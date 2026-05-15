@@ -1,0 +1,382 @@
+/* ────────────────────────────────────────────────────────────────────
+ * 2007-era LinkedIn skin for the /diogonet page.
+ *
+ * Lives in its own file so the bigger globals.css doesn't have to be
+ * touched. Loaded from app/layout.tsx after globals.css.
+ * ──────────────────────────────────────────────────────────────────── */
+
+/* The Window body class on app/page.tsx */
+.linkedin2007-window-body {
+  background: #ffffff;
+  color: #1d1d1d;
+  font-family: Verdana, Geneva, "DejaVu Sans", sans-serif;
+}
+
+.linkedin2007 {
+  background: #ffffff;
+  color: #1d1d1d;
+  min-height: 100%;
+  font-family: Verdana, Geneva, "DejaVu Sans", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ── Top brand band ──────────────────────────────────────────────── */
+.linkedin2007-banner {
+  background: linear-gradient(to bottom, #cfe1f2 0%, #a6c8e6 100%);
+  border-bottom: 1px solid #4b80b8;
+  color: #1b4d8a;
+}
+.linkedin2007-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 16px 6px;
+}
+.linkedin2007-wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1b4d8a;
+  letter-spacing: -0.5px;
+}
+.linkedin2007-wordmark .linkedin2007-in {
+  background: #1b4d8a;
+  color: #ffffff;
+  padding: 0 4px;
+  border-radius: 2px;
+  margin-left: 1px;
+}
+.linkedin2007-nav {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.linkedin2007-nav a {
+  color: #1b4d8a;
+  cursor: pointer;
+}
+.linkedin2007-nav a:hover {
+  text-decoration: underline;
+}
+.linkedin2007-nav a.is-active {
+  color: #0c2c52;
+  border-bottom: 2px solid #0c2c52;
+  padding-bottom: 2px;
+}
+
+.linkedin2007-subnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 16px;
+  background: #eef5fb;
+  border-top: 1px solid #bcd3ea;
+  border-bottom: 1px solid #cfcfcf;
+  font-size: 11px;
+  color: #1b4d8a;
+}
+.linkedin2007-subnav a {
+  cursor: pointer;
+  color: #1b4d8a;
+}
+.linkedin2007-subnav a:hover {
+  text-decoration: underline;
+}
+.linkedin2007-subnav a.is-active {
+  font-weight: 700;
+  color: #0c2c52;
+}
+.linkedin2007-sep {
+  color: #9ab4d2;
+  padding: 0 4px;
+}
+.linkedin2007-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.linkedin2007-search input {
+  width: 160px;
+  font-size: 11px;
+  padding: 2px 4px;
+  background: #ffffff;
+  border: 1px solid #8aa9c8;
+  outline: none;
+}
+.linkedin2007-search button {
+  font-size: 11px;
+  padding: 1px 8px;
+  background: linear-gradient(to bottom, #ffffff, #d8e4ef);
+  border: 1px solid #6b8db0;
+  color: #1b4d8a;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ── Body grid ───────────────────────────────────────────────────── */
+.linkedin2007-body {
+  background: #f3f3f3;
+  padding: 14px;
+  min-height: calc(100% - 60px);
+}
+.linkedin2007-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 14px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+@media (max-width: 720px) {
+  .linkedin2007-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Left rail ───────────────────────────────────────────────────── */
+.linkedin2007-left {
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+  padding: 12px;
+}
+.linkedin2007-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #cfcfcf;
+  background: #f7f9fc;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.linkedin2007-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.linkedin2007-photo-fallback {
+  font-family: -apple-system, "Lucida Grande", sans-serif;
+  font-size: 56px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(145deg, #6ab0e8 0%, #1b4d8a 100%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -2px;
+}
+
+.linkedin2007-name {
+  margin-top: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #1d1d1d;
+}
+.linkedin2007-headline {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #333;
+}
+.linkedin2007-location {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #666;
+}
+
+.linkedin2007-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.linkedin2007-btn {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: linear-gradient(to bottom, #ffffff 0%, #e2e9f0 100%);
+  border: 1px solid #8aa9c8;
+  color: #1b4d8a;
+  cursor: pointer;
+  text-align: center;
+}
+.linkedin2007-btn:hover {
+  filter: brightness(1.04);
+}
+.linkedin2007-btn-primary {
+  background: linear-gradient(to bottom, #5a8fc5 0%, #1b4d8a 100%);
+  border-color: #0c2c52;
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Sidebar boxes (under the left rail's main card) */
+.linkedin2007-side {
+  margin-top: 10px;
+  border-top: 1px solid #e3e3e3;
+  padding-top: 8px;
+}
+.linkedin2007-side-head {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1b4d8a;
+  margin-bottom: 4px;
+}
+.linkedin2007-side-body {
+  font-size: 11px;
+  color: #1d1d1d;
+}
+.linkedin2007-stat {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b4d8a;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+.linkedin2007-stat-label {
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ── Main column ─────────────────────────────────────────────────── */
+.linkedin2007-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.linkedin2007-section {
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+}
+.linkedin2007-section-head {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1b4d8a;
+  padding: 6px 12px;
+  border-bottom: 1px solid #cfcfcf;
+  background: linear-gradient(to bottom, #eef5fb 0%, #dde9f4 100%);
+}
+.linkedin2007-section-body {
+  padding: 12px;
+}
+
+.linkedin2007-paragraph {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #1d1d1d;
+  white-space: pre-wrap;
+}
+
+.linkedin2007-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.linkedin2007-entry {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+}
+.linkedin2007-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.linkedin2007-entry-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #1d1d1d;
+}
+.linkedin2007-entry-sub {
+  font-size: 12px;
+  color: #1b4d8a;
+  font-weight: 700;
+}
+.linkedin2007-entry-meta {
+  font-size: 11px;
+  color: #666;
+  margin-top: 1px;
+}
+.linkedin2007-entry-body {
+  font-size: 12px;
+  color: #1d1d1d;
+  margin-top: 6px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Skill chips */
+.linkedin2007-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.linkedin2007-chip {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1b4d8a;
+  background: #ffffff;
+  border: 1px solid #cfdbe9;
+  padding: 3px 9px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.linkedin2007-chip-num {
+  background: #eef5fb;
+  border: 1px solid #cfdbe9;
+  padding: 0 5px;
+  font-size: 10px;
+  color: #1b4d8a;
+  border-radius: 999px;
+}
+
+/* Key/Value list (Languages) */
+.linkedin2007-kv {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.linkedin2007-kv li {
+  padding: 3px 0;
+  border-bottom: 1px solid #ececec;
+}
+.linkedin2007-kv li:last-child {
+  border-bottom: 0;
+}
+.linkedin2007-kv-key {
+  font-weight: 700;
+  color: #1d1d1d;
+}
+.linkedin2007-kv-val {
+  color: #555;
+}
+
+.linkedin2007-link {
+  color: #1b4d8a;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.linkedin2007-link:hover {
+  color: #0c2c52;
+}
+
+.linkedin2007-footer {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 10px;
+  color: #888;
+}

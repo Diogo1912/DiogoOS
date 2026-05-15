@@ -1,26 +1,1019 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes ichat-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes dock-bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-22px); }
+  50% { transform: translateY(0); }
+  70% { transform: translateY(-10px); }
+}
+
+@keyframes boot-fade {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Lucida Grande",
+      "Lucida Sans Unicode", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Mac-style scrollbar */
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #ececec;
+    border-left: 1px solid #d8d8d8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #c0c0c0, #b0b0b0);
+    border: 3px solid #ececec;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #a8a8a8, #989898);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* ── Desktop background ─────────────────────────────────── */
+  .desktop-bg {
+    background: radial-gradient(
+        ellipse at 25% 40%,
+        rgba(60, 120, 200, 0.55) 0%,
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse at 78% 18%,
+        rgba(110, 55, 180, 0.45) 0%,
+        transparent 48%
+      ),
+      radial-gradient(
+        ellipse at 55% 85%,
+        rgba(25, 75, 160, 0.35) 0%,
+        transparent 55%
+      ),
+      linear-gradient(160deg, #0b1a38 0%, #142850 28%, #1a3a6e 58%, #0d1f42 100%);
+  }
+
+  /* ── Menu bar ───────────────────────────────────────────── */
+  .menu-bar {
+    background: rgba(225, 225, 225, 0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(160, 160, 160, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ── Window title bar (brushed aluminum) ───────────────── */
+  .window-titlebar {
+    background: linear-gradient(
+      to bottom,
+      #f0f0f0 0%,
+      #e2e2e2 15%,
+      #d2d2d2 82%,
+      #bababa 100%
+    );
+    border-bottom: 1px solid #999999;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    /* Subtle pinstripe texture */
+    background-image: linear-gradient(
+        to bottom,
+        #f0f0f0 0%,
+        #e2e2e2 15%,
+        #d2d2d2 82%,
+        #bababa 100%
+      ),
+      repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.018) 3px,
+        rgba(0, 0, 0, 0.018) 6px
+      );
+    background-blend-mode: multiply;
+  }
+
+  /* ── Window content area ────────────────────────────────── */
+  .window-body {
+    background: #ffffff;
+  }
+
+  /* ── Mac drop shadow ────────────────────────────────────── */
+  .mac-shadow {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3),
+      0 8px 28px rgba(0, 0, 0, 0.55), 0 28px 72px rgba(0, 0, 0, 0.42);
+  }
+
+  /* ── Dock stage ──
+   * Just a positioning context — the perspective lives on the shelf itself
+   * (via `transform: perspective(...)`) so the tilt isn't flattened by the
+   * intervening flex container. */
+  .dock-stage {
+    /* (no perspective here on purpose) */
+  }
+
+  /* ── Dock shelf (frosted glass with depth, Yosemite-ish) ────
+   * Absolutely positioned behind the icons; visibly tilted in 3D. The
+   * self-contained `perspective()` in the transform makes the rotation
+   * actually foreshorten the back edge instead of just squashing vertically. */
+  .dock-shelf {
+    position: absolute;
+    /* Stretch the back of the shelf far above the icons so after rotation
+     * the foreshortened top edge clearly reads as a tilted floor behind
+     * them. The bottom stays anchored at the icon row's baseline. */
+    inset: -90px -28px -10px -28px;
+    z-index: 0;
+    border-radius: 22px;
+    pointer-events: none;
+    transform: perspective(420px) rotateX(56deg);
+    transform-origin: 50% 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(248, 248, 248, 0.58) 0%,
+      rgba(225, 225, 225, 0.52) 38%,
+      rgba(195, 195, 195, 0.46) 100%
+    );
+    backdrop-filter: blur(38px) saturate(180%);
+    -webkit-backdrop-filter: blur(38px) saturate(180%);
+    border-top: 1px solid rgba(255, 255, 255, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+    border-right: 1px solid rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+      0 14px 36px rgba(0, 0, 0, 0.45),
+      0 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Top reflective edge line */
+  .dock-shelf::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 1) 50%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* Bottom grounding line (extra depth) */
+  .dock-shelf::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 6%;
+    right: 6%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(0, 0, 0, 0.18) 50%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* ── Dock items sit above the tilted shelf in plain 2D ──── */
+  .dock-item {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Dock icon container — purely 2D; only hover magnifies ── */
+  .dock-icon {
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+      filter 0.12s ease;
+  }
+
+  .dock-icon:hover {
+    transform: translateY(-12px) scale(1.32);
+    filter: brightness(1.04);
+  }
+
+  /* ── Dock tooltip ──────────────────────────────────────────
+   * Floats well above the icon (clear of the ~1.32x magnified state) and
+   * has its own z-index so it never sits underneath neighbouring icons. */
+  .dock-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-18px);
+    padding: 3px 9px;
+    background: rgba(20, 20, 22, 0.92);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: 5px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+    z-index: 60;
+  }
+  .dock-tooltip::after {
+    /* Tiny downward arrow pointing at the icon */
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(20, 20, 22, 0.92);
+  }
+  .group:hover > .dock-tooltip {
+    opacity: 1;
+  }
+
+  /* ── Aqua gel button ────────────────────────────────────── */
+  .aqua-button {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      #68c8f8 0%,
+      #3eb2f0 44%,
+      #1882cc 50%,
+      #229ad6 100%
+    );
+    border: 1px solid #1168aa;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+    transition: filter 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  /* Aqua gloss shine */
+  .aqua-button::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 12%;
+    right: 12%;
+    height: 48%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.78),
+      rgba(255, 255, 255, 0.18)
+    );
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
+  }
+
+  .aqua-button:hover {
+    filter: brightness(1.1);
+  }
+
+  .aqua-button:active {
+    filter: brightness(0.9);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+
+  .aqua-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.4);
+  }
+
+  /* ── Mac-style text input ───────────────────────────────── */
+  .mac-input {
+    background: linear-gradient(to bottom, #e6e6e6, #f8f8f8);
+    border: 1px solid #aaaaaa;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.18),
+      0 1px 0 rgba(255, 255, 255, 0.85);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease,
+      background 0.15s ease;
+    color: #1d1d1f;
+  }
+
+  .mac-input:focus {
+    border-color: #4ab3f4;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
+      0 0 0 3px rgba(74, 179, 244, 0.28);
+    background: #ffffff;
+  }
+
+  /* ── Skill tag ──────────────────────────────────────────── */
+  .skill-tag {
+    background: linear-gradient(to bottom, #eef6ff, #deeeff);
+    border: 1px solid #aed4f4;
+    color: #1a5a9a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: filter 0.1s ease;
+  }
+
+  .skill-tag:hover {
+    filter: brightness(0.96);
+  }
+
+  /* ── Section divider ────────────────────────────────────── */
+  .section-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * 2008 / iTunes Store inspired styles — for /apps page
+   * ──────────────────────────────────────────────────────── */
+
+  /* Dark store backdrop with subtle texture */
+  .store-bg {
+    background:
+      radial-gradient(
+        ellipse at 50% 0%,
+        #2a2a30 0%,
+        #1a1a1f 40%,
+        #0e0e12 100%
+      );
+    color: #f0f0f0;
+    background-image:
+      radial-gradient(
+        ellipse at 50% 0%,
+        #2a2a30 0%,
+        #1a1a1f 40%,
+        #0e0e12 100%
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.025) 0px,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+  }
+
+  /* Featured banner — chunky 2008 web hero strip */
+  .store-banner {
+    background: linear-gradient(
+      to bottom,
+      #4a8edd 0%,
+      #2868c2 50%,
+      #1d56a9 100%
+    );
+    border: 1px solid #15448a;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  /* App row in store — glossy dark card */
+  .store-card {
+    background: linear-gradient(to bottom, #2c2c33 0%, #1d1d22 100%);
+    border: 1px solid #3a3a42;
+    border-bottom-color: #0a0a0d;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+
+  .store-card:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  /* Glossy app icon background — used inside AppCard */
+  .store-app-icon {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 4px 14px rgba(0, 0, 0, 0.55);
+  }
+
+  .store-app-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 50%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.08)
+    );
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
+  }
+
+  /* Star rating — late 2000s feel */
+  .store-stars {
+    color: #ffc827;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+  }
+
+  /* 2008-style chunky aqua "GET" button */
+  .store-button {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      #92e060 0%,
+      #5fbe2a 48%,
+      #3d9117 52%,
+      #5ab12a 100%
+    );
+    border: 1px solid #2d6e10;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  .store-button::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 8%;
+    right: 8%;
+    height: 45%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.12)
+    );
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
+  }
+
+  .store-button:hover {
+    filter: brightness(1.08);
+  }
+
+  /* "NEW" / "FREE" ribbon badge */
+  .store-ribbon {
+    background: linear-gradient(to bottom, #ff6b3d 0%, #d83a16 100%);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 1px;
+    border: 1px solid #a02807;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * Leather Address Book — for /  (home / CV)
+   * ──────────────────────────────────────────────────────── */
+  .leather-bg {
+    background:
+      radial-gradient(
+        ellipse at 30% 20%,
+        rgba(255, 220, 170, 0.35) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse at 70% 80%,
+        rgba(40, 15, 0, 0.35) 0%,
+        transparent 60%
+      ),
+      linear-gradient(135deg, #6b3a1b 0%, #4d260f 50%, #3a1c08 100%);
+    background-color: #4d260f;
+    color: #f6e3c2;
+    background-image:
+      radial-gradient(
+        ellipse at 30% 20%,
+        rgba(255, 220, 170, 0.18) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse at 70% 80%,
+        rgba(40, 15, 0, 0.4) 0%,
+        transparent 60%
+      ),
+      linear-gradient(135deg, #6b3a1b 0%, #4d260f 50%, #3a1c08 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0'/></filter><rect width='240' height='240' filter='url(%23n)' opacity='0.4'/></svg>");
+  }
+
+  /* Stitched cream border line inside leather book */
+  .stitched-border {
+    border: 2px dashed #f0d99c;
+    border-radius: 12px;
+    box-shadow:
+      inset 0 0 0 5px transparent,
+      inset 0 0 0 6px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Cream "paper" card inside the book */
+  .paper-card {
+    background:
+      linear-gradient(to bottom, #faf3e0 0%, #f3e8c8 100%),
+      repeating-linear-gradient(
+        45deg,
+        rgba(180, 140, 80, 0.04) 0px,
+        rgba(180, 140, 80, 0.04) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    border: 1px solid #c4a76a;
+    color: #3a2410;
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  /* Brass ring binding */
+  .brass-ring {
+    background: radial-gradient(circle at 30% 30%, #fff2c5 0%, #d4a437 40%, #6e4d10 100%);
+    border: 1px solid #4a3408;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * Minimalist blog — for /blog
+   * White + green, no shadows. Clean Trebuchet-on-paper feel.
+   * ──────────────────────────────────────────────────────── */
+  .blog2000-window-body {
+    background: #ffffff;
+    color: #222;
+  }
+
+  .blog2000-bg {
+    min-height: 100%;
+  }
+
+  /* Brand colours */
+  :root {
+    --blog-green: #2e7d4f;
+    --blog-green-dark: #1f5e3a;
+    --blog-green-soft: #eaf5ee;
+    --blog-rule: #e3e3e3;
+  }
+
+  .blog2000-banner {
+    background: #ffffff;
+    color: #222;
+    border-bottom: 1px solid var(--blog-green);
+    text-align: left;
+  }
+
+  .blog2000-title {
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--blog-green-dark);
+  }
+  .blog2000-title em {
+    color: var(--blog-green);
+    font-style: normal;
+  }
+
+  .blog2000-tagline {
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  /* Sidebar boxes */
+  .blog2000-side {
+    background: #ffffff;
+    border: 1px solid var(--blog-rule);
+  }
+  .blog2000-side-head {
+    background: var(--blog-green-soft);
+    color: var(--blog-green-dark);
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--blog-rule);
+  }
+
+  /* Post card */
+  .blog2000-post {
+    background: #ffffff;
+    border: 1px solid var(--blog-rule);
+  }
+  .blog2000-post-head {
+    background: #ffffff;
+    color: #222;
+    padding: 10px 14px 6px;
+    border-bottom: 1px solid var(--blog-rule);
+  }
+  .blog2000-post-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-top: 2px;
+    color: #181818;
+  }
+  .blog2000-post-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .blog2000-post-title a:hover {
+    color: var(--blog-green-dark);
+  }
+
+  /* Links inside the blog */
+  .blog2000-bg a {
+    color: var(--blog-green-dark);
+  }
+  .blog2000-bg a:hover {
+    text-decoration: underline;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * iChat — for /contact
+   * ──────────────────────────────────────────────────────── */
+  .ichat-bg {
+    background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%);
+    color: #1d1d1f;
+  }
+
+  .ichat-sidebar {
+    background: linear-gradient(to bottom, #f0f0f0 0%, #d8d8d8 100%);
+    border-right: 1px solid #a8a8a8;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .ichat-bubble-them {
+    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+    border: 1px solid #c0c0c0;
+    color: #1d1d1f;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 2px rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    position: relative;
+  }
+
+  .ichat-bubble-me {
+    background: linear-gradient(to bottom, #6dbef0 0%, #3a92e0 50%, #2278c8 100%);
+    border: 1px solid #1c5fa2;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 1px 2px rgba(0, 0, 0, 0.18);
+    border-radius: 14px;
+    position: relative;
+  }
+
+  /* Pulsing "online" dot used in the iChat buddy list */
+  .status-online {
+    background: #28c840;
+    box-shadow: 0 0 0 1px #1aab29, 0 0 6px rgba(40, 200, 64, 0.5);
+  }
+  .status-away {
+    background: #febc2e;
+    box-shadow: 0 0 0 1px #d4a017;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * OS shell extras: menu dropdown, spotlight, stickies
+   * ──────────────────────────────────────────────────────── */
+
+  /* Mac-style dropdown menu surface (DiogoOS menu, context menu) */
+  .menu-dropdown {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96) 0%, rgba(232, 232, 232, 0.96) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  /* Spotlight overlay — dark blue gel like Mac OS X 10.5 Spotlight */
+  .spotlight-box {
+    background: linear-gradient(to bottom, rgba(36, 50, 76, 0.92) 0%, rgba(20, 30, 50, 0.94) 100%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  /* Sticky note */
+  .sticky-note {
+    background: linear-gradient(to bottom, #fff48a 0%, #f4d738 100%);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(160, 130, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    border-radius: 2px;
+  }
+  .sticky-header {
+    background: linear-gradient(to bottom, #fae66d, #e9c722);
+    border-bottom: 1px solid rgba(140, 110, 0, 0.3);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* Mac-style input field (used in iChat) */
+  .mac-input {
+    background: white;
+    border: 1px solid #b8b8b8;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: #1d1d1f;
+    font-size: 12px;
+  }
+  .mac-input:focus {
+    outline: none;
+    border-color: #3a92e0;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(58, 146, 224, 0.3);
+  }
+
+  /* Trash dock icon — bulges briefly when something lands on it */
+  .trash-bounce {
+    animation: dock-bounce 0.7s ease;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * DiogoNet profile — blue-first palette inspired by 2000s
+   * social profile templates: white body, light-blue section
+   * headers, peach for accent / social sections.
+   * ──────────────────────────────────────────────────────── */
+  .profile-bg {
+    background-color: #ffffff;
+    color: #1a1a1a;
+  }
+
+  /* Top deep-blue site brand band */
+  .profile-nav {
+    background: linear-gradient(to bottom, #3a64a8 0%, #2a4e8c 100%);
+    border-bottom: 1px solid #1a3870;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Lighter sub-nav strip with pipe-separated links */
+  .profile-subnav {
+    background: linear-gradient(to bottom, #6f95cc 0%, #5d83b8 100%);
+    border-bottom: 1px solid #3a5a8a;
+    color: white;
+  }
+
+  /* Section header (default — light blue) */
+  .profile-sec-default {
+    background: linear-gradient(to bottom, #cfdff5 0%, #a8c4e6 100%);
+    color: #1a3870;
+    border-bottom: 1px solid #6f95cc;
+  }
+
+  /* Section header (accent — peach for highlights / social) */
+  .profile-sec-accent {
+    background: linear-gradient(to bottom, #f5d390 0%, #e8b070 100%);
+    color: #5a3d18;
+    border-bottom: 1px solid #c89860;
+  }
+
+  /* Underlined navy links throughout the profile */
+  .profile-link {
+    color: #1a3870;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .profile-link:hover {
+    color: #c8651a;
+  }
+
+  .profile-window-body {
+    scrollbar-color: #3a64a8 #e8eef5;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * Browser chrome (toolbar between the OS title bar and page)
+   * ──────────────────────────────────────────────────────── */
+  .browser-chrome {
+    background: linear-gradient(to bottom, #e8e8e8 0%, #c8c8c8 100%);
+    border-bottom: 1px solid #8a8a8a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .browser-url-bar {
+    background: linear-gradient(to bottom, #ffffff 0%, #f3f3f3 100%);
+    border: 1px solid #a8a8a8;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    min-width: 0;
+  }
+
+  .browser-search-bar {
+    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+    border: 1px solid #a8a8a8;
+    border-radius: 999px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+    min-width: 120px;
+  }
+
+  .browser-tab-active {
+    background: linear-gradient(to bottom, #f7f7f7 0%, #e8e8e8 100%);
+    border: 1px solid #8a8a8a;
+    border-bottom: 1px solid #f7f7f7;
+    border-radius: 6px 6px 0 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    margin-bottom: -1px;
+  }
+
+  .browser-tab-new {
+    background: transparent;
+  }
+
+  /* ────────────────────────────────────────────────────────
+   * Flat-mode toggle pill (bottom-right floating button)
+   * ──────────────────────────────────────────────────────── */
+  .flat-toggle {
+    position: fixed;
+    right: 14px;
+    bottom: 16px;
+    z-index: 55;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, "Lucida Grande", "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(to bottom, #68c8f8 0%, #3eb2f0 44%, #1882cc 50%, #229ad6 100%);
+    border: 1px solid #1168aa;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: filter 0.12s ease, transform 0.12s ease;
+  }
+  .flat-toggle:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .flat-toggle:active { transform: translateY(0); filter: brightness(0.95); }
+  .flat-toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    font-size: 12px;
+    line-height: 1;
+  }
+  /* When the toggle lives inside FlatSite, push it up a bit so it clears
+   * the page footer. */
+  .flat-site .flat-toggle { bottom: 22px; right: 22px; }
+
+  /* ────────────────────────────────────────────────────────
+   * Flat scrolling site — "Convert to a normal website"
+   * Keeps Aqua / 2000s Apple flavour: pinstripes, gel buttons.
+   * ──────────────────────────────────────────────────────── */
+  html[data-flat="1"] body {
+    overflow: auto !important;
+  }
+  /* Strip floating-window chrome inside flat mode */
+  html[data-flat="1"] .mac-shadow {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  html[data-flat="1"] .window-titlebar,
+  html[data-flat="1"] .browser-chrome,
+  html[data-flat="1"] .dock-stage,
+  html[data-flat="1"] .menu-bar {
+    display: none !important;
+  }
+  /* The page's outer <Window> is `fixed` with explicit top/left; flatten it */
+  html[data-flat="1"] .flat-card > .fixed {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+  html[data-flat="1"] .flat-card .window-body,
+  html[data-flat="1"] .flat-card .profile-window-body,
+  html[data-flat="1"] .flat-card .blog2000-window-body {
+    background: transparent !important;
+    color: inherit;
+  }
+
+  .flat-site {
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        #f1f3f7 0px,
+        #f1f3f7 2px,
+        #e6e9ef 2px,
+        #e6e9ef 4px
+      );
+    color: #1a1a1a;
+    font-family: -apple-system, "Lucida Grande", "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+  }
+
+  .flat-header {
+    background:
+      linear-gradient(to bottom, #f8f8f8 0%, #d9d9d9 100%);
+    border-bottom: 1px solid #a3a3a3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .flat-header-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.12), transparent);
+  }
+  .flat-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flat-brand-mark {
+    display: inline-flex;
+    width: 22px; height: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: linear-gradient(145deg, #68c8f8, #1a7fcc);
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  .flat-brand-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #222;
+  }
+
+  .flat-navlink {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+    border: 1px solid #a3a3a3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: filter 0.1s ease;
+  }
+  .flat-navlink:hover { filter: brightness(1.04); }
+  .flat-navlink.is-active {
+    background: linear-gradient(to bottom, #68c8f8 0%, #1a7fcc 100%);
+    color: white;
+    border-color: #1168aa;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .flat-card {
+    background: white;
+    border: 1px solid #b8b8b8;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 1px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .flat-footer {
+    border-top: 1px solid #b8b8b8;
+    background: linear-gradient(to bottom, #ececec, #d6d6d6);
+  }
 }
