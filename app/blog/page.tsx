@@ -6,10 +6,12 @@ import { useOS } from "@/components/os/OSProvider";
 
 export default function BlogEntry() {
   const router = useRouter();
-  const { launchMiniApp } = useOS();
+  const { launchMiniApp, flatMode, isMobile, hydrated } = useOS();
   useEffect(() => {
+    if (!hydrated) return;
+    if (flatMode || isMobile) return;
     launchMiniApp("blogapp");
     router.replace("/desktop");
-  }, [launchMiniApp, router]);
+  }, [launchMiniApp, router, flatMode, isMobile, hydrated]);
   return null;
 }

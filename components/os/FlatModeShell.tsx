@@ -4,39 +4,32 @@ import { useOS } from "./OSProvider";
 import { WindowManagerProvider } from "./WindowManager";
 import { FlatSite } from "./FlatSite";
 import { FlatModeToggle } from "./FlatModeToggle";
-import { MobileShell } from "./MobileShell";
 
 interface Props {
-  /** Desktop / DiogoOS view */
+  /** Desktop / DiogoOS view (only used when not in flat or mobile) */
   os: React.ReactNode;
-  /** Children to render inside the flat scrolling site (the page) */
+  /** Unused; kept for backwards-compat with layout.tsx call site. */
   flat: React.ReactNode;
 }
 
 /**
- * Top-level chooser. When `flatMode` is off, renders the full OS shell.
- * When on, hides the desktop and renders the flat site wrapping the page
- * children. We still wrap in WindowManagerProvider so the pages' <Window>
- * components (which call useWindowManager) don't crash — global CSS strips
- * their absolute/chrome styling in flat mode.
+ * Top-level chooser:
+ *   - mobile (any width ≤ 768): always renders the flat site (the user
+ *     asked for the "normal website" everywhere on phones).
+ *   - flatMode true on desktop: renders the flat site.
+ *   - otherwise: renders the full DiogoOS desktop shell.
+ *
+ * The `flat` children prop is no longer used — FlatSite reads pathname
+ * and renders the right content directly. Kept in the signature so
+ * layout.tsx doesn't need to change shape.
  */
-export function FlatModeShell({ os, flat }: Props) {
+export function FlatModeShell({ os }: Props) {
   const { flatMode, isMobile } = useOS();
 
-  // Phones / narrow tablets always get the dedicated iOS-style shell —
-  // a macOS desktop doesn't fit a phone screen.
-  if (isMobile) {
+  if (isMobile || flatMode) {
     return (
       <WindowManagerProvider>
-        <MobileShell>{flat}</MobileShell>
-      </WindowManagerProvider>
-    );
-  }
-
-  if (flatMode) {
-    return (
-      <WindowManagerProvider>
-        <FlatSite>{flat}</FlatSite>
+        <FlatSite />
       </WindowManagerProvider>
     );
   }

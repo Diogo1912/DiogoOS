@@ -5,19 +5,22 @@ import { useRouter } from "next/navigation";
 import { useOS } from "@/components/os/OSProvider";
 
 /**
- * `/` now just deep-links to "open the Browser mini-app". The actual UI
- * lives in components/miniapps/Browser.tsx and is mounted by MiniAppHost
- * so it can coexist with other open apps. We redirect to `/desktop` so
- * the URL stays clean (the dock + open windows do the rest).
+ * `/` entry. In OS mode this is a deep-link → launch the Browser
+ * mini-app and replace the URL with `/desktop`. In flat / mobile mode
+ * we leave the URL alone so FlatSite can read the path and render the
+ * right content inline. Waits for OSProvider's hydration to finish so
+ * we don't redirect on stale defaults.
  */
 export default function HomeEntry() {
   const router = useRouter();
-  const { launchMiniApp } = useOS();
+  const { launchMiniApp, flatMode, isMobile, hydrated } = useOS();
 
   useEffect(() => {
+    if (!hydrated) return;
+    if (flatMode || isMobile) return;
     launchMiniApp("browser");
     router.replace("/desktop");
-  }, [launchMiniApp, router]);
+  }, [launchMiniApp, router, flatMode, isMobile, hydrated]);
 
   return null;
 }

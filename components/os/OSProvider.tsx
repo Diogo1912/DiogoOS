@@ -85,6 +85,11 @@ interface OSContextValue {
   // dedicated iOS-style shell instead of the macOS desktop.
   isMobile: boolean;
 
+  // True once the provider has read its persisted state from
+  // localStorage. Consumers that branch on flatMode/isMobile should
+  // wait for this so they don't act on stale initial values.
+  hydrated: boolean;
+
   // Mini-apps
   miniApps: MiniAppState[];
   focusedMiniApp: MiniAppId | null;
@@ -123,6 +128,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
   const [welcomeOpen, setWelcomeOpen] = useState(true);
   const [flatMode, setFlatModeState] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   const [miniApps, setMiniApps] = useState<MiniAppState[]>([]);
   const [focusedMiniApp, setFocusedMiniApp] = useState<MiniAppId | null>(null);
   const miniZ = useRef(40);
@@ -183,6 +189,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     if (wc === "1") setWelcomeOpen(false);
     const fm = localStorage.getItem(FLAT_KEY);
     if (fm === "1") setFlatModeState(true);
+    setHydrated(true);
   }, []);
 
   // Apply wallpaper via data-attr on <html>
@@ -315,7 +322,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       stickiesOpen, setStickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
-      isMobile,
+      isMobile, hydrated,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     }),
@@ -330,7 +337,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       stickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
-      isMobile,
+      isMobile, hydrated,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     ]

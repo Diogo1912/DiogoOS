@@ -6,10 +6,12 @@ import { useOS } from "@/components/os/OSProvider";
 
 export default function AppsEntry() {
   const router = useRouter();
-  const { launchMiniApp } = useOS();
+  const { launchMiniApp, flatMode, isMobile, hydrated } = useOS();
   useEffect(() => {
+    if (!hydrated) return;
+    if (flatMode || isMobile) return;
     launchMiniApp("appstore");
     router.replace("/desktop");
-  }, [launchMiniApp, router]);
+  }, [launchMiniApp, router, flatMode, isMobile, hydrated]);
   return null;
 }
