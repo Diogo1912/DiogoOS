@@ -3,15 +3,32 @@
 import { useOS } from "./OSProvider";
 
 /**
- * Floating bottom-right pill. Two parts:
- *   - the main pill button toggles between OS view and the flat site,
- *   - a smaller round X on the right dismisses the pill for the
- *     session. The pill can be re-enabled from the smiley menu's
- *     "Convert to a normal website…" entry.
+ * Mode toggle pill, two presentations:
+ *   - OS mode: floats bottom-right, label "Convert to a normal website",
+ *     with a small red X next to it that dismisses the pill for the
+ *     session.
+ *   - Flat mode: pinned top-right, label "Back to DiogoOS", permanent
+ *     (no dismiss X — the user always needs an obvious way back).
  */
 export function FlatModeToggle() {
   const { flatMode, toggleFlatMode, togglePillVisible, dismissTogglePill } = useOS();
 
+  // Flat mode: always-on top-right pill with no dismiss.
+  if (flatMode) {
+    return (
+      <div className="flat-toggle-wrap flat-toggle-wrap--top" role="group" aria-label="Site mode">
+        <button
+          onClick={toggleFlatMode}
+          className="flat-toggle"
+          aria-label="Switch back to DiogoOS"
+        >
+          <span className="flat-toggle-label">Back to DiogoOS</span>
+        </button>
+      </div>
+    );
+  }
+
+  // OS mode: bottom-right pill with dismiss X (can be hidden for the session).
   if (!togglePillVisible) return null;
 
   return (
@@ -19,18 +36,16 @@ export function FlatModeToggle() {
       <button
         onClick={toggleFlatMode}
         className="flat-toggle"
-        aria-label={flatMode ? "Switch back to DiogoOS" : "Convert to a normal website"}
+        aria-label="Convert to a normal website"
       >
-        <span className="flat-toggle-label">
-          {flatMode ? "Back to DiogoOS" : "Convert to a normal website"}
-        </span>
+        <span className="flat-toggle-label">Convert to a normal website</span>
       </button>
 
       <button
         onClick={dismissTogglePill}
         className="flat-toggle-close"
         aria-label="Hide this pill"
-        title="Hide this pill (you can re-enable it from the smiley menu)"
+        title="Hide this pill"
       >
         <svg viewBox="0 0 12 12" className="w-3 h-3" aria-hidden>
           <path

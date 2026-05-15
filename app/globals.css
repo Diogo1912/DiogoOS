@@ -872,6 +872,15 @@
     gap: 6px;
   }
   .flat-site .flat-toggle-wrap { bottom: 22px; right: 22px; }
+  /* Top-right variant — used in flat mode for the permanent "Back to
+   * DiogoOS" pill. Pinned next to the page header so it's always reachable. */
+  .flat-toggle-wrap--top {
+    top: 12px;
+    bottom: auto;
+    right: 16px;
+    z-index: 60;
+  }
+  .flat-site .flat-toggle-wrap--top { top: 12px; right: 16px; bottom: auto; }
 
   .flat-toggle {
     display: inline-flex;
