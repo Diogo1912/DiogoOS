@@ -4,6 +4,7 @@ import { useOS } from "./OSProvider";
 import { WindowManagerProvider } from "./WindowManager";
 import { FlatSite } from "./FlatSite";
 import { FlatModeToggle } from "./FlatModeToggle";
+import { MobileShell } from "./MobileShell";
 
 interface Props {
   /** Desktop / DiogoOS view */
@@ -20,7 +21,17 @@ interface Props {
  * their absolute/chrome styling in flat mode.
  */
 export function FlatModeShell({ os, flat }: Props) {
-  const { flatMode } = useOS();
+  const { flatMode, isMobile } = useOS();
+
+  // Phones / narrow tablets always get the dedicated iOS-style shell —
+  // a macOS desktop doesn't fit a phone screen.
+  if (isMobile) {
+    return (
+      <WindowManagerProvider>
+        <MobileShell>{flat}</MobileShell>
+      </WindowManagerProvider>
+    );
+  }
 
   if (flatMode) {
     return (

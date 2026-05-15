@@ -41,7 +41,6 @@ export function Spotlight() {
     const miniAppItems: { id: MiniAppId; title: string; subtitle: string }[] = [
       { id: "finder", title: "Finder", subtitle: "Browse the file system (well, sort of)" },
       { id: "calculator", title: "Calculator", subtitle: "Math, but pretty" },
-      { id: "notes", title: "Notes", subtitle: "Yellow legal pad, persists across reloads" },
       { id: "terminal", title: "Terminal", subtitle: "bash · try 'help' or 'cat about.txt'" },
       { id: "ical", title: "iCal", subtitle: "Calendar with events" },
       { id: "snake", title: "Snake", subtitle: "Classic snake — arrow keys to play" },

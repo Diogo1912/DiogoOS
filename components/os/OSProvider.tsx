@@ -16,7 +16,6 @@ export type WallpaperId = "custom" | "aurora" | "aqua" | "space" | "stones";
 export type MiniAppId =
   | "finder"
   | "calculator"
-  | "notes"
   | "terminal"
   | "ical"
   | "snake"
@@ -77,6 +76,10 @@ interface OSContextValue {
   setFlatMode: (v: boolean) => void;
   toggleFlatMode: () => void;
 
+  // Viewport breakpoint — true on phones / narrow tablets. Triggers a
+  // dedicated iOS-style shell instead of the macOS desktop.
+  isMobile: boolean;
+
   // Mini-apps
   miniApps: MiniAppState[];
   focusedMiniApp: MiniAppId | null;
@@ -114,6 +117,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
   const [stickiesOpen, setStickiesOpen] = useState(true);
   const [welcomeOpen, setWelcomeOpen] = useState(true);
   const [flatMode, setFlatModeState] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [miniApps, setMiniApps] = useState<MiniAppState[]>([]);
   const [focusedMiniApp, setFocusedMiniApp] = useState<MiniAppId | null>(null);
   const miniZ = useRef(40);
@@ -196,6 +200,19 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(FLAT_KEY, flatMode ? "1" : "0");
     document.documentElement.dataset.flat = flatMode ? "1" : "0";
   }, [flatMode]);
+
+  // Track viewport breakpoint for iOS / macOS shell selection
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const apply = () => {
+      setIsMobile(mq.matches);
+      document.documentElement.dataset.mobile = mq.matches ? "1" : "0";
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   const closeWelcome = useCallback(() => setWelcomeOpen(false), []);
   const openWelcome = useCallback(() => setWelcomeOpen(true), []);
@@ -293,6 +310,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       stickiesOpen, setStickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
+      isMobile,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     }),
@@ -307,6 +325,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       stickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
+      isMobile,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     ]

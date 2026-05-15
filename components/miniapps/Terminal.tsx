@@ -183,12 +183,25 @@ export function Terminal() {
           <span className="text-[#9dffb3]">{USER}@{HOST}:~$&nbsp;</span>
           <input
             id="term-input"
+            type="text"
+            name="diogoos-terminal"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKey}
             className="flex-1 bg-transparent outline-none text-[#e8e8e8] caret-[#9dffb3]"
             autoFocus
             spellCheck={false}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            inputMode="text"
+            // Hints to the various password managers (1Password, LastPass,
+            // Safari Keychain) to leave this field alone — it's a fake
+            // shell prompt, not a credentials box.
+            data-1p-ignore="true"
+            data-lpignore="true"
+            data-bwignore="true"
+            data-form-type="other"
           />
         </div>
         <div ref={endRef} />

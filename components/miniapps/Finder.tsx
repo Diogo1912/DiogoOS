@@ -37,7 +37,7 @@ const LOCATIONS: { id: LocationId; label: string; emoji: string }[] = [
 
 const ITEMS: Record<LocationId, FinderItem[]> = {
   diogo: [
-    { name: "About Me", kind: "folder", launch: "notes", size: "—", modified: "Today" },
+    { name: "About Me", kind: "folder", launch: "terminal", size: "—", modified: "Today" },
     { name: "Resume.pdf", kind: "doc", external: "/resume.pdf", size: "184 KB", modified: "Yesterday" },
     { name: "Projects", kind: "folder", href: "/apps", size: "—", modified: "May 10" },
     { name: "Blog Posts", kind: "folder", href: "/blog", size: "—", modified: "May 11" },
@@ -46,7 +46,6 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
   ],
   applications: [
     { name: "Calculator.app", kind: "app", launch: "calculator", size: "2.4 MB", modified: "—" },
-    { name: "Notes.app", kind: "app", launch: "notes", size: "1.1 MB", modified: "—" },
     { name: "Terminal.app", kind: "app", launch: "terminal", size: "3.7 MB", modified: "—" },
     { name: "iCal.app", kind: "app", launch: "ical", size: "5.2 MB", modified: "—" },
     { name: "iTunes.app", kind: "app", launch: "itunes", size: "42 MB", modified: "—" },
@@ -55,9 +54,9 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
   ],
   documents: [
     { name: "Resume.pdf", kind: "doc", external: "/resume.pdf", size: "184 KB", modified: "Yesterday" },
-    { name: "todo.txt", kind: "doc", launch: "notes", size: "2 KB", modified: "Today" },
-    { name: "ideas.md", kind: "doc", launch: "notes", size: "12 KB", modified: "May 11" },
-    { name: "haiku-draft.txt", kind: "doc", launch: "notes", size: "1 KB", modified: "May 8" },
+    { name: "todo.txt", kind: "doc", launch: "terminal", size: "2 KB", modified: "Today" },
+    { name: "ideas.md", kind: "doc", launch: "terminal", size: "12 KB", modified: "May 11" },
+    { name: "haiku-draft.txt", kind: "doc", launch: "terminal", size: "1 KB", modified: "May 8" },
   ],
   places: [
     { name: "Lisbon", kind: "folder", size: "—", modified: "—" },
