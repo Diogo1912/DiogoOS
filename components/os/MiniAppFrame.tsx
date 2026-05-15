@@ -34,6 +34,32 @@ export function MiniAppFrame({
     null
   );
 
+  // Local resize state — overrides `width`/`height` props once the user
+  // starts dragging the bottom-right grip.
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  const [resizing, setResizing] = useState(false);
+  const resizeRef = useRef<{ sx: number; sy: number; ow: number; oh: number } | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (!resizing) return;
+    const onMove = (e: MouseEvent) => {
+      const r = resizeRef.current;
+      if (!r) return;
+      const w = Math.max(260, r.ow + (e.clientX - r.sx));
+      const h = Math.max(180, r.oh + (e.clientY - r.sy));
+      setSize({ w, h });
+    };
+    const onUp = () => setResizing(false);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, [resizing]);
+
   useEffect(() => {
     if (!dragging) return;
     const onMove = (e: MouseEvent) => {
@@ -56,14 +82,17 @@ export function MiniAppFrame({
 
   const isFocused = focusedMiniApp === id;
 
+  const effW = size?.w ?? width;
+  const effH = size?.h ?? (height === "auto" ? undefined : height);
+
   return (
     <div
       className="fixed mac-shadow rounded-xl overflow-hidden flex flex-col"
       style={{
         top: state.y,
         left: state.x,
-        width,
-        height: height === "auto" ? undefined : height,
+        width: effW,
+        height: effH,
         zIndex: state.z,
       }}
       onMouseDown={() => focusMiniApp(id)}
@@ -113,7 +142,31 @@ export function MiniAppFrame({
       </div>
 
       {/* Body */}
-      <div className={bodyClassName ?? "window-body"}>{children}</div>
+      <div className={`flex-1 min-h-0 overflow-auto ${bodyClassName ?? "window-body"}`}>
+        {children}
+      </div>
+
+      {/* Resize grip — bottom-right diagonal pinstripes */}
+      <div
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          focusMiniApp(id);
+          resizeRef.current = {
+            sx: e.clientX,
+            sy: e.clientY,
+            ow: effW,
+            oh: typeof effH === "number" ? effH : 320,
+          };
+          setResizing(true);
+        }}
+        aria-label="Resize"
+        className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize z-10 select-none"
+        style={{
+          background:
+            "linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.18) 56%, transparent 56%, transparent 64%, rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.18) 70%, transparent 70%, transparent 78%, rgba(0,0,0,0.18) 78%, rgba(0,0,0,0.18) 84%, transparent 84%)",
+        }}
+      />
     </div>
   );
 }

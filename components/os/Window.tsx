@@ -60,6 +60,51 @@ export function Window({
   );
   const [dragging, setDragging] = useState(false);
 
+  // ─── Resize state ──────────────────────────────
+  // Local width/height that overrides the manager's state once the user
+  // starts resizing. Reset to manager defaults when the window remounts.
+  const [size, setSize] = useState<{ width: number; height: number } | null>(null);
+  const resizeRef = useRef<{
+    startX: number; startY: number; origW: number; origH: number;
+  } | null>(null);
+  const [resizing, setResizing] = useState(false);
+
+  const onResizeMouseDown = (e: React.MouseEvent) => {
+    if (isMaximized) return;
+    e.preventDefault();
+    e.stopPropagation();
+    focus(id);
+    const startW = size?.width ?? state?.width ?? 880;
+    const startH = size?.height ?? state?.height ?? 620;
+    resizeRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      origW: startW,
+      origH: startH,
+    };
+    setResizing(true);
+  };
+
+  useEffect(() => {
+    if (!resizing) return;
+    const onMove = (ev: MouseEvent) => {
+      const r = resizeRef.current;
+      if (!r) return;
+      const dx = ev.clientX - r.startX;
+      const dy = ev.clientY - r.startY;
+      const newW = Math.max(360, r.origW + dx);
+      const newH = Math.max(220, r.origH + dy);
+      setSize({ width: newW, height: newH });
+    };
+    const onUp = () => setResizing(false);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, [resizing]);
+
   const onTitleBarMouseDown = (e: React.MouseEvent) => {
     if (isMaximized) return;
     if ((e.target as HTMLElement).closest("[data-traffic-light]")) return;
@@ -113,6 +158,8 @@ export function Window({
   }
 
   // ─── Style: maximized fills the desktop area; minimized hides ──
+  const effW = size?.width ?? state.width;
+  const effH = size?.height ?? state.height;
   const style: React.CSSProperties = isMaximized
     ? {
         top: 24,
@@ -126,7 +173,8 @@ export function Window({
     : {
         top: state.y,
         left: state.x,
-        width: state.width,
+        width: effW,
+        height: size ? effH : undefined,
         maxHeight: `calc(100vh - 24px - 90px - 24px)`,
         zIndex: state.z,
       };
@@ -203,6 +251,20 @@ export function Window({
       >
         {children}
       </div>
+
+      {/* Resize grip — bottom-right corner. Hidden when the window is
+       *  maximized (resize doesn't apply then). */}
+      {!isMaximized && (
+        <div
+          onMouseDown={onResizeMouseDown}
+          aria-label="Resize window"
+          className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize z-10 select-none"
+          style={{
+            background:
+              "linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.18) 56%, transparent 56%, transparent 64%, rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.18) 70%, transparent 70%, transparent 78%, rgba(0,0,0,0.18) 78%, rgba(0,0,0,0.18) 84%, transparent 84%)",
+          }}
+        />
+      )}
     </div>
   );
 }

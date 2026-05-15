@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local IDE / Claude config
 .claude/
+
+# local icon assets (not tracked)
+icons/
