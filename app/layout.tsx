@@ -17,6 +17,7 @@ import { BootScreen } from "@/components/os/BootScreen";
 import { MiniAppHost } from "@/components/os/MiniAppHost";
 import { WelcomeNote } from "@/components/os/WelcomeNote";
 import { FlatModeShell } from "@/components/os/FlatModeShell";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "DiogoOS",
@@ -76,6 +77,7 @@ export default function RootLayout({
             flat={children}
           />
         </OSProvider>
+        <Analytics />
       </body>
     </html>
   );
