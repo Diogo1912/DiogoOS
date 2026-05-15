@@ -46,7 +46,7 @@ export function Spotlight() {
       { id: "finder",     title: "Finder",    subtitle: "Browse the file system",   group: "Utilities" },
       { id: "calculator", title: "Calculator", subtitle: "Math, but pretty",        group: "Utilities" },
       { id: "terminal",   title: "Terminal",  subtitle: "bash · try 'help'",        group: "Utilities" },
-      { id: "ical",       title: "iCal",      subtitle: "Calendar with events",     group: "Utilities" },
+      { id: "ical",       title: "Book a meeting", subtitle: "Schedule a call with Diogo", group: "Utilities" },
       { id: "snake",      title: "Snake",     subtitle: "Arrow keys to play",       group: "Utilities" },
     ];
 

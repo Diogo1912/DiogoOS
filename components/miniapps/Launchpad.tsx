@@ -33,7 +33,7 @@ export function Launchpad() {
     { label: "iChat", route: "/contact", bg: "linear-gradient(145deg,#f8f8f8,#c0c0c0)", glyph: <ContactDockIcon className="w-full h-full" /> },
     { label: "Calculator", mini: "calculator", bg: "linear-gradient(145deg,#5a5a5a,#1a1a1a)", glyph: <BigGlyph>≡</BigGlyph> },
     { label: "Terminal", mini: "terminal", bg: "linear-gradient(145deg,#2a2a2a,#000000)", glyph: <BigGlyph mono>{">"}_</BigGlyph> },
-    { label: "iCal", mini: "ical", bg: "linear-gradient(145deg,#c81818,#5a0e0e)", glyph: <ICalGlyph /> },
+    { label: "Book a meeting", mini: "ical", bg: "linear-gradient(145deg,#c81818,#5a0e0e)", glyph: <ICalGlyph /> },
     { label: "Snake", mini: "snake", bg: "linear-gradient(145deg,#5fe07a,#0a1f0a)", glyph: <BigGlyph mono>S</BigGlyph> },
   ];
 

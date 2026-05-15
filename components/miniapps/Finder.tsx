@@ -47,7 +47,7 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
   applications: [
     { name: "Calculator.app", kind: "app", launch: "calculator", size: "2.4 MB", modified: "—" },
     { name: "Terminal.app", kind: "app", launch: "terminal", size: "3.7 MB", modified: "—" },
-    { name: "iCal.app", kind: "app", launch: "ical", size: "5.2 MB", modified: "—" },
+    { name: "Book a meeting.app", kind: "app", launch: "ical", size: "5.2 MB", modified: "—" },
     { name: "Snake.app", kind: "app", launch: "snake", size: "0.9 MB", modified: "—" },
     { name: "App Store.app", kind: "app", launch: "appstore", size: "8.4 MB", modified: "—" },
   ],

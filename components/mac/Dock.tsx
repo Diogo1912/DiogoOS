@@ -29,7 +29,7 @@ const APPS: DockApp[] = [
   { id: "ichat", label: "iChat", Icon: ContactDockIcon },
   { id: "calculator", label: "Calculator", Icon: CalculatorDockIcon },
   { id: "terminal", label: "Terminal", Icon: TerminalDockIcon },
-  { id: "ical", label: "iCal", Icon: ICalDockIcon },
+  { id: "ical", label: "Book a meeting", Icon: ICalDockIcon },
   { id: "snake", label: "Snake", Icon: SnakeDockIcon },
 ];
 
