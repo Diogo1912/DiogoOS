@@ -15,7 +15,6 @@ import { Stickies } from "@/components/os/Stickies";
 import { ResumeFile } from "@/components/os/ResumeFile";
 import { BootScreen } from "@/components/os/BootScreen";
 import { MiniAppHost } from "@/components/os/MiniAppHost";
-import { WelcomeNote } from "@/components/os/WelcomeNote";
 import { FlatModeShell } from "@/components/os/FlatModeShell";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -59,7 +58,6 @@ export default function RootLayout({
                 <MiniAppHost />
 
                 {/* Welcome sticky note on first load */}
-                <WelcomeNote />
 
                 {/* Window area — pages render here as <Window> overlays */}
                 <WindowManagerProvider>

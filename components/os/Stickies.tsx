@@ -97,11 +97,22 @@ export function Stickies() {
           color: "#3a2f0a",
         }}
       >
-        <p className="font-semibold mb-1">hey, you found this</p>
+        <p className="font-semibold mb-1 text-[14px]">Hi — welcome to DiogoOS!</p>
         <p className="text-[12px]">
-          welcome to DiogoOS. try{" "}
-          <kbd className="bg-yellow-200/70 px-1 rounded text-[10px]">⌘ Space</kbd>
-          {" "}for spotlight, right-click the desktop, or click the smiley.
+          This is my personal website pretending to be a tiny operating system.
+        </p>
+        <p className="text-[12px] mt-2 font-semibold">Things to try:</p>
+        <ul className="text-[12px] list-disc list-inside leading-snug">
+          <li>Click the dock icons</li>
+          <li>Open <b>Finder</b> to browse everything</li>
+          <li>
+            Hit <kbd className="bg-yellow-200/70 px-1 rounded text-[10px]">⌘ Space</kbd> for Spotlight
+          </li>
+          <li>Right-click the wallpaper</li>
+        </ul>
+        <p className="text-[11px] mt-2 text-[#5a4a00]">
+          Prefer something plainer? Click <b>&ldquo;Convert to a normal website&rdquo;</b>{" "}
+          (bottom-right) for a flat scrolling version.
         </p>
         <p className="text-[10px] mt-2 text-[#7a6018] italic">
           — drag me anywhere
