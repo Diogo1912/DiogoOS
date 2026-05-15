@@ -44,10 +44,36 @@ export function Terminal() {
   const [history, setHistory] = useState<string[]>([]);
   const [histIdx, setHistIdx] = useState<number>(-1);
   const endRef = useRef<HTMLDivElement>(null);
+  // contentEditable span — used instead of <input> so Safari / iCloud
+  // Keychain doesn't mistake the shell prompt for a username field.
+  const promptRef = useRef<HTMLSpanElement>(null);
+
+  // Write a string into the prompt span and place the caret at the end.
+  // Used by history navigation. Free-form contentEditable doesn't take
+  // a controlled `value` prop, so we sync imperatively.
+  const setPrompt = (v: string) => {
+    setInput(v);
+    const el = promptRef.current;
+    if (!el) return;
+    if (el.textContent !== v) el.textContent = v;
+    // Move caret to end.
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  };
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
+
+  // Focus the contentEditable prompt once on mount so the user can start
+  // typing immediately. (`autoFocus` is not supported on contentEditable.)
+  useEffect(() => {
+    promptRef.current?.focus();
+  }, []);
 
   const run = (raw: string) => {
     const cmd = raw.trim();
@@ -129,27 +155,28 @@ export function Terminal() {
     return `open: unknown app '${target}'`;
   };
 
-  const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKey = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      run(input);
-      setInput("");
+      const current = promptRef.current?.textContent ?? "";
+      run(current);
+      setPrompt("");
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (history.length === 0) return;
       const ni = histIdx === -1 ? history.length - 1 : Math.max(0, histIdx - 1);
       setHistIdx(ni);
-      setInput(history[ni] ?? "");
+      setPrompt(history[ni] ?? "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (histIdx === -1) return;
       const ni = histIdx + 1;
       if (ni >= history.length) {
         setHistIdx(-1);
-        setInput("");
+        setPrompt("");
       } else {
         setHistIdx(ni);
-        setInput(history[ni] ?? "");
+        setPrompt(history[ni] ?? "");
       }
     }
   };
@@ -164,9 +191,7 @@ export function Terminal() {
           height: 340,
           lineHeight: 1.45,
         }}
-        onClick={() =>
-          (document.getElementById("term-input") as HTMLInputElement)?.focus()
-        }
+        onClick={() => promptRef.current?.focus()}
       >
         {lines.map((l, i) => (
           <pre
@@ -181,27 +206,23 @@ export function Terminal() {
         ))}
         <div className="flex items-center mt-0.5">
           <span className="text-[#9dffb3]">{USER}@{HOST}:~$&nbsp;</span>
-          <input
-            id="term-input"
-            type="text"
-            name="diogoos-terminal"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+          {/* contentEditable span instead of <input> — Safari / iCloud
+              Keychain only attaches its autofill chip to <input> elements,
+              so a span is invisible to it. We sync state imperatively via
+              promptRef + setPrompt(). */}
+          <span
+            ref={promptRef}
+            role="textbox"
+            aria-label="Terminal input"
+            contentEditable
+            suppressContentEditableWarning
+            onInput={(e) => setInput((e.target as HTMLSpanElement).textContent ?? "")}
             onKeyDown={onKey}
-            className="flex-1 bg-transparent outline-none text-[#e8e8e8] caret-[#9dffb3]"
-            autoFocus
             spellCheck={false}
-            autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
-            inputMode="text"
-            // Hints to the various password managers (1Password, LastPass,
-            // Safari Keychain) to leave this field alone — it's a fake
-            // shell prompt, not a credentials box.
-            data-1p-ignore="true"
-            data-lpignore="true"
-            data-bwignore="true"
-            data-form-type="other"
+            className="flex-1 bg-transparent outline-none text-[#e8e8e8] caret-[#9dffb3] whitespace-pre"
+            style={{ minWidth: 4 }}
           />
         </div>
         <div ref={endRef} />
