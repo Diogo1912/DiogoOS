@@ -1,21 +1,23 @@
-import { Window } from "@/components/os/Window";
-import { BrowserChrome } from "@/components/os/BrowserChrome";
-import { HomeProfile } from "@/components/pages/HomeProfile";
+"use client";
 
-export default function HomePage() {
-  return (
-    <Window
-      id="/"
-      title="Browser"
-      bodyClassName="linkedin2007-window-body"
-      toolbar={
-        <BrowserChrome
-          url="https://diogonet.com/in/diogobaptista"
-          tabTitle="Diogo Baptista | diogonet"
-        />
-      }
-    >
-      <HomeProfile />
-    </Window>
-  );
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useOS } from "@/components/os/OSProvider";
+
+/**
+ * `/` now just deep-links to "open the Browser mini-app". The actual UI
+ * lives in components/miniapps/Browser.tsx and is mounted by MiniAppHost
+ * so it can coexist with other open apps. We redirect to `/desktop` so
+ * the URL stays clean (the dock + open windows do the rest).
+ */
+export default function HomeEntry() {
+  const router = useRouter();
+  const { launchMiniApp } = useOS();
+
+  useEffect(() => {
+    launchMiniApp("browser");
+    router.replace("/desktop");
+  }, [launchMiniApp, router]);
+
+  return null;
 }

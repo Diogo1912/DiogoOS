@@ -39,10 +39,10 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
   diogo: [
     { name: "About Me", kind: "folder", launch: "terminal", size: "—", modified: "Today" },
     { name: "Resume.pdf", kind: "doc", external: "/resume.pdf", size: "184 KB", modified: "Yesterday" },
-    { name: "Projects", kind: "folder", href: "/apps", size: "—", modified: "May 10" },
-    { name: "Blog Posts", kind: "folder", href: "/blog", size: "—", modified: "May 11" },
-    { name: "Contact Card", kind: "doc", href: "/contact", size: "1 KB", modified: "May 9" },
-    { name: "diogonet.webloc", kind: "link", href: "/", size: "1 KB", modified: "May 14" },
+    { name: "Projects", kind: "folder", launch: "appstore", size: "—", modified: "May 10" },
+    { name: "Blog Posts", kind: "folder", launch: "blogapp", size: "—", modified: "May 11" },
+    { name: "Contact Card", kind: "doc", launch: "ichat", size: "1 KB", modified: "May 9" },
+    { name: "diogonet.webloc", kind: "link", launch: "browser", size: "1 KB", modified: "May 14" },
   ],
   applications: [
     { name: "Calculator.app", kind: "app", launch: "calculator", size: "2.4 MB", modified: "—" },
@@ -50,7 +50,7 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
     { name: "iCal.app", kind: "app", launch: "ical", size: "5.2 MB", modified: "—" },
     { name: "iTunes.app", kind: "app", launch: "itunes", size: "42 MB", modified: "—" },
     { name: "Snake.app", kind: "app", launch: "snake", size: "0.9 MB", modified: "—" },
-    { name: "App Store.app", kind: "app", href: "/apps", size: "8.4 MB", modified: "—" },
+    { name: "App Store.app", kind: "app", launch: "appstore", size: "8.4 MB", modified: "—" },
   ],
   documents: [
     { name: "Resume.pdf", kind: "doc", external: "/resume.pdf", size: "184 KB", modified: "Yesterday" },
@@ -65,9 +65,9 @@ const ITEMS: Record<LocationId, FinderItem[]> = {
     { name: "On the Train", kind: "folder", size: "—", modified: "—" },
   ],
   network: [
-    { name: "diogonet.com", kind: "link", href: "/", size: "—", modified: "—" },
-    { name: "diogo.blog", kind: "link", href: "/blog", size: "—", modified: "—" },
-    { name: "iChat — Diogo", kind: "link", href: "/contact", size: "—", modified: "—" },
+    { name: "diogonet.com", kind: "link", launch: "browser", size: "—", modified: "—" },
+    { name: "diogo.blog", kind: "link", launch: "blogapp", size: "—", modified: "—" },
+    { name: "iChat — Diogo", kind: "link", launch: "ichat", size: "—", modified: "—" },
   ],
 };
 

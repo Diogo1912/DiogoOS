@@ -38,48 +38,22 @@ export function Spotlight() {
   const results = useMemo<Result[]>(() => {
     const q = query.trim().toLowerCase();
 
-    const miniAppItems: { id: MiniAppId; title: string; subtitle: string }[] = [
-      { id: "finder", title: "Finder", subtitle: "Browse the file system (well, sort of)" },
-      { id: "calculator", title: "Calculator", subtitle: "Math, but pretty" },
-      { id: "terminal", title: "Terminal", subtitle: "bash · try 'help' or 'cat about.txt'" },
-      { id: "ical", title: "iCal", subtitle: "Calendar with events" },
-      { id: "snake", title: "Snake", subtitle: "Classic snake — arrow keys to play" },
+    const appItems: { id: MiniAppId; title: string; subtitle: string; group: string }[] = [
+      { id: "browser",    title: "Browser",   subtitle: "Visit diogonet.com",        group: "Applications" },
+      { id: "appstore",   title: "App Store", subtitle: "Apps, games, and tools",   group: "Applications" },
+      { id: "blogapp",    title: "Blog",      subtitle: "diogo's blog ★",            group: "Applications" },
+      { id: "ichat",      title: "iChat",     subtitle: "Send Diogo a message",      group: "Applications" },
+      { id: "finder",     title: "Finder",    subtitle: "Browse the file system",   group: "Utilities" },
+      { id: "calculator", title: "Calculator", subtitle: "Math, but pretty",        group: "Utilities" },
+      { id: "terminal",   title: "Terminal",  subtitle: "bash · try 'help'",        group: "Utilities" },
+      { id: "ical",       title: "iCal",      subtitle: "Calendar with events",     group: "Utilities" },
+      { id: "snake",      title: "Snake",     subtitle: "Arrow keys to play",       group: "Utilities" },
     ];
 
     const all: Result[] = [
-      // Pages
-      {
-        id: "page-home",
-        group: "Applications",
-        title: "Browser",
-        subtitle: "Visit diogonet.com",
-        action: () => router.push("/"),
-      },
-      {
-        id: "page-apps",
-        group: "Applications",
-        title: "App Store",
-        subtitle: "Apps, games, and tools",
-        action: () => router.push("/apps"),
-      },
-      {
-        id: "page-blog",
-        group: "Applications",
-        title: "Blog",
-        subtitle: "diogo's blog ★ (2005 throwback)",
-        action: () => router.push("/blog"),
-      },
-      {
-        id: "page-contact",
-        group: "Applications",
-        title: "iChat — Contact",
-        subtitle: "Send a message",
-        action: () => router.push("/contact"),
-      },
-      // Mini-apps
-      ...miniAppItems.map((m) => ({
-        id: `mini-${m.id}`,
-        group: "Utilities",
+      ...appItems.map((m) => ({
+        id: `app-${m.id}`,
+        group: m.group,
         title: m.title,
         subtitle: m.subtitle,
         action: () => launchMiniApp(m.id),

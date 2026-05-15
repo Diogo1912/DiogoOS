@@ -11,6 +11,9 @@ interface Props {
   children: React.ReactNode;
   /** Optional inline style for the body */
   bodyClassName?: string;
+  /** Optional secondary toolbar rendered between title bar and content
+   *  (e.g. the BrowserChrome URL pill on the Browser mini-app). */
+  toolbar?: React.ReactNode;
 }
 
 /**
@@ -24,6 +27,7 @@ export function MiniAppFrame({
   height = "auto",
   children,
   bodyClassName,
+  toolbar,
 }: Props) {
   const { miniApps, focusMiniApp, closeMiniApp, moveMiniApp, focusedMiniApp } =
     useOS();
@@ -140,6 +144,9 @@ export function MiniAppFrame({
           </span>
         </div>
       </div>
+
+      {/* Optional toolbar (browser chrome, etc.) */}
+      {toolbar}
 
       {/* Body */}
       <div className={`flex-1 min-h-0 overflow-auto ${bodyClassName ?? "window-body"}`}>

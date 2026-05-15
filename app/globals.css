@@ -1186,45 +1186,111 @@
     font-weight: 700 !important;
   }
 
-  /* App Store cards → uniform list rows */
-  html[data-flat="1"] .store-card {
-    background: white !important;
-    border: 1px solid var(--flat-rule) !important;
-    border-radius: 10px !important;
-    box-shadow: none !important;
+  /* ── App Store inside flat mode: Aqua-fied dark theme dropped for a
+   *    bright glass card library that matches the rest of flat mode. */
+  html[data-flat="1"] .store-bg {
+    background: transparent !important;
     color: var(--flat-text) !important;
   }
-  html[data-flat="1"] .store-card .text-white { color: var(--flat-text) !important; }
+  /* The dark App Store header section uses text-white on its h2.
+   * Flatten everything to dark text on light cards. */
+  html[data-flat="1"] .store-bg .text-white,
+  html[data-flat="1"] .store-bg .text-white\/80,
+  html[data-flat="1"] .store-bg .text-white\/70,
+  html[data-flat="1"] .store-bg .text-white\/60,
+  html[data-flat="1"] .store-bg .text-gray-500,
+  html[data-flat="1"] .store-bg .text-gray-400,
+  html[data-flat="1"] .store-bg .text-gray-300 {
+    color: var(--flat-text) !important;
+  }
+  html[data-flat="1"] .store-bg .text-gray-500,
+  html[data-flat="1"] .store-bg .text-gray-400 {
+    color: var(--flat-muted) !important;
+  }
+  html[data-flat="1"] .store-card {
+    background: #fdfdfd !important;
+    border: 1px solid #8a8a8a !important;
+    border-radius: 9px !important;
+    color: var(--flat-text) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 2px rgba(0, 0, 0, 0.08) !important;
+  }
   html[data-flat="1"] .store-card .text-gray-400,
   html[data-flat="1"] .store-card .text-gray-300 {
     color: var(--flat-muted) !important;
   }
+  /* App icon tiles keep their colourful gradient — they already match Aqua */
   html[data-flat="1"] .store-button {
-    background: var(--flat-accent) !important;
+    background: linear-gradient(to bottom, #68c8f8 0%, #3eb2f0 44%, #1882cc 50%, #229ad6 100%) !important;
     color: white !important;
-    border: none !important;
-    text-shadow: none !important;
+    border: 1px solid #1168aa !important;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 1px rgba(0, 0, 0, 0.18) !important;
   }
   html[data-flat="1"] .store-ribbon {
-    background: #f4f4f6 !important;
-    color: var(--flat-muted) !important;
-    border: 1px solid var(--flat-rule) !important;
-    text-shadow: none !important;
+    background: linear-gradient(to bottom, #fff3a0 0%, #f7d958 60%, #dba922 100%) !important;
+    color: #5a4810 !important;
+    border: 1px solid #b8a020 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
   }
 
-  /* iChat contact page — collapse the two-pane chat into a single column */
-  html[data-flat="1"] .ichat-bubble-them,
-  html[data-flat="1"] .ichat-bubble-me {
-    background: #f4f4f6 !important;
+  /* ── iChat inside flat mode: convert the macOS-Messages skin into the
+   *    same gel-pill / Aqua-card system as the rest of the site. */
+  html[data-flat="1"] .ichat-bg {
+    background: transparent !important;
     color: var(--flat-text) !important;
-    border: 1px solid var(--flat-rule) !important;
-    box-shadow: none !important;
-    border-radius: 12px !important;
+  }
+  html[data-flat="1"] .ichat-sidebar {
+    background:
+      linear-gradient(to bottom, #f8f8f8 0%, #e4e4e4 100%) !important;
+    border-right: 1px solid #a8a8a8 !important;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.6) !important;
+  }
+  html[data-flat="1"] .ichat-bubble-them {
+    background: linear-gradient(to bottom, #ffffff 0%, #ececec 100%) !important;
+    color: var(--flat-text) !important;
+    border: 1px solid #b8b8b8 !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 14px !important;
   }
   html[data-flat="1"] .ichat-bubble-me {
-    background: var(--flat-accent) !important;
+    background: linear-gradient(to bottom, #79c8ff 0%, #2a8be0 50%, #1168aa 100%) !important;
     color: white !important;
-    border-color: var(--flat-accent) !important;
+    border: 1px solid #0e4d99 !important;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-radius: 14px !important;
+  }
+  /* iChat form inputs (name / email / message) styled as Aqua input wells */
+  html[data-flat="1"] .ichat-bg input,
+  html[data-flat="1"] .ichat-bg textarea {
+    background: #ffffff !important;
+    border: 1px solid #8a8a8a !important;
+    border-radius: 999px !important;
+    padding: 5px 12px !important;
+    color: var(--flat-text) !important;
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.12) !important;
+  }
+  /* iChat send button gel-ified */
+  html[data-flat="1"] .ichat-bg button[type="submit"],
+  html[data-flat="1"] .ichat-bg .ichat-send {
+    background: linear-gradient(to bottom, #68c8f8 0%, #3eb2f0 44%, #1882cc 50%, #229ad6 100%) !important;
+    color: white !important;
+    border: 1px solid #1168aa !important;
+    border-radius: 999px !important;
+    padding: 4px 14px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 1px rgba(0, 0, 0, 0.18) !important;
   }
 
   .flat-site {

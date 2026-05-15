@@ -1,16 +1,15 @@
-import { Window } from "@/components/os/Window";
-import { BlogTumblr } from "@/components/pages/BlogTumblr";
-import { fetchPosts } from "@/lib/rss";
+"use client";
 
-export const metadata = {
-  title: "Blog — Diogo Baptista",
-};
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useOS } from "@/components/os/OSProvider";
 
-export default async function BlogPage() {
-  const posts = await fetchPosts();
-  return (
-    <Window id="/blog" title="diogo's blog ★" bodyClassName="blog2000-window-body">
-      <BlogTumblr posts={posts} />
-    </Window>
-  );
+export default function BlogEntry() {
+  const router = useRouter();
+  const { launchMiniApp } = useOS();
+  useEffect(() => {
+    launchMiniApp("blogapp");
+    router.replace("/desktop");
+  }, [launchMiniApp, router]);
+  return null;
 }

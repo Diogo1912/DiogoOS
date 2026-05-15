@@ -21,7 +21,12 @@ export type MiniAppId =
   | "snake"
   | "launchpad"
   | "textedit"
-  | "welcome";
+  | "welcome"
+  // Former route apps — now mini-apps so multiple can coexist
+  | "browser"
+  | "appstore"
+  | "blogapp"
+  | "ichat";
 
 export interface MiniAppState {
   id: MiniAppId;
