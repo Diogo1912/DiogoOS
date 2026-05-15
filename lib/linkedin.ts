@@ -15,7 +15,13 @@ export interface Experience {
   location: string | null;
   startDate: string;          // "Jan 2022"
   endDate: string | null;     // null = "Present"
-  description: string | null; // free-form summary; can contain newlines
+  /** Bulleted description — each item is rendered as a list bullet.
+   *  Empty array (or null) hides the description block entirely. */
+  description: string[] | null;
+  /** Optional, e.g. "Full-time" / "Internship" / "Freelance". */
+  employment?: string;
+  /** Optional, e.g. "Remote" / "Hybrid" / "On-site". */
+  locationType?: string;
 }
 
 export interface Education {
@@ -55,17 +61,27 @@ export interface Volunteer {
   organization: string;
   startDate: string | null;
   endDate: string | null;
-  description: string | null;
+  description: string[] | null;
+}
+
+export interface Featured {
+  bannerText: string;
+  bannerBrand: string;
+  bannerCta: string;
 }
 
 export interface LinkedInProfile {
   fullName: string;
+  /** Optional pronouns, e.g. "He/Him" — shown next to the name. */
+  pronouns?: string;
   headline: string;
   location: string;
   about: string | null;
   photoUrl: string | null;
   publicProfileUrl: string;
   connections: number | null;
+  /** Optional Featured banner (from LinkedIn's "Featured" section). */
+  featured?: Featured;
   experience: Experience[];
   education: Education[];
   skills: Skill[];

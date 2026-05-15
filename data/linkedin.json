@@ -1,78 +1,189 @@
 {
-  "fullName": "Diogo Baptista",
-  "headline": "Product & Engineering",
-  "location": "Lisbon, Portugal",
-  "about": "I build products people love. Passionate about the intersection of technology and human experience — from crafting intuitive apps to writing about ideas that matter.\n\nThis page is auto-synced from my LinkedIn each week. The contents are exactly what's on LinkedIn — no more, no less.",
+  "fullName": "Diogo (Da Piedade) Baptista",
+  "pronouns": "He/Him",
+  "headline": "Founder of Storay | AI Engineer | Student in Cssci @ UvA",
+  "location": "Amsterdam, North Holland, Netherlands",
+  "about": "Consumer product builder currently working on Storay: a personal inventory app with the long-term ambition of becoming the underlying asset graph for how people catalogue and exchange their belongings. Studying Computational Social Science @ UvA. AI/ML engineer by trade, but what I care about is using technical tools to answer social questions and build products with real-world impact — tech that meets people where they already are, not the other way around.",
   "photoUrl": null,
-  "publicProfileUrl": "https://www.linkedin.com/in/diogobaptista",
+  "publicProfileUrl": "https://www.linkedin.com/in/diogodbaptista/",
   "connections": 500,
+  "featured": {
+    "bannerText": "Declutter your life, beautifully.",
+    "bannerBrand": "storay.",
+    "bannerCta": "Try now"
+  },
   "experience": [
     {
-      "title": "Your Current Role",
-      "company": "Current Company",
-      "location": "Lisbon, Portugal",
-      "startDate": "Jan 2022",
+      "title": "Owner",
+      "company": "DiogoBap Studio",
+      "employment": "Part-time",
+      "location": null,
+      "startDate": "May 2026",
       "endDate": null,
-      "description": "Describe your most impactful responsibility or achievement here.\nAnother bullet — include metrics where possible (e.g. grew X by Y%).\nA third achievement or project you led."
+      "description": null
     },
     {
-      "title": "Previous Role",
-      "company": "Previous Company",
-      "location": "Lisbon, Portugal",
-      "startDate": "Jun 2019",
-      "endDate": "Dec 2021",
-      "description": "Key project or initiative you owned in this role.\nImpact you had on the team, product, or business."
+      "title": "Founder",
+      "company": "Storay",
+      "employment": "Full-time",
+      "location": "Amsterdam, North Holland, Netherlands",
+      "startDate": "Apr 2026",
+      "endDate": null,
+      "description": null
     },
     {
-      "title": "Early Career Role",
-      "company": "First Company",
-      "location": "Lisbon, Portugal",
-      "startDate": "Sep 2017",
-      "endDate": "May 2019",
-      "description": "How you started your career and the foundation you built.\nKey skills or technologies you worked with."
+      "title": "AI Engineer",
+      "company": "Tired of Cancer",
+      "employment": "Freelance",
+      "location": "Remote",
+      "locationType": "Remote",
+      "startDate": "Mar 2026",
+      "endDate": null,
+      "description": [
+        "Designed and implemented a 4-step conversational coaching flow using the OpenRouter API (Claude Sonnet), with structured prompts for empathetic, autonomy-supportive responses",
+        "Built full-stack with Next.js 15 App Router, SQLite, and bcrypt session auth",
+        "Set up a RAG pipeline with cosine similarity retrieval, ingesting Untire Now's clinical content library to ground AI responses in evidence-based material",
+        "Implemented LLM-as-judge evaluation (async quality scoring on tone, flow compliance, and safety) and per-request observability (latency, tokens, cost) for research and iteration",
+        "Integrated a risk detection protocol that overrides the coaching flow on distress signals and surfaces crisis resources"
+      ]
+    },
+    {
+      "title": "Chair of the Praesidium",
+      "company": "Study Association Bloom",
+      "employment": "Part-time",
+      "location": "Amsterdam, North Holland, Netherlands",
+      "locationType": "Hybrid",
+      "startDate": "Feb 2025",
+      "endDate": "Mar 2026",
+      "description": [
+        "Preparing the General Assembly meetings for the Bloom study association",
+        "Chairing the Assemblies and ensuring a smooth discussion",
+        "Upholding the Bylaws and Statutes of the association",
+        "Monitoring the Board to ensure they follow said bylaws"
+      ]
+    },
+    {
+      "title": "AI Engineer",
+      "company": "Whoppah",
+      "employment": "Full-time",
+      "location": "Amsterdam, North Holland, Netherlands",
+      "locationType": "Hybrid",
+      "startDate": "Aug 2025",
+      "endDate": "Feb 2026",
+      "description": [
+        "Developing AI Agents using frameworks such as Langchain and crewai using the OpenAI, Anthropic and Gemini API",
+        "Building automations using Python and n8n",
+        "Building internal tools using frameworks/libraries such as React, Vite, FastAPI, Django and Tailwind",
+        "Assisting the team with integrating AI and automation into their workflow",
+        "Refining prompts and doing research for AI incorporation into Product",
+        "Helping testing out new features and reporting feedback to developers"
+      ]
+    },
+    {
+      "title": "QA Engineer and User Research Intern",
+      "company": "Whoppah",
+      "employment": "Internship",
+      "location": "Amsterdam, North Holland, Netherlands",
+      "locationType": "Hybrid",
+      "startDate": "Mar 2025",
+      "endDate": "Jul 2025",
+      "description": [
+        "Conducting manual testing on new features and reported bugs",
+        "Performing weekly periodic testing across our different platforms",
+        "Maintaining and updating our QA documentation",
+        "Conducting market research, competitive benchmarking and user experience research",
+        "Developing tools to help automate the QA process"
+      ]
+    },
+    {
+      "title": "AI Engineer",
+      "company": "GOLEXAI",
+      "employment": "Freelance",
+      "location": null,
+      "startDate": "Sep 2025",
+      "endDate": "Jan 2026",
+      "description": null
+    },
+    {
+      "title": "Kitchen Staff",
+      "company": "PANCAKES Amsterdam",
+      "employment": "Part-time",
+      "location": "Amsterdam, North Holland, Netherlands",
+      "locationType": "On-site",
+      "startDate": "Nov 2024",
+      "endDate": "Mar 2025",
+      "description": [
+        "Preparation of toppings and ingredients",
+        "Preparation of the homemade batter",
+        "Baking and assembling the pancakes",
+        "Performing the opening and closing procedures"
+      ]
+    },
+    {
+      "title": "Project Management Intern",
+      "company": "Xantor Group",
+      "employment": "Part-time",
+      "location": "Luxembourg",
+      "locationType": "Remote",
+      "startDate": "Apr 2024",
+      "endDate": "Sep 2024",
+      "description": [
+        "Assisted management with running side projects so they could focus on the core business",
+        "Ensured collaboration between developers and designers",
+        "Provided human written translations for the websites",
+        "Other miscellaneous tasks"
+      ]
+    },
+    {
+      "title": "President of the Student Council",
+      "company": "Ecole Internationale de Differdange",
+      "employment": "Full-time",
+      "location": "Differdange, Luxembourg",
+      "locationType": "On-site",
+      "startDate": "Sep 2021",
+      "endDate": "Jul 2023",
+      "description": [
+        "Chaired and moderated the council meetings",
+        "Responsible for creating and upholding the Agenda",
+        "Launched new projects and events that have since become school tradition (such as no backpack day)",
+        "Led the 'Student guide' project which allowed students to have quick access to their rights and duties",
+        "Worked with multiple stakeholders to guarantee collaboration with Student representatives, the administration and student clubs"
+      ]
     }
   ],
   "education": [
     {
-      "institution": "University Name",
-      "degree": "Bachelor's / Master's",
-      "field": "Your Field of Study",
-      "startYear": 2013,
-      "endYear": 2017
+      "institution": "University of Amsterdam",
+      "degree": "Bachelor's degree",
+      "field": "Computational Social Science",
+      "startYear": 2023,
+      "endYear": 2027
     },
     {
-      "institution": "Other Institution",
-      "degree": "Certification",
-      "field": "Field or Programme",
-      "startYear": 2017,
-      "endYear": 2018
+      "institution": "Ecole Internationale Differdange",
+      "degree": null,
+      "field": null,
+      "startYear": 2016,
+      "endYear": 2023
     }
   ],
   "skills": [
-    { "name": "Product Management" },
-    { "name": "TypeScript" },
-    { "name": "Python" },
-    { "name": "Swift" },
-    { "name": "SQL" },
-    { "name": "React" },
-    { "name": "Next.js" },
-    { "name": "Node.js" },
-    { "name": "Tailwind CSS" },
-    { "name": "Figma" },
-    { "name": "Git" },
-    { "name": "Docker" },
-    { "name": "Vercel" },
-    { "name": "AWS" },
-    { "name": "Agile" },
-    { "name": "User Research" },
-    { "name": "A/B Testing" }
+    { "name": "Artificial Intelligence (AI)" },
+    { "name": "Python (Programming Language)" },
+    { "name": "JavaScript" },
+    { "name": "Machine Learning" },
+    { "name": "React.js" }
   ],
   "certifications": [],
   "languages": [
-    { "name": "Portuguese", "proficiency": "Native or bilingual proficiency" },
-    { "name": "English", "proficiency": "Full professional proficiency" }
+    { "name": "Dutch", "proficiency": "Limited working proficiency" },
+    { "name": "English", "proficiency": "Native or bilingual proficiency" },
+    { "name": "French", "proficiency": "Native or bilingual proficiency" },
+    { "name": "German", "proficiency": "Professional working proficiency" },
+    { "name": "Luxembourgish", "proficiency": "Full professional proficiency" },
+    { "name": "Portuguese", "proficiency": "Native or bilingual proficiency" }
   ],
   "honors": [],
   "volunteer": [],
-  "syncedAt": "2026-05-15T00:00:00.000Z"
+  "syncedAt": "2026-05-15T19:45:00.000Z"
 }

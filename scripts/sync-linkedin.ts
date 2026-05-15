@@ -121,6 +121,18 @@ function buildLocation(p: ProxycurlResponse): string {
   return [p.city, p.state, p.country_full_name].filter(Boolean).join(", ");
 }
 
+/** Proxycurl returns descriptions as free-form strings with embedded
+ *  newlines / bullet chars. We want them as a clean string[] for the
+ *  renderer to display as <li> items. */
+function bullets(s: string | null | undefined): string[] | null {
+  if (!s) return null;
+  const items = s
+    .split(/\r?\n+/)
+    .map((line) => line.replace(/^\s*[•·\-\*]\s*/, "").trim())
+    .filter(Boolean);
+  return items.length > 0 ? items : null;
+}
+
 // ─── Normalisation ───────────────────────────────────────────────────────
 
 function normalise(p: ProxycurlResponse, sourceUrl: string): LinkedInProfile {
@@ -130,7 +142,7 @@ function normalise(p: ProxycurlResponse, sourceUrl: string): LinkedInProfile {
     location: e.location ?? null,
     startDate: fmtDate(e.starts_at) ?? "",
     endDate: fmtDate(e.ends_at),
-    description: e.description ?? null,
+    description: bullets(e.description),
   }));
 
   const education: Education[] = (p.education ?? []).map((e) => ({
@@ -167,7 +179,7 @@ function normalise(p: ProxycurlResponse, sourceUrl: string): LinkedInProfile {
     organization: v.company ?? "",
     startDate: fmtDate(v.starts_at),
     endDate: fmtDate(v.ends_at),
-    description: v.description ?? null,
+    description: bullets(v.description),
   }));
 
   const fullName = p.full_name ?? [p.first_name, p.last_name].filter(Boolean).join(" ");

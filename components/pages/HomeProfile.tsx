@@ -13,13 +13,15 @@ import { getLinkedInProfile } from "@/lib/linkedin";
  */
 export function HomeProfile() {
   const p = getLinkedInProfile();
-  const initials = p.fullName
+  // Initials: first letter of the first word + first letter of the last word.
+  // Ignores parenthesised middle bits like "Diogo (Da Piedade) Baptista" so
+  // we get "DB" rather than "D(" from naive char-grabbing.
+  const words = p.fullName
     .split(/\s+/)
-    .map((s) => s[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+    .filter((w) => /^[A-Za-z]/.test(w));
+  const initials = words.length === 0
+    ? "?"
+    : (words[0][0] + (words[words.length - 1][0] ?? "")).toUpperCase();
 
   const handle = p.publicProfileUrl.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, "").replace(/\/$/, "");
 
@@ -79,7 +81,12 @@ export function HomeProfile() {
                 <div className="linkedin2007-photo-fallback">{initials}</div>
               )}
             </div>
-            <h1 className="linkedin2007-name">{p.fullName}</h1>
+            <h1 className="linkedin2007-name">
+              {p.fullName}
+              {p.pronouns && (
+                <span className="linkedin2007-pronouns"> · {p.pronouns}</span>
+              )}
+            </h1>
             <div className="linkedin2007-headline">{p.headline}</div>
             <div className="linkedin2007-location">{p.location}</div>
 
@@ -112,27 +119,63 @@ export function HomeProfile() {
           {/* Main column */}
           <main className="linkedin2007-main">
             {p.about && (
-              <Section title="Summary">
+              <Section title="About">
                 <p className="linkedin2007-paragraph">{p.about}</p>
+              </Section>
+            )}
+
+            {p.featured && (
+              <Section title="Featured">
+                <a
+                  href={p.publicProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="linkedin2007-featured"
+                >
+                  <div className="linkedin2007-featured-text">
+                    {p.featured.bannerText}
+                  </div>
+                  <div className="linkedin2007-featured-brand">
+                    {p.featured.bannerBrand}
+                  </div>
+                  <div className="linkedin2007-featured-cta">
+                    {p.featured.bannerCta} →
+                  </div>
+                </a>
               </Section>
             )}
 
             {p.experience.length > 0 && (
               <Section title="Experience">
                 <div className="linkedin2007-list">
-                  {p.experience.map((e, i) => (
-                    <div key={`${e.company}-${i}`} className="linkedin2007-entry">
-                      <div className="linkedin2007-entry-title">{e.title}</div>
-                      <div className="linkedin2007-entry-sub">{e.company}</div>
-                      <div className="linkedin2007-entry-meta">
-                        {e.startDate} – {e.endDate ?? "Present"}
-                        {e.location ? <> · {e.location}</> : null}
+                  {p.experience.map((e, i) => {
+                    const bullets = Array.isArray(e.description)
+                      ? e.description.filter(Boolean)
+                      : [];
+                    return (
+                      <div key={`${e.company}-${i}`} className="linkedin2007-entry">
+                        <div className="linkedin2007-entry-title">
+                          {e.title}
+                          {e.employment && (
+                            <span className="linkedin2007-entry-chip"> · {e.employment}</span>
+                          )}
+                        </div>
+                        <div className="linkedin2007-entry-sub">{e.company}</div>
+                        <div className="linkedin2007-entry-meta">
+                          {e.startDate} – {e.endDate ?? "Present"}
+                          {e.location ? <> · {e.location}</> : null}
+                          {e.locationType ? <> · {e.locationType}</> : null}
+                        </div>
+                        {bullets.length > 0 && (
+                          <ul className="linkedin2007-entry-bullets">
+                            {bullets.map((b, k) => (
+                              <li key={k}>{b}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                      {e.description && (
-                        <p className="linkedin2007-entry-body">{e.description}</p>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </Section>
             )}
@@ -238,7 +281,11 @@ export function HomeProfile() {
                           {v.startDate ?? ""}{v.startDate && v.endDate ? " – " : ""}{v.endDate ?? (v.startDate ? "Present" : "")}
                         </div>
                       )}
-                      {v.description && <p className="linkedin2007-entry-body">{v.description}</p>}
+                      {Array.isArray(v.description) && v.description.length > 0 && (
+                        <ul className="linkedin2007-entry-bullets">
+                          {v.description.map((b, k) => <li key={k}>{b}</li>)}
+                        </ul>
+                      )}
                     </div>
                   ))}
                 </div>

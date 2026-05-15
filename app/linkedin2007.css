@@ -315,6 +315,70 @@
   line-height: 1.55;
   white-space: pre-wrap;
 }
+/* Bulleted entry body (e.g. Experience bullet list) */
+.linkedin2007-entry-bullets {
+  font-size: 12px;
+  color: #1d1d1d;
+  margin: 6px 0 0 0;
+  padding-left: 18px;
+  list-style: disc;
+  line-height: 1.55;
+}
+.linkedin2007-entry-bullets li { margin: 2px 0; }
+/* Employment chip — small "· Full-time" / "· Internship" mark next to the
+ * job title in the Experience list. */
+.linkedin2007-entry-chip {
+  font-weight: 400;
+  color: #666;
+  font-size: 11px;
+  margin-left: 2px;
+}
+/* Pronouns badge next to the user's name. */
+.linkedin2007-pronouns {
+  font-size: 12px;
+  font-weight: 400;
+  color: #555;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+/* Featured banner card (LinkedIn-style "Featured" section) */
+.linkedin2007-featured {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, #e9f1fb 0%, #cfe1f2 100%);
+  padding: 16px 18px 14px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: filter 0.12s ease;
+}
+.linkedin2007-featured:hover { filter: brightness(1.03); }
+.linkedin2007-featured-text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  color: #1b4d8a;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.linkedin2007-featured-brand {
+  font-family: -apple-system, "Lucida Grande", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a2c66;
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+}
+.linkedin2007-featured-cta {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1168aa;
+}
 
 /* Skill chips */
 .linkedin2007-chips {
