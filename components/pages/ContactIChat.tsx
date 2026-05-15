@@ -5,16 +5,20 @@ import { social, profile } from "@/lib/data";
 import {
   LinkedInIcon,
   GitHubIcon,
-  TwitterIcon,
   SubstackIcon,
 } from "@/components/icons";
 
 const BUDDIES = [
   { key: "linkedin" as const, label: "LinkedIn", Icon: LinkedInIcon, color: "#0a66c2", status: "online" as const },
   { key: "github" as const, label: "GitHub", Icon: GitHubIcon, color: "#1d1d1d", status: "online" as const },
-  { key: "twitter" as const, label: "Twitter", Icon: TwitterIcon, color: "#000000", status: "away" as const },
   { key: "substack" as const, label: "Substack", Icon: SubstackIcon, color: "#ff6719", status: "away" as const },
 ];
+
+/** Web3Forms access key — public-safe (intended for client embed). When
+ *  set, the Send button POSTs the form to Web3Forms which forwards to the
+ *  email registered on web3forms.com for this key. Without it, the form
+ *  silently falls back to the mailto: link (so dev still works). */
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 interface Message {
   from: "me" | "them";
@@ -47,7 +51,36 @@ export function ContactIChat() {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
 
-  const handleSend = (e: React.FormEvent) => {
+  const [sendError, setSendError] = useState<string | null>(null);
+
+  const sendToWeb3Forms = async (payload: {
+    name: string;
+    email: string;
+    message: string;
+  }): Promise<boolean> => {
+    if (!WEB3FORMS_KEY) return false;
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `iChat message from ${payload.name}`,
+          from_name: payload.name,
+          email: payload.email,
+          message: payload.message,
+          // Honeypot — keeps spam down
+          botcheck: "",
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      return !!res.ok && (data as { success?: boolean }).success !== false;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
     if (!text) return;
@@ -55,6 +88,18 @@ export function ContactIChat() {
     setMessages((m) => [...m, { from: "me", text }]);
     setInput("");
     setTyping(true);
+    setSendError(null);
+
+    // If the visitor gave us a name + email, try to actually forward the
+    // message to Diogo's inbox via Web3Forms. If they didn't, we still
+    // show the canned reply for the iChat illusion.
+    let delivered = false;
+    if (name && email) {
+      delivered = await sendToWeb3Forms({ name, email, message: text });
+      if (!delivered && WEB3FORMS_KEY) {
+        setSendError("Couldn't send right now — try again or hit the Email link.");
+      }
+    }
 
     // Simulate Diogo "typing" then send a canned reply
     setTimeout(() => {
@@ -63,11 +108,11 @@ export function ContactIChat() {
         ...m,
         {
           from: "them",
-          text:
-            CANNED_REPLIES[Math.floor(Math.random() * CANNED_REPLIES.length)] +
-            (name && email
-              ? ` (I'll reach out to ${email}.)`
-              : " (Add your name + email below so I can actually reply!)"),
+          text: name && email
+            ? (delivered
+                ? `${CANNED_REPLIES[Math.floor(Math.random() * CANNED_REPLIES.length)]} (Got it — I'll reach out to ${email}.)`
+                : `Got your message but my form service might be sleeping. Email me directly at ${profile.email} and I'll reply.`)
+            : "Add your name + email below so I can actually reply!",
         },
       ]);
     }, 1400);

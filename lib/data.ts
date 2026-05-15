@@ -51,10 +51,9 @@ export const profile = {
 };
 
 export const social = {
-  linkedin: "",
-  github: "",
-  twitter: "",
-  substack: "",
+  linkedin: "https://www.linkedin.com/in/diogodbaptista/",
+  github: "https://github.com/Diogo1912",
+  substack: "https://substack.com/@diogobap",
 };
 
 /** @deprecated see `lib/linkedin.ts` */
