@@ -861,15 +861,22 @@
   /* ────────────────────────────────────────────────────────
    * Flat-mode toggle pill (bottom-right floating button)
    * ──────────────────────────────────────────────────────── */
-  .flat-toggle {
+  /* Wrap holds the pill + its dismiss X so they animate / position together */
+  .flat-toggle-wrap {
     position: fixed;
     right: 14px;
     bottom: 16px;
     z-index: 55;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 7px 14px 7px 10px;
+    gap: 6px;
+  }
+  .flat-site .flat-toggle-wrap { bottom: 22px; right: 22px; }
+
+  .flat-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
     border-radius: 999px;
     font-family: -apple-system, "Lucida Grande", "Helvetica Neue", sans-serif;
     font-size: 12px;
@@ -885,20 +892,25 @@
   }
   .flat-toggle:hover { filter: brightness(1.06); transform: translateY(-1px); }
   .flat-toggle:active { transform: translateY(0); filter: brightness(0.95); }
-  .flat-toggle-icon {
+
+  /* Small round dismiss X — matches the pill's gel finish */
+  .flat-toggle-close {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px; height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.22);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-    font-size: 12px;
-    line-height: 1;
+    color: #fff;
+    background: linear-gradient(to bottom, #ff8985 0%, #ee5a55 50%, #c8362f 100%);
+    border: 1px solid #8c1a18;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: filter 0.12s ease, transform 0.12s ease;
   }
-  /* When the toggle lives inside FlatSite, push it up a bit so it clears
-   * the page footer. */
-  .flat-site .flat-toggle { bottom: 22px; right: 22px; }
+  .flat-toggle-close:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .flat-toggle-close:active { transform: translateY(0); filter: brightness(0.92); }
 
   /* ────────────────────────────────────────────────────────
    * Flat scrolling site — "Convert to a normal website"

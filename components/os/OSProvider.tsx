@@ -90,6 +90,11 @@ interface OSContextValue {
   // wait for this so they don't act on stale initial values.
   hydrated: boolean;
 
+  // The "Convert to a normal website" pill in the bottom-right is
+  // dismissible. Once dismissed it stays hidden for the session.
+  togglePillVisible: boolean;
+  dismissTogglePill: () => void;
+
   // Mini-apps
   miniApps: MiniAppState[];
   focusedMiniApp: MiniAppId | null;
@@ -129,6 +134,14 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
   const [flatMode, setFlatModeState] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [togglePillVisible, setTogglePillVisible] = useState(true);
+
+  const dismissTogglePill = useCallback(() => {
+    setTogglePillVisible(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("diogoos:toggle-pill-dismissed", "1");
+    }
+  }, []);
   const [miniApps, setMiniApps] = useState<MiniAppState[]>([]);
   const [focusedMiniApp, setFocusedMiniApp] = useState<MiniAppId | null>(null);
   const miniZ = useRef(40);
@@ -189,6 +202,8 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     if (wc === "1") setWelcomeOpen(false);
     const fm = localStorage.getItem(FLAT_KEY);
     if (fm === "1") setFlatModeState(true);
+    const tp = sessionStorage.getItem("diogoos:toggle-pill-dismissed");
+    if (tp === "1") setTogglePillVisible(false);
     setHydrated(true);
   }, []);
 
@@ -323,6 +338,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
       isMobile, hydrated,
+      togglePillVisible, dismissTogglePill,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     }),
@@ -338,6 +354,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       welcomeOpen, closeWelcome, openWelcome,
       flatMode, setFlatMode, toggleFlatMode,
       isMobile, hydrated,
+      togglePillVisible, dismissTogglePill,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     ]
