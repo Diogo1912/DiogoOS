@@ -63,103 +63,123 @@ export function VolumeIcon(props: IconProps) {
  * Each is a rounded square with detailed artwork and gloss
  * ──────────────────────────────────────────────────────────── */
 
-/** Finder — classic blue-and-white half-mask "happy mac" face. */
+/** Finder — split-face Aqua glyph on a rounded blue tile.
+ *  Original artwork: my own SVG paths and gradient stops, evoking the
+ *  classic two-tone mask without reproducing any specific asset. */
 export function FinderDockIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 64 64" aria-hidden {...props}>
       <defs>
-        <linearGradient id="finder-bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#7fb4ee" />
-          <stop offset="1" stopColor="#1b5fa8" />
+        <linearGradient id="finder-tile" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#a9d6ff" />
+          <stop offset="0.5" stopColor="#3a8bd8" />
+          <stop offset="1" stopColor="#0e3f8a" />
         </linearGradient>
         <linearGradient id="finder-gloss" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="white" stopOpacity="0.55" />
-          <stop offset="0.55" stopColor="white" stopOpacity="0.04" />
+          <stop offset="0" stopColor="white" stopOpacity="0.78" />
+          <stop offset="0.55" stopColor="white" stopOpacity="0.08" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
+        <radialGradient id="finder-lowlight" cx="0.5" cy="1" r="0.7">
+          <stop offset="0" stopColor="white" stopOpacity="0.42" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
+        </radialGradient>
       </defs>
-      <rect width="64" height="64" rx="13" fill="url(#finder-bg)" />
-      <rect x="1" y="1" width="62" height="62" rx="12" fill="none" stroke="rgba(0,0,0,0.25)" strokeWidth="0.7" />
-      {/* Split face — left half blue, right half white */}
-      <path d="M14 22 Q20 8 32 8 L32 56 Q20 56 14 42 Z" fill="#1b5fa8" />
-      <path d="M50 22 Q44 8 32 8 L32 56 Q44 56 50 42 Z" fill="#f5f5f5" />
-      {/* Left eye (on blue side, white pupil) */}
-      <ellipse cx="22" cy="24" rx="2.2" ry="3.4" fill="white" />
-      {/* Right eye (on white side, dark pupil) */}
-      <ellipse cx="42" cy="24" rx="2.2" ry="3.4" fill="#1a1a1a" />
-      {/* Smile — straddles the split */}
-      <path
-        d="M19 38 Q32 50 45 38"
-        fill="none"
-        stroke="#1a1a1a"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-      {/* Outline of the face shape */}
-      <path
-        d="M14 22 Q20 8 32 8 Q44 8 50 22 Q56 32 50 42 Q44 56 32 56 Q20 56 14 42 Q8 32 14 22 Z"
-        fill="none"
-        stroke="rgba(0,0,0,0.55)"
-        strokeWidth="1.1"
-      />
-      {/* Top gloss */}
-      <rect x="3" y="2" width="58" height="26" rx="10" fill="url(#finder-gloss)" />
+      {/* Rounded blue tile */}
+      <rect width="64" height="64" rx="14" fill="url(#finder-tile)" />
+      <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="rgba(0,0,0,0.42)" strokeWidth="0.8" />
+      {/* Bottom under-glow */}
+      <rect x="2" y="34" width="60" height="28" rx="12" fill="url(#finder-lowlight)" />
+      {/* Face capsule — blue left / white right */}
+      <path d="M12 21 Q17 7 32 7 L32 57 Q17 57 12 43 Q7 32 12 21 Z"
+            fill="#0e3f8a" stroke="rgba(0,0,0,0.6)" strokeWidth="0.9" />
+      <path d="M52 21 Q47 7 32 7 L32 57 Q47 57 52 43 Q57 32 52 21 Z"
+            fill="#f7f7f7" stroke="rgba(0,0,0,0.6)" strokeWidth="0.9" />
+      {/* Eyes — mirror palette: white pupil on blue side, dark on white */}
+      <ellipse cx="22" cy="23.5" rx="2.4" ry="3.6" fill="white" />
+      <ellipse cx="22" cy="22.5" rx="0.9" ry="1.4" fill="rgba(0,0,0,0.18)" />
+      <ellipse cx="42" cy="23.5" rx="2.4" ry="3.6" fill="#101820" />
+      <ellipse cx="42.7" cy="22.5" rx="0.7" ry="1" fill="white" opacity="0.5" />
+      {/* Smile — quadratic curve, slightly higher on the white side */}
+      <path d="M18 37 Q32 50 46 37"
+            fill="none" stroke="#101820" strokeWidth="2.4" strokeLinecap="round" />
+      {/* Faint cheek tint on blue side (echoes the highlight) */}
+      <circle cx="20" cy="34" r="3" fill="white" opacity="0.12" />
+      {/* Top gel sheen */}
+      <rect x="3" y="2" width="58" height="22" rx="11" fill="url(#finder-gloss)" />
     </svg>
   );
 }
 
-/** Browser — generic blue globe with latitude/longitude lines + a tiny needle. */
+/** Browser — chromed Aqua globe with a compass needle.
+ *  Original artwork: my own paths/gradients. */
 export function HomeDockIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 64 64" aria-hidden {...props}>
       <defs>
-        <radialGradient id="globe-bg" cx="0.4" cy="0.3" r="0.8">
-          <stop offset="0" stopColor="#9fd8ff" />
-          <stop offset="0.5" stopColor="#3a8bd8" />
-          <stop offset="1" stopColor="#0a3a78" />
+        <radialGradient id="globe-sphere" cx="0.35" cy="0.28" r="0.95">
+          <stop offset="0" stopColor="#cdebff" />
+          <stop offset="0.35" stopColor="#5da6e8" />
+          <stop offset="0.78" stopColor="#1e5fac" />
+          <stop offset="1" stopColor="#0a2c66" />
+        </radialGradient>
+        <linearGradient id="globe-rim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f6f6f6" />
+          <stop offset="0.5" stopColor="#b8b8b8" />
+          <stop offset="1" stopColor="#5a5a5a" />
+        </linearGradient>
+        <radialGradient id="globe-shine" cx="0.32" cy="0.18" r="0.5">
+          <stop offset="0" stopColor="white" stopOpacity="0.85" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
       </defs>
-      {/* Outer rim */}
-      <circle cx="32" cy="32" r="30" fill="#e0e0e0" stroke="rgba(0,0,0,0.3)" strokeWidth="0.7" />
-      <circle cx="32" cy="32" r="28" fill="url(#globe-bg)" />
-      {/* Latitudes */}
-      {[12, 20, 32, 44, 52].map((y) => {
+      {/* Chrome rim */}
+      <circle cx="32" cy="32" r="30" fill="url(#globe-rim)" />
+      <circle cx="32" cy="32" r="28.5" fill="none" stroke="rgba(0,0,0,0.55)" strokeWidth="0.7" />
+      {/* Inner sphere */}
+      <circle cx="32" cy="32" r="27" fill="url(#globe-sphere)" />
+      {/* Latitudes — denser near the equator */}
+      {[10, 16, 22, 32, 42, 48, 54].map((y) => {
         const dy = y - 32;
-        const r = Math.sqrt(Math.max(0, 28 * 28 - dy * dy));
+        const r = Math.sqrt(Math.max(0, 27 * 27 - dy * dy));
         return (
           <ellipse
             key={y}
             cx="32"
             cy={y}
             rx={r}
-            ry={r * 0.32}
+            ry={r * 0.3}
             fill="none"
             stroke="rgba(255,255,255,0.55)"
-            strokeWidth="0.7"
+            strokeWidth="0.55"
           />
         );
       })}
-      {/* Longitudes */}
-      {[-24, -12, 0, 12, 24].map((x) => (
+      {/* Longitudes — symmetric meridians */}
+      {[0, 18, 36, 54, 72].map((deg) => (
         <ellipse
-          key={x}
+          key={deg}
           cx="32"
           cy="32"
-          rx={Math.max(2, Math.abs(28 - Math.abs(x) * 1.1))}
-          ry="28"
+          rx={27 * Math.cos((deg * Math.PI) / 180)}
+          ry="27"
           fill="none"
-          stroke="rgba(255,255,255,0.55)"
-          strokeWidth="0.7"
-          transform={`rotate(${x === 0 ? 0 : x * 0.6} 32 32)`}
+          stroke="rgba(255,255,255,0.5)"
+          strokeWidth="0.55"
         />
       ))}
-      {/* Center vertical meridian */}
-      <line x1="32" y1="4" x2="32" y2="60" stroke="rgba(255,255,255,0.7)" strokeWidth="0.7" />
-      {/* Compass needle — red north, white south */}
-      <polygon points="32,12 27,32 32,29 37,32" fill="#cc2222" stroke="#8a1010" strokeWidth="0.4" />
-      <polygon points="32,52 27,32 32,35 37,32" fill="#f0f0f0" stroke="#888" strokeWidth="0.4" />
-      <circle cx="32" cy="32" r="2.5" fill="#1a1a1a" stroke="#888" strokeWidth="0.4" />
-      {/* Top sphere highlight */}
-      <ellipse cx="24" cy="18" rx="11" ry="5" fill="white" opacity="0.32" />
+      {/* Polar caps — subtle */}
+      <ellipse cx="32" cy="6.5" rx="2.6" ry="1.1" fill="rgba(255,255,255,0.55)" />
+      <ellipse cx="32" cy="57.5" rx="2.6" ry="1.1" fill="rgba(255,255,255,0.35)" />
+      {/* Compass needle */}
+      <polygon points="32,11 27.5,32 32,29 36.5,32" fill="#d62828" stroke="#7a1414" strokeWidth="0.4" />
+      <polygon points="32,53 27.5,32 32,35 36.5,32" fill="#f4f4f4" stroke="#777" strokeWidth="0.4" />
+      <circle cx="32" cy="32" r="2.6" fill="#1a1a1a" stroke="#888" strokeWidth="0.4" />
+      <circle cx="32" cy="32" r="0.9" fill="#ffd76b" />
+      {/* Aqua sphere highlight */}
+      <ellipse cx="24" cy="17" rx="13" ry="6" fill="url(#globe-shine)" />
+      {/* Bottom inner shadow ring (gives the glass-sphere feel) */}
+      <circle cx="32" cy="32" r="27" fill="none" stroke="rgba(0,0,0,0.22)" strokeWidth="0.6" />
     </svg>
   );
 }
@@ -197,34 +217,68 @@ export function AppsDockIcon(props: IconProps) {
   );
 }
 
+/** Blog — yellow legal-pad tile with red header strip and a fountain pen.
+ *  Original SVG paths + gradients. */
 export function BlogDockIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 64 64" aria-hidden {...props}>
       <defs>
         <linearGradient id="blog-bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff4b3" />
-          <stop offset="1" stopColor="#f4d738" />
+          <stop offset="0" stopColor="#fff3a0" />
+          <stop offset="0.5" stopColor="#f7d958" />
+          <stop offset="1" stopColor="#dba922" />
+        </linearGradient>
+        <linearGradient id="blog-header" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#e6555f" />
+          <stop offset="0.5" stopColor="#c8242d" />
+          <stop offset="1" stopColor="#9a1820" />
         </linearGradient>
         <linearGradient id="blog-gloss" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="white" stopOpacity="0.6" />
+          <stop offset="0" stopColor="white" stopOpacity="0.65" />
           <stop offset="0.55" stopColor="white" stopOpacity="0.05" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="blog-pen-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#3a3a3a" />
+          <stop offset="0.5" stopColor="#161616" />
+          <stop offset="1" stopColor="#2a2a2a" />
+        </linearGradient>
+        <linearGradient id="blog-pen-nib" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#d8d8d8" />
+          <stop offset="0.5" stopColor="#f4f4f4" />
+          <stop offset="1" stopColor="#9a9a9a" />
         </linearGradient>
       </defs>
       <rect width="64" height="64" rx="14" fill="url(#blog-bg)" />
-      <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="0.5" />
-      {/* Red top strip — notepad header */}
-      <path d="M0 14 L64 14 L64 12 Q64 6 58 6 L6 6 Q0 6 0 12 Z" fill="#d8333d" />
-      {/* Lines on the page */}
-      <line x1="12" y1="24" x2="52" y2="24" stroke="#b8a020" strokeWidth="1.2" />
-      <line x1="12" y1="32" x2="52" y2="32" stroke="#b8a020" strokeWidth="1.2" />
-      <line x1="12" y1="40" x2="52" y2="40" stroke="#b8a020" strokeWidth="1.2" />
-      <line x1="12" y1="48" x2="40" y2="48" stroke="#b8a020" strokeWidth="1.2" />
-      {/* Pen */}
-      <g transform="translate(40 36) rotate(35)">
-        <rect x="0" y="0" width="22" height="3.2" rx="0.4" fill="#2a2a2a" />
-        <polygon points="22,0 26,1.6 22,3.2" fill="#666" />
+      <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="rgba(0,0,0,0.45)" strokeWidth="0.7" />
+      {/* Red header strip with subtle saddle stitch */}
+      <path d="M0 15 L64 15 L64 13 Q64 5 56 5 L8 5 Q0 5 0 13 Z" fill="url(#blog-header)" />
+      <path d="M0 13 L64 13" stroke="rgba(0,0,0,0.18)" strokeWidth="0.4" />
+      {[10, 22, 32, 42, 54].map((x) => (
+        <circle key={x} cx={x} cy={10} r="0.7" fill="#7a1014" />
+      ))}
+      {/* Rule lines on the page */}
+      {[24, 32, 40, 48].map((y, i) => (
+        <line key={y} x1="10" y1={y} x2={i === 3 ? 36 : 54} y2={y}
+              stroke="#a88a10" strokeWidth="1.1" opacity="0.85" />
+      ))}
+      {/* Faint blue margin rule */}
+      <line x1="16" y1="18" x2="16" y2="58" stroke="#b4dcff" strokeWidth="0.8" opacity="0.65" />
+      {/* Fountain pen — angled across the lower-right of the pad */}
+      <g transform="translate(34 38) rotate(35)">
+        <rect x="0" y="-1.8" width="20" height="3.6" rx="0.8" fill="url(#blog-pen-body)"
+              stroke="rgba(0,0,0,0.55)" strokeWidth="0.4" />
+        {/* Cap band */}
+        <rect x="13" y="-1.8" width="2.4" height="3.6" fill="#c8a050" />
+        {/* Nib */}
+        <polygon points="20,-1.8 26,0 20,1.8" fill="url(#blog-pen-nib)"
+                 stroke="rgba(0,0,0,0.5)" strokeWidth="0.35" />
+        <line x1="22" y1="-0.4" x2="24.5" y2="0.4" stroke="rgba(0,0,0,0.4)" strokeWidth="0.3" />
+        {/* Ink line trailing back */}
+        <line x1="-3" y1="1" x2="0" y2="0" stroke="#0a3a78" strokeWidth="0.5" opacity="0.55" />
       </g>
-      <rect x="3" y="2" width="58" height="28" rx="11" fill="url(#blog-gloss)" />
+      {/* Top gel sheen */}
+      <rect x="3" y="2" width="58" height="22" rx="11" fill="url(#blog-gloss)" />
     </svg>
   );
 }
@@ -257,65 +311,81 @@ export function LaunchpadDockIcon(props: IconProps) {
   );
 }
 
-/** Trash — wire-mesh can (cylinder, NOT a rounded square). */
+/** Trash — chromed wire-mesh wastebasket. Tapered cylinder, brushed-metal
+ *  rim, vertical wires that converge to a narrower base, horizontal bands
+ *  fading into the body. Original artwork. */
 export function TrashDockIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 64 64" aria-hidden {...props}>
       <defs>
-        <linearGradient id="trash-can-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e8e8e8" />
-          <stop offset="0.5" stopColor="#b8b8b8" />
+        <linearGradient id="trash-body" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#7a7a7a" />
+          <stop offset="0.15" stopColor="#c8c8c8" />
+          <stop offset="0.5" stopColor="#f0f0f0" />
+          <stop offset="0.85" stopColor="#c8c8c8" />
           <stop offset="1" stopColor="#7a7a7a" />
         </linearGradient>
+        <linearGradient id="trash-rim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f4f4f4" />
+          <stop offset="0.5" stopColor="#bcbcbc" />
+          <stop offset="1" stopColor="#7a7a7a" />
+        </linearGradient>
+        <linearGradient id="trash-inside" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#2a2a2a" />
+          <stop offset="1" stopColor="#6a6a6a" />
+        </linearGradient>
       </defs>
-      {/* Open lid ellipse (top rim) */}
-      <ellipse cx="32" cy="14" rx="22" ry="5" fill="none" stroke="#6a6a6a" strokeWidth="1.5" />
-      <ellipse cx="32" cy="14" rx="22" ry="5" fill="#cccccc" opacity="0.6" />
-      {/* Body — slightly tapered */}
+      {/* Inside of the rim (visible through the opening) */}
+      <ellipse cx="32" cy="14" rx="21" ry="4.6" fill="url(#trash-inside)" />
+      {/* Rim outer band — chromed */}
+      <path d="M10 14 Q10 9 32 9 Q54 9 54 14 Q54 18 32 18 Q10 18 10 14 Z"
+            fill="url(#trash-rim)" stroke="#5a5a5a" strokeWidth="0.8" />
+      <ellipse cx="32" cy="13" rx="20" ry="3.4" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.4" />
+      {/* Body — slightly tapered cylinder */}
       <path
-        d="M10 14
-           L14 56
-           Q14 60 18 60
-           L46 60
-           Q50 60 50 56
-           L54 14"
-        fill="url(#trash-can-grad)"
+        d="M11 15
+           L14.5 56
+           Q14.5 60 19 60
+           L45 60
+           Q49.5 60 49.5 56
+           L53 15
+           Z"
+        fill="url(#trash-body)"
         stroke="#5a5a5a"
-        strokeWidth="1.2"
+        strokeWidth="0.9"
       />
-      {/* Vertical wire lines — converge inward at the base to match the tapered body */}
-      {[16, 21, 26, 31, 36, 41, 46, 51].map((x) => {
-        // pull toward center at the bottom so the mesh narrows like the can
-        const x2 = x + (32 - x) * 0.18;
+      {/* Vertical wire mesh — converges to a narrower base */}
+      {[15.5, 19, 22.5, 26, 29.5, 33, 36.5, 40, 43.5, 47, 50.5].map((x) => {
+        const x2 = x + (32 - x) * 0.16;
         return (
           <line
             key={x}
             x1={x}
-            y1="15"
+            y1="16"
             x2={x2}
-            y2="58"
-            stroke="#4a4a4a"
-            strokeWidth="0.7"
-            opacity="0.55"
+            y2="58.5"
+            stroke="rgba(50,50,50,0.55)"
+            strokeWidth="0.55"
           />
         );
       })}
-      {/* Horizontal banding — narrows toward the base */}
-      {[22, 32, 42, 52].map((y) => (
+      {/* Horizontal banding (subtle ribs) */}
+      {[24, 33, 42, 51].map((y) => (
         <ellipse
           key={y}
           cx="32"
           cy={y}
-          rx={22 - (y - 14) * 0.16}
-          ry="2"
+          rx={22 - (y - 14) * 0.18}
+          ry="1.7"
           fill="none"
-          stroke="#5a5a5a"
-          strokeWidth="0.5"
-          opacity="0.5"
+          stroke="rgba(40,40,40,0.42)"
+          strokeWidth="0.45"
         />
       ))}
-      {/* Subtle ground shadow */}
-      <ellipse cx="32" cy="62" rx="22" ry="1.4" fill="black" opacity="0.18" />
+      {/* Specular highlight on the left flank */}
+      <path d="M14 18 L17 56" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" strokeLinecap="round" />
+      {/* Bottom shadow on the floor */}
+      <ellipse cx="32" cy="62" rx="22" ry="1.5" fill="black" opacity="0.22" />
     </svg>
   );
 }
@@ -515,34 +585,54 @@ export function SnakeDockIcon(props: IconProps) {
 
 /** Blog / Tumblr — keep the legal-pad style; lightly tweaked. */
 
-/** iChat — blue speech bubble with a tail (not a rounded square frame). */
+/** iChat — Aqua speech bubble with a curved tail and gel sheen.
+ *  Original artwork: my own SVG paths + gradient stops. */
 export function ContactDockIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 64 64" aria-hidden {...props}>
       <defs>
         <linearGradient id="ichat-bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#79c8ff" />
-          <stop offset="0.5" stopColor="#2a8be0" />
-          <stop offset="1" stopColor="#0e4d99" />
+          <stop offset="0" stopColor="#9bd6ff" />
+          <stop offset="0.5" stopColor="#3aa2ec" />
+          <stop offset="1" stopColor="#0c4488" />
         </linearGradient>
+        <radialGradient id="ichat-lowlight" cx="0.5" cy="1.05" r="0.7">
+          <stop offset="0" stopColor="white" stopOpacity="0.42" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
+        </radialGradient>
         <linearGradient id="ichat-gloss" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="white" stopOpacity="0.65" />
-          <stop offset="0.5" stopColor="white" stopOpacity="0.06" />
+          <stop offset="0" stopColor="white" stopOpacity="0.92" />
+          <stop offset="0.6" stopColor="white" stopOpacity="0.1" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
       </defs>
+      {/* Bubble body — soft rounded rect with a curving tail toward bottom-left */}
       <path
-        d="M8 24 Q8 8 24 8 L44 8 Q60 8 60 24 L60 38 Q60 52 44 52 L28 52 L16 60 L20 50 Q8 48 8 38 Z"
+        d="M9 22 Q9 7 25 7 L43 7 Q59 7 59 22 L59 36 Q59 50 43 50 L26 50 L13 60 L18 48 Q9 46 9 36 Z"
         fill="url(#ichat-bg)"
-        stroke="rgba(0,0,0,0.28)"
-        strokeWidth="0.7"
+        stroke="rgba(0,0,0,0.45)"
+        strokeWidth="0.9"
       />
-      <circle cx="22" cy="30" r="3" fill="white" opacity="0.95" />
-      <circle cx="32" cy="30" r="3" fill="white" opacity="0.95" />
-      <circle cx="42" cy="30" r="3" fill="white" opacity="0.95" />
+      {/* Bottom under-glow gives that glass-pebble depth */}
       <path
-        d="M11 22 Q11 12 22 12 L42 12 Q56 12 57 22 L57 28 Q57 18 42 18 L22 18 Q11 18 11 28 Z"
+        d="M11 33 L57 33 Q57 49 43 49 L26 49 L14 58 L18 47 Q11 45 11 36 Z"
+        fill="url(#ichat-lowlight)"
+      />
+      {/* Three chat dots */}
+      <circle cx="22" cy="29" r="3.4" fill="white" />
+      <circle cx="32" cy="29" r="3.4" fill="white" />
+      <circle cx="42" cy="29" r="3.4" fill="white" />
+      {/* Subtle inner-shadow on dots so they read as pearls, not flat circles */}
+      <circle cx="22" cy="30" r="3.4" fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="0.4" />
+      <circle cx="32" cy="30" r="3.4" fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="0.4" />
+      <circle cx="42" cy="30" r="3.4" fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="0.4" />
+      {/* Aqua gel sheen — covers ~the top 40% of the bubble */}
+      <path
+        d="M12 20 Q12 11 24 11 L44 11 Q56 11 56 20 L56 26 Q44 22 32 22 Q20 22 12 26 Z"
         fill="url(#ichat-gloss)"
       />
+      {/* Tiny specular highlight bottom-left for extra glassiness */}
+      <ellipse cx="17" cy="44" rx="3" ry="1.5" fill="white" opacity="0.3" transform="rotate(-18 17 44)" />
     </svg>
   );
 }

@@ -940,17 +940,21 @@
   }
 
   /* ────────────────────────────────────────────────────────
-   * Flat-mode unified content style. Every page (diogonet,
-   * apps, blog, contact) gets the same typography, palette,
-   * spacing, section heads and card chrome — overriding each
-   * page's per-app theme so they read as one consistent site.
+   * Flat-mode unified content style — 2000s Aqua throughout.
+   * Pinstripes, candy stripes, brushed metal, gel pills, glossy
+   * panel chrome — every page gets the same Aqua language so
+   * /, /apps, /blog and /contact read as one consistent site.
    * ──────────────────────────────────────────────────────── */
   html[data-flat="1"] {
-    --flat-text: #1c1c1e;
-    --flat-muted: #6e6e73;
-    --flat-rule: #e3e3e3;
-    --flat-accent: #0a66c2;
+    --flat-text: #1d1d1f;
+    --flat-muted: #5a5a5a;
+    --flat-rule: #a8a8a8;        /* Aqua border grey */
+    --flat-rule-soft: #c8c8c8;
+    --flat-accent: #1168aa;       /* Aqua deep blue */
+    --flat-accent-soft: #cfe1f2;
     --flat-bg: #ffffff;
+    --flat-stripe-a: #f6f6f6;
+    --flat-stripe-b: #ebebeb;
   }
 
   /* Hide every page's decorative banner / sub-nav / sidebar — flat mode
@@ -965,15 +969,15 @@
     display: none !important;
   }
 
-  /* Reset body type system inside the flat card */
+  /* Type system inside the flat card — Lucida Grande Aqua-era */
   html[data-flat="1"] .flat-card,
   html[data-flat="1"] .flat-card * {
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-      "Segoe UI", Roboto, sans-serif !important;
+    font-family: "Lucida Grande", -apple-system, "Helvetica Neue",
+      Helvetica, sans-serif !important;
     color: var(--flat-text);
   }
   html[data-flat="1"] .flat-card {
-    padding: 28px 32px;
+    padding: 30px 34px 28px 34px;
   }
 
   /* Two-column layouts collapse to one column with a clean stack */
@@ -1003,7 +1007,14 @@
     margin: 0 !important;
     border-radius: 999px !important;
     overflow: hidden;
-    border: 1px solid var(--flat-rule) !important;
+    /* Aqua chrome bezel — concentric rings + outer drop shadow */
+    border: 2px solid #ffffff !important;
+    box-shadow:
+      0 0 0 1px #8a8a8a,
+      0 0 0 4px #ebebeb,
+      0 0 0 5px #8a8a8a,
+      0 4px 10px rgba(0, 0, 0, 0.18),
+      inset 0 1px 2px rgba(0, 0, 0, 0.25) !important;
   }
   html[data-flat="1"] .linkedin2007-photo img,
   html[data-flat="1"] .linkedin2007-photo-fallback {
@@ -1034,20 +1045,28 @@
     flex-wrap: wrap;
     gap: 6px !important;
   }
+  /* Action buttons → Aqua gel pills */
   html[data-flat="1"] .linkedin2007-btn {
-    background: white !important;
-    border: 1px solid var(--flat-rule) !important;
-    color: var(--flat-text) !important;
-    box-shadow: none !important;
-    padding: 6px 12px !important;
+    background: linear-gradient(to bottom, #ffffff 0%, #e4e4e4 50%, #d2d2d2 100%) !important;
+    border: 1px solid #8a8a8a !important;
+    color: #2a2a2a !important;
+    padding: 5px 14px !important;
     font-size: 12px !important;
+    font-weight: 600 !important;
     border-radius: 999px !important;
-    text-shadow: none !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 1px rgba(0, 0, 0, 0.12) !important;
   }
   html[data-flat="1"] .linkedin2007-btn-primary {
-    background: var(--flat-accent) !important;
+    background: linear-gradient(to bottom, #68c8f8 0%, #3eb2f0 44%, #1882cc 50%, #229ad6 100%) !important;
     color: white !important;
-    border-color: var(--flat-accent) !important;
+    border-color: #1168aa !important;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.2) !important;
   }
   html[data-flat="1"] .linkedin2007-side {
     background: transparent !important;
@@ -1077,19 +1096,24 @@
     padding-bottom: 18px !important;
     border-radius: 0 !important;
   }
+  /* Section heads — light Aqua candy-stripe bar */
   html[data-flat="1"] .linkedin2007-section-head,
   html[data-flat="1"] .blog2000-post-head,
   html[data-flat="1"] .blog2000-side-head {
-    background: transparent !important;
-    color: var(--flat-text) !important;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background:
+      linear-gradient(to bottom, #e9f1fb 0%, #cfe1f2 100%) !important;
+    color: var(--flat-accent) !important;
+    font-family: "Lucida Grande", -apple-system, sans-serif !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
-    padding: 0 0 8px 0 !important;
-    border: none !important;
-    margin: 0 0 8px 0 !important;
+    padding: 4px 10px !important;
+    border: 1px solid #b8c8da !important;
+    border-radius: 5px !important;
+    margin: 0 0 10px 0 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
   }
   html[data-flat="1"] .linkedin2007-section-body,
   html[data-flat="1"] .blog2000-post .px-4 {
@@ -1122,16 +1146,17 @@
     margin-top: 6px !important;
   }
 
-  /* Skill chips → light pills */
+  /* Skill chips → glossy Aqua mini-pills */
   html[data-flat="1"] .linkedin2007-chip {
-    background: #f4f4f6 !important;
-    color: var(--flat-text) !important;
-    border: 1px solid var(--flat-rule) !important;
-    font-size: 12px !important;
-    padding: 4px 10px !important;
+    background: linear-gradient(to bottom, #ffffff 0%, #e4e4e4 50%, #d2d2d2 100%) !important;
+    color: #1168aa !important;
+    border: 1px solid #8a8a8a !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 3px 10px !important;
     border-radius: 999px !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
   }
 
   /* Links unified */
@@ -1203,17 +1228,34 @@
   }
 
   .flat-site {
-    background: #f4f4f6;
-    color: #1c1c1e;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        #f1f3f7 0px,
+        #f1f3f7 2px,
+        #e0e4ec 2px,
+        #e0e4ec 4px
+      );
+    color: #1a1a1a;
+    font-family: "Lucida Grande", -apple-system, "Helvetica Neue", sans-serif;
     min-height: 100vh;
   }
 
+  /* Brushed-metal Aqua header with a candy-stripe rule under it. */
   .flat-header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid #e3e3e3;
+    background:
+      linear-gradient(
+        to bottom,
+        #f8f8f8 0%,
+        #ebebeb 48%,
+        #d8d8d8 52%,
+        #c2c2c2 100%
+      );
+    border-bottom: 1px solid #8a8a8a;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.4),
+      0 1px 0 rgba(0, 0, 0, 0.12);
     position: sticky;
     top: 0;
     z-index: 40;
@@ -1245,32 +1287,69 @@
     color: #222;
   }
 
+  /* Glossy gel pill nav — classic Aqua bar button */
   .flat-navlink {
-    padding: 6px 14px;
+    padding: 4px 14px;
     border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #1c1c1e;
-    background: transparent;
-    border: 1px solid transparent;
-    transition: background-color 0.12s ease, color 0.12s ease;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2a2a2a;
+    background: linear-gradient(to bottom, #ffffff 0%, #e4e4e4 50%, #d2d2d2 100%);
+    border: 1px solid #8a8a8a;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 1px rgba(0, 0, 0, 0.12);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: filter 0.1s ease;
   }
-  .flat-navlink:hover { background: rgba(0, 0, 0, 0.05); }
+  .flat-navlink:hover { filter: brightness(1.04); }
+  .flat-navlink:active { filter: brightness(0.94); }
   .flat-navlink.is-active {
-    background: #1c1c1e;
+    background: linear-gradient(to bottom, #68c8f8 0%, #3eb2f0 44%, #1882cc 50%, #229ad6 100%);
     color: white;
+    border-color: #1168aa;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 1px 1px rgba(0, 0, 0, 0.18);
   }
 
+  /* Aqua chrome card — glassy top stripe + brushed body */
   .flat-card {
-    background: white;
-    border: 1px solid #e3e3e3;
-    border-radius: 14px;
+    background: #fdfdfd;
+    border: 1px solid #8a8a8a;
+    border-radius: 9px;
     overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 1px 0 rgba(255, 255, 255, 0.92),
+      0 2px 6px rgba(0, 0, 0, 0.18),
+      0 12px 28px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+  .flat-card::before {
+    /* Subtle pinstripe / gloss arc across the top — like Aqua window sheen */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 38px;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(255, 255, 255, 0.35) 60%,
+        rgba(255, 255, 255, 0) 100%
+      );
   }
 
   .flat-footer {
-    border-top: 1px solid #e3e3e3;
-    background: white;
+    border-top: 1px solid #8a8a8a;
+    background:
+      linear-gradient(to bottom, #ececec 0%, #d4d4d4 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
   /* ────────────────────────────────────────────────────────
