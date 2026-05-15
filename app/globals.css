@@ -141,15 +141,12 @@
    * actually foreshorten the back edge instead of just squashing vertically. */
   .dock-shelf {
     position: absolute;
-    /* Stretch the back of the shelf far above the icons so after rotation
-     * the foreshortened top edge clearly reads as a tilted floor behind
-     * them. The bottom stays anchored at the icon row's baseline. */
-    inset: -90px -28px -10px -28px;
+    /* Flat shelf — sits directly behind the icon row, no 3D tilt. */
+    inset: 0;
     z-index: 0;
     border-radius: 22px;
     pointer-events: none;
-    transform: perspective(420px) rotateX(56deg);
-    transform-origin: 50% 100%;
+    transform: none;
     background: linear-gradient(
       to bottom,
       rgba(248, 248, 248, 0.58) 0%,
