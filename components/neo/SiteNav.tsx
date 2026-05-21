@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/cv", label: "CV" },
   { href: "/apps", label: "My Apps" },
   { href: "/contact", label: "Contact" },
 ];
@@ -15,9 +16,6 @@ export function SiteNav() {
     <header className="neo-nav">
       <div className="neo-nav-inner">
         <Link href="/" className="neo-brand">
-          <span className="neo-brand-mark" aria-hidden>
-            DB
-          </span>
           <span>Diogo Baptista</span>
         </Link>
         <nav className="neo-nav-links">

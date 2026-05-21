@@ -386,6 +386,307 @@
   border: 2px solid var(--neo-border);
 }
 
+/* ── Reveal-on-scroll ────────────────────────────────────── */
+.neo-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 540ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 540ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.neo-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .neo-reveal,
+  .neo-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Brand mark hover wiggle ─────────────────────────────── */
+.neo-brand {
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.neo-brand:hover {
+  transform: rotate(-1.5deg) scale(1.02);
+}
+
+/* ── Hero highlight underline animation ──────────────────── */
+.neo-hero h1 mark {
+  position: relative;
+  display: inline-block;
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 200ms ease;
+}
+.neo-hero h1 mark:hover {
+  transform: rotate(-2deg) translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--neo-border);
+}
+
+/* Floating sticker emoji on hero */
+.neo-hero-sticker {
+  position: absolute;
+  top: 20px;
+  right: 6%;
+  width: 92px;
+  height: 92px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--neo-border);
+  border-radius: 50%;
+  background: var(--neo-pink);
+  font-size: 44px;
+  box-shadow: var(--neo-shadow);
+  animation: neo-spin-soft 14s linear infinite;
+  user-select: none;
+}
+.neo-hero-sticker:hover {
+  animation-play-state: paused;
+}
+@keyframes neo-spin-soft {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (max-width: 720px) {
+  .neo-hero-sticker { display: none; }
+}
+
+/* ── Marquee strip ───────────────────────────────────────── */
+.neo-marquee {
+  border-top: 2px solid var(--neo-border);
+  border-bottom: 2px solid var(--neo-border);
+  overflow: hidden;
+  padding: 14px 0;
+  margin: 32px 0;
+  position: relative;
+  transform: rotate(-1.2deg);
+}
+.neo-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+  animation: neo-marquee var(--marquee-speed, 40s) linear infinite;
+}
+.neo-marquee-item {
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+}
+.neo-marquee-dot { font-size: 14px; opacity: 0.8; }
+@keyframes neo-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .neo-marquee-track { animation: none; }
+}
+
+/* ── Live status dot (e.g. "available for work") ─────────── */
+.neo-status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--neo-green);
+  border: 1.5px solid var(--neo-border);
+  margin-right: 8px;
+  position: relative;
+  vertical-align: middle;
+}
+.neo-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: var(--neo-green);
+  opacity: 0.45;
+  animation: neo-ping 1.7s ease-out infinite;
+}
+@keyframes neo-ping {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ── Stat row ────────────────────────────────────────────── */
+.neo-stat-row {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+.neo-stat {
+  padding: 16px 18px;
+  border: 2px solid var(--neo-border);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: var(--neo-shadow-sm);
+}
+.neo-stat-value {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.neo-stat-label {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+/* ── Two-column section ──────────────────────────────────── */
+.neo-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+}
+@media (max-width: 720px) {
+  .neo-two-col { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* ── Experience list (CV) ────────────────────────────────── */
+.neo-exp-list {
+  display: grid;
+  gap: 14px;
+}
+.neo-exp {
+  border: 2px solid var(--neo-border);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: var(--neo-shadow);
+  overflow: hidden;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.neo-exp:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--neo-border);
+}
+.neo-exp-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.neo-exp-head:disabled {
+  cursor: default;
+}
+.neo-exp-marker {
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--neo-border);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+  box-shadow: var(--neo-shadow-sm);
+}
+.neo-exp-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.neo-exp-title {
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.neo-exp-sub {
+  font-size: 13px;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.neo-exp-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+}
+.neo-exp-chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--neo-border);
+  border-radius: 999px;
+  background: var(--neo-yellow);
+  box-shadow: var(--neo-shadow-sm);
+  font-size: 16px;
+  font-weight: 900;
+}
+.neo-exp-body {
+  list-style: disc;
+  padding: 0 28px 18px 44px;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #222;
+}
+
+/* ── Skill chips ─────────────────────────────────────────── */
+.neo-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.neo-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 2px solid var(--neo-border);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: var(--neo-shadow-sm);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.neo-chip:hover {
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow: 4px 4px 0 0 var(--neo-border);
+}
+.neo-chip--0 { background: var(--neo-yellow); }
+.neo-chip--1 { background: var(--neo-pink); }
+.neo-chip--2 { background: var(--neo-blue); }
+.neo-chip--3 { background: var(--neo-green); }
+.neo-chip--4 { background: var(--neo-purple); }
+
+/* ── App card lift (slightly stronger) ───────────────────── */
+.neo-app-card .neo-app-icon {
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.neo-card--hover:hover .neo-app-icon {
+  transform: rotate(-6deg) scale(1.06);
+}
+
 /* ── Mobile tweaks ───────────────────────────────────────── */
 @media (max-width: 640px) {
   .neo-nav-inner { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
