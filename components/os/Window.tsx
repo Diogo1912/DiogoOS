@@ -27,7 +27,7 @@ export function Window({
   id,
   title,
   children,
-  closeHref = "/desktop",
+  closeHref = "/os/desktop",
   bodyClassName,
   toolbar,
 }: WindowProps) {

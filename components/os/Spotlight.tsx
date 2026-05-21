@@ -79,7 +79,7 @@ export function Spotlight() {
         group: "Projects",
         title: a.name,
         subtitle: a.description,
-        action: () => router.push("/apps"),
+        action: () => router.push("/os/apps"),
       })),
       // Skills
       ...skillCategories.flatMap((c) =>

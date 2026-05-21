@@ -137,15 +137,15 @@ export function Terminal() {
     if (!target) return "open: missing app name";
     const t = target.toLowerCase();
     if (["apps", "appstore", "store"].includes(t)) {
-      window.location.assign("/apps");
+      window.location.assign("/os/apps");
       return "opening App Store…";
     }
     if (t === "blog" || t === "tumblr") {
-      window.location.assign("/blog");
+      window.location.assign("/os/blog");
       return "opening Blog…";
     }
     if (["contact", "ichat"].includes(t)) {
-      window.location.assign("/contact");
+      window.location.assign("/os/contact");
       return "opening iChat…";
     }
     if (["home", "myspace"].includes(t)) {

@@ -33,10 +33,14 @@
 
   html,
   body {
-    height: 100%;
-    overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Lucida Grande",
       "Lucida Sans Unicode", "Helvetica Neue", Arial, sans-serif;
+  }
+  /* Lock scroll only when the OS shell mounts. Other routes scroll normally. */
+  html:has(.os-root),
+  html:has(.os-root) body {
+    height: 100%;
+    overflow: hidden;
   }
 
   /* Mac-style scrollbar */

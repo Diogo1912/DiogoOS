@@ -28,9 +28,9 @@ export function Launchpad() {
 
   const items: LaunchItem[] = [
     { label: "MySpace", route: "/", bg: "linear-gradient(145deg,#ff66cc,#003399)", glyph: <HomeDockIcon className="w-full h-full" /> },
-    { label: "App Store", route: "/apps", bg: "linear-gradient(145deg,#444,#111)", glyph: <AppsDockIcon className="w-full h-full" /> },
-    { label: "Blog", route: "/blog", bg: "linear-gradient(145deg,#fff48a,#e9c722)", glyph: <BlogDockIcon className="w-full h-full" /> },
-    { label: "iChat", route: "/contact", bg: "linear-gradient(145deg,#f8f8f8,#c0c0c0)", glyph: <ContactDockIcon className="w-full h-full" /> },
+    { label: "App Store", route: "/os/apps", bg: "linear-gradient(145deg,#444,#111)", glyph: <AppsDockIcon className="w-full h-full" /> },
+    { label: "Blog", route: "/os/blog", bg: "linear-gradient(145deg,#fff48a,#e9c722)", glyph: <BlogDockIcon className="w-full h-full" /> },
+    { label: "iChat", route: "/os/contact", bg: "linear-gradient(145deg,#f8f8f8,#c0c0c0)", glyph: <ContactDockIcon className="w-full h-full" /> },
     { label: "Calculator", mini: "calculator", bg: "linear-gradient(145deg,#5a5a5a,#1a1a1a)", glyph: <BigGlyph>≡</BigGlyph> },
     { label: "Terminal", mini: "terminal", bg: "linear-gradient(145deg,#2a2a2a,#000000)", glyph: <BigGlyph mono>{">"}_</BigGlyph> },
     { label: "Book a meeting", mini: "ical", bg: "linear-gradient(145deg,#c81818,#5a0e0e)", glyph: <ICalGlyph /> },

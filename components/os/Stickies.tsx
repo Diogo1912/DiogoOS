@@ -111,8 +111,7 @@ export function Stickies() {
           <li>Right-click the wallpaper</li>
         </ul>
         <p className="text-[11px] mt-2 text-[#5a4a00]">
-          Prefer something plainer? Click <b>&ldquo;Convert to a normal website&rdquo;</b>{" "}
-          (bottom-right) for a flat scrolling version.
+          Prefer the plain site? <a href="/" className="underline font-semibold">Head back home →</a>
         </p>
         <p className="text-[10px] mt-2 text-[#7a6018] italic">
           — drag me anywhere

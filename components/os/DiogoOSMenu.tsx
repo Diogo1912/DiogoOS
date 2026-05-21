@@ -12,8 +12,6 @@ export function DiogoOSMenu() {
     openAbout,
     openWallpaperPicker,
     setMenuOpen,
-    flatMode,
-    toggleFlatMode,
   } = useOS();
 
   if (!menuOpen) return null;
@@ -27,14 +25,6 @@ export function DiogoOSMenu() {
         <MenuItem onClick={openAbout}>About DiogoOS…</MenuItem>
         <MenuSeparator />
         <MenuItem onClick={openWallpaperPicker}>System Preferences…</MenuItem>
-        <MenuItem
-          onClick={() => {
-            setMenuOpen(false);
-            toggleFlatMode();
-          }}
-        >
-          {flatMode ? "Back to DiogoOS" : "Convert to a normal website…"}
-        </MenuItem>
         <MenuSeparator />
         <MenuItem disabled>Sleep</MenuItem>
         <MenuItem

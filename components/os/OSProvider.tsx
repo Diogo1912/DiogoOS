@@ -75,25 +75,11 @@ interface OSContextValue {
   closeWelcome: () => void;
   openWelcome: () => void;
 
-  // "Convert to a normal website" mode — flat scrolling layout that keeps
-  // the 2000s Apple visual language but drops the desktop chrome.
-  flatMode: boolean;
-  setFlatMode: (v: boolean) => void;
-  toggleFlatMode: () => void;
-
-  // Viewport breakpoint — true on phones / narrow tablets. Triggers a
-  // dedicated iOS-style shell instead of the macOS desktop.
+  // Viewport breakpoint — true on phones / narrow tablets.
   isMobile: boolean;
 
-  // True once the provider has read its persisted state from
-  // localStorage. Consumers that branch on flatMode/isMobile should
-  // wait for this so they don't act on stale initial values.
+  // True once the provider has read its persisted state from localStorage.
   hydrated: boolean;
-
-  // The "Convert to a normal website" pill in the bottom-right is
-  // dismissible. Once dismissed it stays hidden for the session.
-  togglePillVisible: boolean;
-  dismissTogglePill: () => void;
 
   // Mini-apps
   miniApps: MiniAppState[];
@@ -117,8 +103,6 @@ export function useOS() {
 const WALLPAPER_KEY = "diogoos:wallpaper:v3";
 const STICKIES_KEY = "diogoos:stickies-open";
 const WELCOME_KEY = "diogoos:welcome-closed";
-const FLAT_KEY = "diogoos:flat-mode";
-
 export function OSProvider({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -131,17 +115,8 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
   const [photoBoothOn, setBooth] = useState(false);
   const [stickiesOpen, setStickiesOpen] = useState(true);
   const [welcomeOpen, setWelcomeOpen] = useState(true);
-  const [flatMode, setFlatModeState] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [hydrated, setHydrated] = useState(false);
-  const [togglePillVisible, setTogglePillVisible] = useState(true);
-
-  const dismissTogglePill = useCallback(() => {
-    setTogglePillVisible(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("diogoos:toggle-pill-dismissed", "1");
-    }
-  }, []);
   const [miniApps, setMiniApps] = useState<MiniAppState[]>([]);
   const [focusedMiniApp, setFocusedMiniApp] = useState<MiniAppId | null>(null);
   const miniZ = useRef(40);
@@ -200,10 +175,6 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     if (st === "false") setStickiesOpen(false);
     const wc = localStorage.getItem(WELCOME_KEY);
     if (wc === "1") setWelcomeOpen(false);
-    const fm = localStorage.getItem(FLAT_KEY);
-    if (fm === "1") setFlatModeState(true);
-    const tp = sessionStorage.getItem("diogoos:toggle-pill-dismissed");
-    if (tp === "1") setTogglePillVisible(false);
     setHydrated(true);
   }, []);
 
@@ -222,12 +193,6 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(WELCOME_KEY, welcomeOpen ? "0" : "1");
   }, [welcomeOpen]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    localStorage.setItem(FLAT_KEY, flatMode ? "1" : "0");
-    document.documentElement.dataset.flat = flatMode ? "1" : "0";
-  }, [flatMode]);
-
   // Track viewport breakpoint for iOS / macOS shell selection
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -243,8 +208,6 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
 
   const closeWelcome = useCallback(() => setWelcomeOpen(false), []);
   const openWelcome = useCallback(() => setWelcomeOpen(true), []);
-  const setFlatMode = useCallback((v: boolean) => setFlatModeState(v), []);
-  const toggleFlatMode = useCallback(() => setFlatModeState((v) => !v), []);
 
   const setWallpaper = useCallback((id: WallpaperId) => setWPState(id), []);
   const openAbout = useCallback(() => {
@@ -336,9 +299,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       photoBoothOn, toggleBooth,
       stickiesOpen, setStickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
-      flatMode, setFlatMode, toggleFlatMode,
       isMobile, hydrated,
-      togglePillVisible, dismissTogglePill,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     }),
@@ -352,9 +313,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
       photoBoothOn, toggleBooth,
       stickiesOpen,
       welcomeOpen, closeWelcome, openWelcome,
-      flatMode, setFlatMode, toggleFlatMode,
       isMobile, hydrated,
-      togglePillVisible, dismissTogglePill,
       miniApps, focusedMiniApp,
       launchMiniApp, closeMiniApp, focusMiniApp, moveMiniApp,
     ]

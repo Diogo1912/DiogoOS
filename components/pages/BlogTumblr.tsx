@@ -65,8 +65,8 @@ export function BlogTumblr({ posts }: BlogProps) {
           <SidebarBox title="Elsewhere">
             <ul className="space-y-1">
               <li><a href="/">diogonet</a></li>
-              <li><a href="/apps">projects</a></li>
-              <li><a href="/contact">contact</a></li>
+              <li><a href="/os/apps">projects</a></li>
+              <li><a href="/os/contact">contact</a></li>
               <li><a href="#">RSS</a></li>
             </ul>
           </SidebarBox>

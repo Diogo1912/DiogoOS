@@ -12,10 +12,10 @@ import { useOS } from "@/components/os/OSProvider";
 
 const PAGE_NAMES: Record<string, string> = {
   "/": "Browser",
-  "/apps": "App Store",
-  "/blog": "Blog",
-  "/desktop": "Finder",
-  "/contact": "iChat",
+  "/os/apps": "App Store",
+  "/os/blog": "Blog",
+  "/os/desktop": "Finder",
+  "/os/contact": "iChat",
 };
 
 const MENUS = ["File", "Edit", "View", "Window", "Help"];
