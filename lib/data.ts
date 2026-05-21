@@ -28,13 +28,21 @@ export interface App {
   id: string;
   name: string;
   description: string;
+  /** Optional longer write-up shown on detailed portfolio cards. */
+  longDescription?: string;
   tags: string[];
+  /** Tech stack chips shown on the landing portfolio cards. */
+  stack?: string[];
   icon: AppIconKey;
   liveUrl: string;
   sourceUrl?: string;
   color: string;
   badge?: "NEW" | "FREE" | "HOT";
   rating?: number; // 0-5
+  /** Short status note, e.g. "Live · 200+ users", "In private beta". */
+  status?: string;
+  /** Bullet highlights of impact / what I built. */
+  highlights?: string[];
 }
 
 /**
@@ -143,45 +151,97 @@ export const apps: App[] = [
     name: "Storay",
     description:
       "Personal inventory app. Catalogue everything you own and sell with one link, zero fees.",
+    longDescription:
+      "Storay is a consumer app for cataloguing the things you own — and the public 'shelf' lets you sell items with a single shareable link. No listing fees, no marketplace cut, no platform lock-in. Building it solo while studying.",
     tags: ["Web App", "iOS"],
+    stack: ["Next.js", "TypeScript", "Postgres", "Tailwind", "Vercel"],
     icon: "lightbulb",
     liveUrl: "https://storay.app",
     color: "#3a8fde",
     badge: "NEW",
     rating: 5,
+    status: "In private beta",
+    highlights: [
+      "Inventory model that handles photos, custom fields, and rich tags",
+      "Public shelves with one-click sharing — sell with zero platform fees",
+      "Designed end-to-end: research, product, brand, and engineering",
+    ],
+  },
+  {
+    id: "tiredofcancer",
+    name: "Untire Now",
+    description:
+      "AI coaching companion for cancer-related fatigue, built with the Tired of Cancer team.",
+    longDescription:
+      "A four-step conversational coaching flow grounded in Untire Now's clinical content library. Empathy-first prompt design, retrieval over evidence-based material, and a safety layer that escalates to crisis resources when distress signals appear.",
+    tags: ["AI", "Healthcare"],
+    stack: [
+      "Next.js 15",
+      "Claude Sonnet",
+      "OpenRouter",
+      "SQLite",
+      "RAG",
+      "LLM-as-judge",
+    ],
+    icon: "bolt",
+    liveUrl: "https://www.tiredofcancer.com/",
+    color: "#16a085",
+    status: "Live · Freelance work",
+    highlights: [
+      "Designed the conversational coaching flow end-to-end",
+      "Built the RAG pipeline against the clinical content library",
+      "Set up LLM-as-judge evaluation and per-request observability",
+      "Implemented a risk-detection protocol that overrides the flow on distress",
+    ],
   },
   {
     id: "chandle",
     name: "Chandle",
     description:
       "Daily music guessing game — listen to a clip, name the song before you run out of guesses.",
+    longDescription:
+      "Built for fun in a long weekend. Picks a daily song from a curated catalogue, drips out increasingly long preview clips and lets the player narrow down with autocomplete-style guesses. Inspired by Wordle and Heardle.",
     tags: ["Web App", "Game"],
+    stack: ["React", "Vite", "TypeScript"],
     icon: "gamepad",
     liveUrl: "https://chandle.vercel.app",
     color: "#e74c3c",
     rating: 4,
+    status: "Live",
+    highlights: [
+      "Daily song rotation with shareable spoiler-free results",
+      "Lightweight client — no backend, ships under 50KB gzipped",
+    ],
   },
   {
     id: "golexai",
     name: "Golexai",
     description:
-      "AI engineering work — building agents, automations, and bespoke models for clients.",
+      "AI engineering work — agents, automations, and bespoke models for clients.",
+    longDescription:
+      "Freelance AI engineering brand. I take on agentic systems, retrieval pipelines, prompt-tuned products and AI-assisted automations for small teams that need a senior implementer for a short window.",
     tags: ["AI", "Consulting"],
+    stack: ["LangChain", "CrewAI", "Anthropic", "OpenAI", "n8n", "FastAPI"],
     icon: "bolt",
     liveUrl: "https://golexai.pl",
     color: "#8e44ad",
     rating: 5,
+    status: "Booking projects",
   },
   {
     id: "circuitboard",
     name: "Circuitboard",
     description:
-      "Browser-based circuit builder — drag components onto a board and wire them up in your browser.",
+      "Browser-based circuit builder — drag components onto a board and wire them up.",
+    longDescription:
+      "A teaching-oriented playground for electronics: drag components onto a canvas, connect them up, watch values propagate. Built to scratch my own itch while studying digital logic.",
     tags: ["Web App", "Tool"],
+    stack: ["TypeScript", "Canvas API", "GitHub Pages"],
     icon: "wrench",
     liveUrl: "https://diogo1912.github.io/circuitboard/",
     sourceUrl: "https://github.com/Diogo1912/circuitboard",
     color: "#27ae60",
     rating: 4,
+    status: "Source available",
   },
 ];

@@ -3,6 +3,7 @@ import { getLinkedInProfile } from "@/lib/linkedin";
 import { apps, social } from "@/lib/data";
 import { Reveal } from "@/components/neo/Reveal";
 import { Marquee } from "@/components/neo/Marquee";
+import { PortfolioCard } from "@/components/neo/PortfolioCard";
 
 export default function LandingPage() {
   const profile = getLinkedInProfile();
@@ -10,9 +11,7 @@ export default function LandingPage() {
     .filter((j) => !j.endDate)
     .slice(0, 3);
 
-  const featuredApps = apps.slice(0, 3);
-
-  const stack = [
+  const marqueeStack = [
     "TypeScript",
     "React",
     "Next.js",
@@ -23,6 +22,41 @@ export default function LandingPage() {
     "Tailwind",
     "OpenRouter",
     "Anthropic API",
+  ];
+
+  const techGroups: { title: string; tone: string; items: string[] }[] = [
+    {
+      title: "Languages",
+      tone: "neo-highlight--yellow",
+      items: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
+    },
+    {
+      title: "Frontend",
+      tone: "neo-highlight--blue",
+      items: ["React", "Next.js", "Vite", "Tailwind CSS", "Framer Motion"],
+    },
+    {
+      title: "Backend & data",
+      tone: "neo-highlight--green",
+      items: ["FastAPI", "Django", "Node.js", "Postgres", "SQLite", "Redis"],
+    },
+    {
+      title: "AI / ML",
+      tone: "neo-highlight--pink",
+      items: [
+        "Anthropic API",
+        "OpenAI API",
+        "LangChain",
+        "CrewAI",
+        "RAG pipelines",
+        "LLM-as-judge eval",
+      ],
+    },
+    {
+      title: "Tooling",
+      tone: "neo-highlight--purple",
+      items: ["Git", "Vercel", "Docker", "n8n", "Figma", "Posthog"],
+    },
   ];
 
   const beliefs = [
@@ -43,26 +77,11 @@ export default function LandingPage() {
     },
   ];
 
-  const facts = [
-    { label: "Based in", value: "Amsterdam 🇳🇱" },
-    { label: "From", value: "Luxembourg 🇱🇺 / Portugal 🇵🇹" },
-    { label: "Speaks", value: `${profile.languages.length} languages` },
-    { label: "Building", value: "Storay" },
-    { label: "Studying", value: "Computational Social Science @ UvA" },
-  ];
-
   return (
     <>
       {/* Hero */}
       <section className="neo-hero neo-bg-dots">
-        <div className="neo-container" style={{ position: "relative" }}>
-          <span className="neo-hero-sticker" aria-hidden>
-            ✦
-          </span>
-          <span className="neo-badge neo-badge--pink neo-hero-eyebrow">
-            <span className="neo-status-dot" />
-            Open to new projects · Amsterdam
-          </span>
+        <div className="neo-container">
           <h1>
             Hi, I&apos;m Diogo. I build <mark>products</mark> that meet people
             where they are.
@@ -89,31 +108,28 @@ export default function LandingPage() {
       </section>
 
       {/* Skills marquee */}
-      <Marquee items={stack} tone="yellow" speed={36} />
+      <Marquee items={marqueeStack} tone="yellow" speed={36} />
 
-      {/* Quick facts */}
+      {/* Tech I work with */}
       <section className="neo-section">
         <div className="neo-container">
           <Reveal>
-            <h2>Quick facts</h2>
+            <h2>Tech I work with</h2>
             <p className="neo-section-lead">
-              The five-second version of who I am.
+              The tools I reach for, grouped by where they sit in the stack.
             </p>
           </Reveal>
-          <div className="neo-stat-row">
-            {facts.map((f, i) => (
-              <Reveal key={f.label} delay={i * 60}>
-                <div className="neo-stat">
-                  <div className="neo-stat-label">{f.label}</div>
-                  <div
-                    style={{
-                      fontSize: 16,
-                      fontWeight: 800,
-                      marginTop: 6,
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
-                    {f.value}
+          <div className="neo-tech-grid">
+            {techGroups.map((g, i) => (
+              <Reveal key={g.title} delay={i * 60}>
+                <div className={`neo-highlight ${g.tone}`}>
+                  <h3 className="neo-tech-title">{g.title}</h3>
+                  <div className="neo-chip-row">
+                    {g.items.map((it) => (
+                      <span key={it} className="neo-chip-mini">
+                        {it}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </Reveal>
@@ -176,6 +192,31 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Portfolio — detailed */}
+      <section className="neo-section">
+        <div className="neo-container">
+          <Reveal>
+            <h2>Portfolio</h2>
+            <p className="neo-section-lead">
+              Selected projects — each with the stack, what I built, and where
+              to find it.
+            </p>
+          </Reveal>
+          <div className="neo-portfolio-grid">
+            {apps.map((app, i) => (
+              <Reveal key={app.id} delay={i * 60}>
+                <PortfolioCard app={app} index={i} featured={i === 0} />
+              </Reveal>
+            ))}
+          </div>
+          <div style={{ marginTop: 28, textAlign: "center" }}>
+            <Link href="/apps" className="neo-btn neo-btn--neutral">
+              See the full apps page →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Beliefs */}
       <section className="neo-section">
         <div className="neo-container">
@@ -203,57 +244,6 @@ export default function LandingPage() {
                     {b.body}
                   </p>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured apps */}
-      <section className="neo-section">
-        <div className="neo-container">
-          <Reveal>
-            <div
-              className="flex items-end justify-between flex-wrap"
-              style={{ gap: 16, marginBottom: 22 }}
-            >
-              <div>
-                <h2>Featured apps</h2>
-                <p className="neo-section-lead" style={{ margin: 0 }}>
-                  Things I&apos;ve shipped recently.
-                </p>
-              </div>
-              <Link href="/apps" className="neo-btn neo-btn--sm neo-btn--neutral">
-                All apps →
-              </Link>
-            </div>
-          </Reveal>
-          <div className="neo-app-grid">
-            {featuredApps.map((app, i) => (
-              <Reveal key={app.id} delay={i * 70}>
-                <a
-                  href={app.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="neo-card neo-card--hover neo-app-card"
-                  style={{ display: "flex", height: "100%" }}
-                >
-                  <span
-                    className="neo-app-icon"
-                    style={{ background: app.color }}
-                  >
-                    {app.name.charAt(0)}
-                  </span>
-                  <h3>{app.name}</h3>
-                  <p>{app.description}</p>
-                  <div className="neo-app-tags">
-                    {app.tags.map((t) => (
-                      <span key={t} className="neo-badge neo-badge--white">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </a>
               </Reveal>
             ))}
           </div>

@@ -1,9 +1,11 @@
 import { ContactForm } from "@/components/neo/ContactForm";
+import { CalendlyEmbed } from "@/components/neo/CalendlyEmbed";
 import { profile, social } from "@/lib/data";
 
 export const metadata = {
   title: "Contact · Diogo Baptista",
-  description: "Get in touch — email, LinkedIn, GitHub, or Substack.",
+  description:
+    "Get in touch — email, LinkedIn, GitHub, Substack, or book a meeting on Calendly.",
 };
 
 export default function ContactPage() {
@@ -15,10 +17,11 @@ export default function ContactPage() {
         </span>
         <h2 style={{ marginTop: 12 }}>Get in touch</h2>
         <p className="neo-section-lead">
-          Quickest way to reach me is email. The form below just composes the
-          message and opens your mail client — no servers, no spam, nothing
-          stored.
+          Three ways to reach me. Pick whichever fits.
         </p>
+
+        {/* Calendly first — it's the fastest path */}
+        <CalendlyEmbed title="Book a 30-minute call ☎" />
 
         <div
           style={{
@@ -26,10 +29,27 @@ export default function ContactPage() {
             gap: 32,
             gridTemplateColumns: "minmax(0, 1fr) 280px",
             alignItems: "start",
+            marginTop: 32,
           }}
           className="contact-grid"
         >
-          <ContactForm to={profile.email} />
+          <div>
+            <h3
+              style={{
+                fontSize: 22,
+                fontWeight: 900,
+                margin: "0 0 6px",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Or send an email
+            </h3>
+            <p style={{ color: "#444", fontSize: 14, margin: "0 0 18px" }}>
+              The form opens your mail client — no servers, no spam, nothing
+              stored.
+            </p>
+            <ContactForm to={profile.email} />
+          </div>
 
           <aside style={{ display: "grid", gap: 14 }}>
             <div className="neo-highlight neo-highlight--yellow">
