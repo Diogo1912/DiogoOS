@@ -7,6 +7,10 @@ export function SiteFooter() {
       <div className="neo-footer-inner">
         <span>© {new Date().getFullYear()} Diogo Baptista</span>
         <div className="flex items-center gap-3 text-[13px]">
+          <Link href="/freelance" style={{ fontWeight: 700 }}>
+            Hire me
+          </Link>
+          <span>·</span>
           <a href={social.linkedin} target="_blank" rel="noreferrer">
             LinkedIn
           </a>

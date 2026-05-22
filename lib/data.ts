@@ -46,6 +46,109 @@ export interface App {
 }
 
 /**
+ * Service offered as freelance work. Consumed by `/freelance` (full
+ * cards) and the homepage "Recent client work" recap.
+ */
+export interface Service {
+  id: string;
+  title: string;
+  tagline: string;
+  /** 1-emoji glyph used as the card's marker. Kept minimal — neobrutalism. */
+  glyph: string;
+  /** Neobrutalism accent token name (yellow|pink|blue|green|purple). */
+  tone: "yellow" | "pink" | "blue" | "green" | "purple";
+  /** Concise pitch shown above the deliverables list. */
+  description: string;
+  /** Bullets of what's included in a typical engagement. */
+  deliverables: string[];
+  /** Tech / tool stack chips. */
+  stack: string[];
+  /** Display string like "from €1,500" — full freedom to phrase per service. */
+  priceFrom: string;
+  /** Short note under price ("per project", "fixed-fee", etc.). */
+  priceNote?: string;
+  /** Optional related portfolio app id for cross-linking. */
+  exampleAppId?: string;
+}
+
+export const services: Service[] = [
+  {
+    id: "ai-automation",
+    title: "AI-powered automation",
+    tagline: "Repetitive ops work, gone.",
+    glyph: "⚙",
+    tone: "yellow",
+    description:
+      "I take the slow, manual parts of your business — sorting, tagging, summarising, replying, syncing — and replace them with reliable AI-driven workflows that run on their own.",
+    deliverables: [
+      "Mapping your current process and finding the highest-leverage cuts",
+      "Building the pipeline in n8n / Python with safe fallbacks",
+      "Hooking into your existing tools (Slack, Notion, Gmail, your CRM)",
+      "Setup, monitoring and a handover doc so your team can run it",
+    ],
+    stack: ["n8n", "Python", "OpenAI", "Anthropic API", "FastAPI", "Zapier"],
+    priceFrom: "from €1,500",
+    priceNote: "fixed-fee per workflow",
+  },
+  {
+    id: "chatbots-agents",
+    title: "Chatbots & AI agents",
+    tagline: "Conversational products that actually work.",
+    glyph: "✦",
+    tone: "pink",
+    description:
+      "Bespoke chatbots and multi-step agents grounded in your content. Built with proper prompt design, retrieval, evaluation and safety — not a thin wrapper around a single LLM call.",
+    deliverables: [
+      "Conversation design — flows, tone, guardrails, escalation paths",
+      "RAG pipeline against your docs / knowledge base",
+      "LLM-as-judge evaluation + per-request observability",
+      "Embed-anywhere widget or a dedicated app — your choice",
+    ],
+    stack: ["Claude", "OpenRouter", "LangChain", "CrewAI", "Next.js", "Postgres"],
+    priceFrom: "from €3,000",
+    priceNote: "scope-dependent",
+    exampleAppId: "tiredofcancer",
+  },
+  {
+    id: "small-business-sites",
+    title: "Websites for small businesses",
+    tagline: "Fast, beautiful, easy to update.",
+    glyph: "◆",
+    tone: "blue",
+    description:
+      "Modern websites for restaurants, studios, freelancers and shops. Designed to load instantly, look distinctive, and let you update copy yourself without calling a developer every time.",
+    deliverables: [
+      "Brand-aware design tailored to your business (not a template)",
+      "Built on Next.js — accessible, SEO-ready, fast on mobile",
+      "Headless CMS (Sanity or Notion) so you edit in plain language",
+      "Hosting, analytics and a 30-day post-launch tweak window",
+    ],
+    stack: ["Next.js", "Sanity", "Tailwind", "Vercel", "Posthog"],
+    priceFrom: "from €1,500",
+    priceNote: "incl. design + 30 days support",
+  },
+  {
+    id: "interactive-apps",
+    title: "Interactive apps & games",
+    tagline: "When you need a memorable moment.",
+    glyph: "✺",
+    tone: "green",
+    description:
+      "One-off web apps and small games — campaigns, internal tools, playful brand experiences. The kind of thing that makes people screenshot and share.",
+    deliverables: [
+      "Concept + interaction sketch (paper-thin first, then code)",
+      "Hand-built in React/Vite or Canvas — no bloated boilerplate",
+      "Mobile-first, share-friendly, deploys to your domain",
+      "Source code yours at the end",
+    ],
+    stack: ["React", "Vite", "Canvas", "TypeScript", "Vercel"],
+    priceFrom: "from €1,000",
+    priceNote: "per project",
+    exampleAppId: "chandle",
+  },
+];
+
+/**
  * @deprecated The diogonet page now reads from `lib/linkedin.ts` /
  * `data/linkedin.json` (synced weekly from LinkedIn). This export and the
  * `experience` / `education` / `skillCategories` exports below are kept only
@@ -63,6 +166,53 @@ export const social = {
   github: "https://github.com/Diogo1912",
   substack: "https://substack.com/@diogobap",
 };
+
+/**
+ * What I'm focused on this season — hand-curated for the homepage
+ * "Right now" section. Kept separate from LinkedIn experience so I can
+ * write the copy that actually fits the freelance pitch.
+ */
+export interface CurrentFocus {
+  id: string;
+  label: string;           // small uppercase pill, e.g. "Founder · Building"
+  title: string;           // big title, e.g. "Storay"
+  context?: string;        // parent / org line under title
+  body: string;            // 1-2 sentence description
+  tone: "yellow" | "pink" | "blue" | "green" | "purple";
+  href?: string;           // optional click-through
+}
+
+export const currentlyDoing: CurrentFocus[] = [
+  {
+    id: "storay",
+    label: "Founder · Building",
+    title: "Storay",
+    context: "My own product",
+    body:
+      "A personal inventory app — catalogue what you own, then share a public shelf to sell anything in one click with zero platform fees. I lead product, design, engineering and brand.",
+    tone: "yellow",
+    href: "https://storay.app",
+  },
+  {
+    id: "studio",
+    label: "Freelance · Open for projects",
+    title: "DiogoBap Studio",
+    context: "My freelance practice",
+    body:
+      "AI automation, chatbots and agents, small-business websites and interactive apps. Solo, senior and fixed-fee — most engagements ship in 2-6 weeks. Currently booking new clients.",
+    tone: "pink",
+    href: "/freelance",
+  },
+  {
+    id: "studies",
+    label: "Student · Year 3",
+    title: "Computational Social Science",
+    context: "Bachelor's @ University of Amsterdam",
+    body:
+      "A degree that sits between data science, social science and ethics — modelling societies with code, plus the methods and critique side. It's where my taste for products that 'meet people where they are' comes from.",
+    tone: "blue",
+  },
+];
 
 /** @deprecated see `lib/linkedin.ts` */
 export const experience: Job[] = [

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ContactForm } from "@/components/neo/ContactForm";
 import { CalendlyEmbed } from "@/components/neo/CalendlyEmbed";
 import { profile, social } from "@/lib/data";
@@ -17,7 +18,10 @@ export default function ContactPage() {
         </span>
         <h2 style={{ marginTop: 12 }}>Get in touch</h2>
         <p className="neo-section-lead">
-          Three ways to reach me. Pick whichever fits.
+          Three ways to reach me. Pick whichever fits.{" "}
+          <Link href="/freelance" style={{ fontWeight: 700 }}>
+            Freelance work? → /freelance
+          </Link>
         </p>
 
         {/* Calendly first — it's the fastest path */}
