@@ -1229,6 +1229,9 @@
   background: #ffffff;
   overflow: hidden;
 }
+.neo-cal-embed--compact .neo-cal-embed-frame {
+  height: 520px;
+}
 .neo-cal-embed-frame iframe {
   display: block;
   border: 0;

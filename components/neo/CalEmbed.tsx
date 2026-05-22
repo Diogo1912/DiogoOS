@@ -11,7 +11,13 @@ const DEFAULT_LINK =
  * `NEXT_PUBLIC_CAL_LINK` (format: "username/event-slug") so the booking
  * link stays in one place.
  */
-export function CalEmbed({ title = "Book a time" }: { title?: string }) {
+export function CalEmbed({
+  title = "Book a time",
+  compact = false,
+}: {
+  title?: string;
+  compact?: boolean;
+}) {
   useEffect(() => {
     (async () => {
       const cal = await getCalApi({ namespace: "inline" });
@@ -40,7 +46,7 @@ export function CalEmbed({ title = "Book a time" }: { title?: string }) {
   }, []);
 
   return (
-    <div className="neo-cal-embed">
+    <div className={`neo-cal-embed${compact ? " neo-cal-embed--compact" : ""}`}>
       <div className="neo-cal-embed-head">{title}</div>
       <div className="neo-cal-embed-frame">
         <Cal

@@ -26,13 +26,11 @@ export default function ContactPage() {
           </Link>
         </p>
 
-        {/* Two-column: Cal.com on the left, contact methods on the right */}
+        {/* Left: Cal.com (compact) + email/socials underneath. Right: email form */}
         <div className="contact-grid">
-          <div style={{ minWidth: 0 }}>
-            <CalEmbed title="Book a 30-minute call ☎" />
-          </div>
+          <div className="contact-left">
+            <CalEmbed title="Book a 30-minute call ☎" compact />
 
-          <aside className="contact-aside">
             <div className="neo-highlight neo-highlight--yellow">
               <div className="neo-label" style={{ marginBottom: 4 }}>
                 Email
@@ -44,7 +42,8 @@ export default function ContactPage() {
                 {profile.email}
               </a>
             </div>
-            <div className="neo-link-row" style={{ gridTemplateColumns: "1fr" }}>
+
+            <div className="neo-link-row" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
               <a
                 className="neo-link-card"
                 href={social.linkedin}
@@ -73,22 +72,21 @@ export default function ContactPage() {
                 Substack
               </a>
             </div>
-          </aside>
-        </div>
+          </div>
 
-        {/* Email form full-width below the booking section */}
-        <div style={{ marginTop: 40 }}>
-          <h3
-            style={{
-              fontSize: 22,
-              fontWeight: 900,
-              margin: "0 0 18px",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Or send an email
-          </h3>
-          <ContactForm />
+          <div className="contact-right">
+            <h3
+              style={{
+                fontSize: 22,
+                fontWeight: 900,
+                margin: "0 0 18px",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Or send an email
+            </h3>
+            <ContactForm />
+          </div>
         </div>
       </div>
 
@@ -96,13 +94,17 @@ export default function ContactPage() {
         .contact-grid {
           display: grid;
           gap: 32px;
-          grid-template-columns: minmax(0, 1fr) 320px;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           align-items: start;
           margin-top: 28px;
         }
-        .contact-aside {
+        .contact-left {
           display: grid;
-          gap: 14px;
+          gap: 16px;
+          min-width: 0;
+        }
+        .contact-right {
+          min-width: 0;
         }
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr; }
