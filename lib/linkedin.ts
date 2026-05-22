@@ -1,13 +1,13 @@
 import profile from "@/data/linkedin.json";
 
 /**
- * Canonical shape of the user's LinkedIn snapshot. Field names mirror
- * Proxycurl's `Person` response so the sync script can normalise easily.
+ * Canonical shape of the LinkedIn-style profile snapshot the CV page
+ * renders off. Field names mirror Proxycurl's `Person` response (a
+ * legacy from an earlier auto-sync; the file is now hand-edited).
  *
- * One source of truth lives at `data/linkedin.json` and is rewritten
- * weekly by `scripts/sync-linkedin.ts` (locally or via the
- * `.github/workflows/sync-linkedin.yml` cron). Nothing in the app fetches
- * LinkedIn at request time — pages prerender statically off the JSON.
+ * One source of truth lives at `data/linkedin.json`. Update it manually
+ * when LinkedIn changes. Nothing in the app fetches anything at request
+ * time — pages prerender statically off the JSON.
  */
 export interface Experience {
   title: string;

@@ -336,7 +336,7 @@ export const apps: App[] = [
     icon: "bolt",
     liveUrl: "https://www.tiredofcancer.com/",
     color: "#16a085",
-    status: "Live · Freelance work",
+    status: "Live",
     highlights: [
       "Designed the conversational coaching flow end-to-end",
       "Built the RAG pipeline against the clinical content library",
