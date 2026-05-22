@@ -1,12 +1,46 @@
 import Link from "next/link";
-import { apps } from "@/lib/data";
+import { apps, type App } from "@/lib/data";
 
 export const metadata = {
   title: "My Apps · Diogo Baptista",
   description: "Apps, games and tools I've built — including DiogoOS.",
 };
 
+const byId = (id: string): App | undefined => apps.find((a) => a.id === id);
+
 export default function AppsPage() {
+  const storay = byId("storay");
+  const chandle = byId("chandle");
+  const circuitboard = byId("circuitboard");
+  const golexai = byId("golexai");
+  const untire = byId("tiredofcancer");
+
+  const sections: {
+    id: string;
+    title: string;
+    lead?: string;
+    items: App[];
+  }[] = [
+    {
+      id: "games",
+      title: "Games & experiments",
+      lead: "Built for fun on weekends — playful interfaces and tiny worlds.",
+      items: [chandle].filter(Boolean) as App[],
+    },
+    {
+      id: "tools",
+      title: "Tools",
+      lead: "Things I made because nothing on the market quite fit.",
+      items: [circuitboard, storay].filter(Boolean) as App[],
+    },
+    {
+      id: "freelance",
+      title: "Freelance work",
+      lead: "Shipped for clients. Want one of these for your team? See /freelance.",
+      items: [untire, golexai].filter(Boolean) as App[],
+    },
+  ];
+
   return (
     <section className="neo-section">
       <div className="neo-container">
@@ -22,75 +56,141 @@ export default function AppsPage() {
           </Link>
         </p>
 
-        <div className="neo-app-grid">
-          {/* DiogoOS — featured first as an internal route */}
-          <Link href="/os" className="neo-card neo-card--hover neo-app-card">
-            <span
-              className="neo-app-icon"
-              style={{ background: "#0a0a0a" }}
-            >
-              OS
-            </span>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3>DiogoOS</h3>
-              <span className="neo-badge neo-badge--yellow">Featured</span>
-            </div>
-            <p>
-              My old personal website rebuilt as a Mac OS X-inspired desktop —
-              with a menubar, dock, mini-apps and a working iChat-style contact
-              page. Now a sub-app of this site.
-            </p>
-            <div className="neo-app-tags">
-              <span className="neo-badge neo-badge--white">Web App</span>
-              <span className="neo-badge neo-badge--white">For fun</span>
-            </div>
-          </Link>
-
-          {apps.map((app) => (
+        {/* Featured — wide banner */}
+        {storay && (
+          <div style={{ marginTop: 28 }}>
+            <h3 className="neo-apps-cat-title">Featured</h3>
             <a
-              key={app.id}
-              href={app.liveUrl}
+              href={storay.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="neo-card neo-card--hover neo-app-card"
+              className="neo-card neo-card--hover neo-apps-banner"
+              style={{ background: storay.color }}
             >
+              <div className="neo-apps-banner-inner">
+                <div className="neo-apps-banner-icon">
+                  {storay.name.charAt(0)}
+                </div>
+                <div className="neo-apps-banner-text">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 style={{ margin: 0 }}>{storay.name}</h3>
+                    {storay.badge && (
+                      <span className="neo-badge neo-badge--pink">
+                        {storay.badge}
+                      </span>
+                    )}
+                    {storay.status && (
+                      <span className="neo-badge neo-badge--white">
+                        {storay.status}
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ margin: "10px 0 12px" }}>
+                    {storay.longDescription ?? storay.description}
+                  </p>
+                  <div className="neo-app-tags">
+                    {storay.tags.map((t) => (
+                      <span key={t} className="neo-badge neo-badge--white">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
+
+        {/* Games & experiments — special-cased so DiogoOS (internal route) sits with Chandle */}
+        <div style={{ marginTop: 36 }}>
+          <h3 className="neo-apps-cat-title">Games &amp; experiments</h3>
+          <p className="neo-section-lead" style={{ marginTop: -4 }}>
+            Built for fun on weekends — playful interfaces and tiny worlds.
+          </p>
+          <div className="neo-app-grid">
+            {chandle && <ExternalAppCard app={chandle} />}
+            {/* DiogoOS — internal route */}
+            <Link href="/os" className="neo-card neo-card--hover neo-app-card">
               <span
                 className="neo-app-icon"
-                style={{ background: app.color }}
+                style={{ background: "#0a0a0a" }}
               >
-                {app.name.charAt(0)}
+                OS
               </span>
               <div className="flex items-center gap-2 flex-wrap">
-                <h3>{app.name}</h3>
-                {app.badge && (
-                  <span
-                    className={`neo-badge ${
-                      app.badge === "NEW"
-                        ? "neo-badge--pink"
-                        : "neo-badge--green"
-                    }`}
-                  >
-                    {app.badge}
-                  </span>
-                )}
+                <h3>DiogoOS</h3>
+                <span className="neo-badge neo-badge--yellow">Featured</span>
               </div>
-              <p>{app.description}</p>
+              <p>
+                My old personal website rebuilt as a Mac OS X-inspired desktop
+                — with a menubar, dock, mini-apps and a working iChat-style
+                contact page. Now a sub-app of this site.
+              </p>
               <div className="neo-app-tags">
-                {app.tags.map((t) => (
-                  <span key={t} className="neo-badge neo-badge--white">
-                    {t}
-                  </span>
+                <span className="neo-badge neo-badge--white">Web App</span>
+                <span className="neo-badge neo-badge--white">For fun</span>
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* Remaining categories */}
+        {sections
+          .filter((s) => s.id !== "games")
+          .map((s) => (
+            <div key={s.id} style={{ marginTop: 36 }}>
+              <h3 className="neo-apps-cat-title">{s.title}</h3>
+              {s.lead && (
+                <p className="neo-section-lead" style={{ marginTop: -4 }}>
+                  {s.lead}
+                </p>
+              )}
+              <div className="neo-app-grid">
+                {s.items.map((app) => (
+                  <ExternalAppCard key={app.id} app={app} />
                 ))}
               </div>
-              {app.sourceUrl && (
-                <span className="text-xs font-bold underline">
-                  View source ↗
-                </span>
-              )}
-            </a>
+            </div>
           ))}
-        </div>
       </div>
     </section>
+  );
+}
+
+function ExternalAppCard({ app }: { app: App }) {
+  return (
+    <a
+      href={app.liveUrl}
+      target="_blank"
+      rel="noreferrer"
+      className="neo-card neo-card--hover neo-app-card"
+    >
+      <span className="neo-app-icon" style={{ background: app.color }}>
+        {app.name.charAt(0)}
+      </span>
+      <div className="flex items-center gap-2 flex-wrap">
+        <h3>{app.name}</h3>
+        {app.badge && (
+          <span
+            className={`neo-badge ${
+              app.badge === "NEW" ? "neo-badge--pink" : "neo-badge--green"
+            }`}
+          >
+            {app.badge}
+          </span>
+        )}
+      </div>
+      <p>{app.description}</p>
+      <div className="neo-app-tags">
+        {app.tags.map((t) => (
+          <span key={t} className="neo-badge neo-badge--white">
+            {t}
+          </span>
+        ))}
+      </div>
+      {app.sourceUrl && (
+        <span className="text-xs font-bold underline">View source ↗</span>
+      )}
+    </a>
   );
 }

@@ -329,6 +329,71 @@
   color: #333;
   margin: 0;
 }
+.neo-apps-cat-title {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  display: inline-block;
+  padding: 6px 12px;
+  background: #0a0a0a;
+  color: #fff;
+  border: 2px solid var(--neo-border);
+  border-radius: 999px;
+  box-shadow: var(--neo-shadow-sm);
+}
+.neo-apps-banner {
+  display: block;
+  padding: 28px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.neo-apps-banner-inner {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.neo-apps-banner-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  border: 2px solid var(--neo-border);
+  background: rgba(255, 255, 255, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 44px;
+  box-shadow: var(--neo-shadow-sm);
+}
+.neo-apps-banner-text h3 {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.neo-apps-banner-text p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .neo-apps-banner-inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .neo-apps-banner-text h3 {
+    font-size: 26px;
+  }
+}
 .neo-app-tags {
   display: flex;
   flex-wrap: wrap;
