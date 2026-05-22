@@ -100,3 +100,101 @@ export interface LinkedInProfile {
 export function getLinkedInProfile(): LinkedInProfile {
   return profile as LinkedInProfile;
 }
+
+/* ──────────────────────────────────────────────────────────────────
+ * Experience grouping for /cv
+ *
+ * The CV page used to render every role in one flat list. That worked
+ * when there were 3 roles; with 10 it loses hierarchy. `groupExperience`
+ * buckets each role into one of four hand-curated groups so the page can
+ * lead with "now", surface the AI-engineering track, and demote early
+ * gigs without hiding them.
+ *
+ * Bucketing is keyed by `company|title` to survive LinkedIn re-syncs.
+ * Anything that doesn't match falls into the "Outside" bucket — so newly
+ * synced roles appear by default rather than disappearing.
+ * ──────────────────────────────────────────────────────────────── */
+
+export type RoleGroupId = "now" | "ai" | "earlier" | "outside";
+export type RoleGroupTone = "yellow" | "pink" | "blue" | "green";
+
+export interface RoleGroup {
+  id: RoleGroupId;
+  title: string;
+  blurb: string;
+  tone: RoleGroupTone;
+  roles: Experience[];
+}
+
+const ROLE_BUCKETS: Record<string, RoleGroupId> = {
+  // Active roles
+  "Storay|Founder": "now",
+  "DiogoBap Studio|Owner": "now",
+  "Tired of Cancer|AI Engineer": "now",
+  // AI engineering track
+  "Whoppah|AI Engineer": "ai",
+  "GOLEXAI|AI Engineer": "ai",
+  // Earlier industry (internships before the engineer title)
+  "Whoppah|QA Engineer and User Research Intern": "earlier",
+  "Xantor Group|Project Management Intern": "earlier",
+  // Outside the day-job — leadership, community, food service
+  "Study Association Bloom|Chair of the Praesidium": "outside",
+  "PANCAKES Amsterdam|Kitchen Staff": "outside",
+  "Ecole Internationale de Differdange|President of the Student Council":
+    "outside",
+};
+
+const GROUP_META: Record<RoleGroupId, Omit<RoleGroup, "roles">> = {
+  now: {
+    id: "now",
+    title: "Right now",
+    blurb:
+      "What I split my time across today. Two are mine; one is a freelance client.",
+    tone: "yellow",
+  },
+  ai: {
+    id: "ai",
+    title: "AI engineering",
+    blurb:
+      "Where the AI engineering chops come from — production agents, RAG and internal tools.",
+    tone: "pink",
+  },
+  earlier: {
+    id: "earlier",
+    title: "Earlier industry",
+    blurb: "How I got in. Two internships before the engineer title.",
+    tone: "blue",
+  },
+  outside: {
+    id: "outside",
+    title: "Outside the day-job",
+    blurb:
+      "Leadership, community and the studying-while-working period — the rest of who I am.",
+    tone: "green",
+  },
+};
+
+/** Render order, top to bottom. */
+const GROUP_ORDER: RoleGroupId[] = ["now", "ai", "earlier", "outside"];
+
+export function groupExperience(experience: Experience[]): RoleGroup[] {
+  const buckets: Record<RoleGroupId, Experience[]> = {
+    now: [],
+    ai: [],
+    earlier: [],
+    outside: [],
+  };
+
+  for (const role of experience) {
+    const key = `${role.company}|${role.title}`;
+    const id = ROLE_BUCKETS[key] ?? "outside";
+    buckets[id].push(role);
+  }
+
+  // Roles within a bucket stay in the order they came in (the JSON is
+  // reverse-chronological by startDate, which is exactly what we want).
+  return GROUP_ORDER.map((id) => ({
+    ...GROUP_META[id],
+    roles: buckets[id],
+  })).filter((g) => g.roles.length > 0);
+}

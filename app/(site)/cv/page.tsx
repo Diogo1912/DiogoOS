@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getLinkedInProfile } from "@/lib/linkedin";
+import { getLinkedInProfile, groupExperience } from "@/lib/linkedin";
 import { ExperienceItem } from "@/components/neo/ExperienceItem";
 import { Reveal } from "@/components/neo/Reveal";
 
@@ -11,6 +11,7 @@ export const metadata = {
 
 export default function CVPage() {
   const profile = getLinkedInProfile();
+  const groups = groupExperience(profile.experience);
 
   return (
     <>
@@ -84,31 +85,52 @@ export default function CVPage() {
         </div>
       </section>
 
-      {/* Experience */}
+      {/* Experience — grouped */}
       <section className="neo-section">
         <div className="neo-container">
           <h2>Experience</h2>
           <p className="neo-section-lead">
-            Click any role to expand the details.
+            Grouped by what kind of work it is. Click any role to expand the
+            details.
           </p>
-          <div className="neo-exp-list">
-            {profile.experience.map((e, i) => (
-              <Reveal key={i} delay={i * 40}>
-                <ExperienceItem
-                  exp={{
-                    title: e.title,
-                    company: e.company,
-                    employment: e.employment,
-                    location: e.location,
-                    startDate: e.startDate,
-                    endDate: e.endDate,
-                    description: e.description,
-                  }}
-                  index={i}
-                />
-              </Reveal>
-            ))}
-          </div>
+
+          {groups.map((group, gi) => (
+            <div
+              key={group.id}
+              style={{ marginTop: gi === 0 ? 24 : 40 }}
+            >
+              <h3
+                className={`neo-apps-cat-title neo-apps-cat-title--${group.tone}`}
+              >
+                {group.title}
+              </h3>
+              <p
+                className="neo-section-lead"
+                style={{ marginTop: -4, marginBottom: 18 }}
+              >
+                {group.blurb}
+              </p>
+              <div className="neo-exp-list">
+                {group.roles.map((e, i) => (
+                  <Reveal key={`${group.id}-${i}`} delay={i * 40}>
+                    <ExperienceItem
+                      exp={{
+                        title: e.title,
+                        company: e.company,
+                        employment: e.employment,
+                        location: e.location,
+                        startDate: e.startDate,
+                        endDate: e.endDate,
+                        description: e.description,
+                      }}
+                      index={i}
+                      tone={group.tone}
+                    />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

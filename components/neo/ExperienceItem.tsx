@@ -13,7 +13,8 @@ export interface ExpProps {
 }
 
 const TONES = ["yellow", "pink", "blue", "green", "purple"] as const;
-const VARS: Record<(typeof TONES)[number], string> = {
+type Tone = (typeof TONES)[number];
+const VARS: Record<Tone, string> = {
   yellow: "var(--neo-yellow)",
   pink: "var(--neo-pink)",
   blue: "var(--neo-blue)",
@@ -24,13 +25,16 @@ const VARS: Record<(typeof TONES)[number], string> = {
 export function ExperienceItem({
   exp,
   index,
+  tone: toneOverride,
 }: {
   exp: ExpProps;
   index: number;
+  /** Optional fixed tone for the marker. If omitted, cycles through TONES. */
+  tone?: Tone;
 }) {
   const hasDesc = Array.isArray(exp.description) && exp.description.length > 0;
   const [open, setOpen] = useState(index === 0);
-  const tone = TONES[index % TONES.length];
+  const tone: Tone = toneOverride ?? TONES[index % TONES.length];
 
   return (
     <article className="neo-exp">
