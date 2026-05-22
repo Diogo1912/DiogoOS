@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ContactForm } from "@/components/neo/ContactForm";
-import { CalendlyEmbed } from "@/components/neo/CalendlyEmbed";
+import { CalEmbed } from "@/components/neo/CalEmbed";
 import { profile, social } from "@/lib/data";
 
 export const metadata = {
   title: "Contact · Diogo Baptista",
   description:
-    "Get in touch — email, LinkedIn, GitHub, Substack, or book a meeting on Calendly.",
+    "Get in touch — email, LinkedIn, GitHub, Substack, or book a meeting on Cal.com.",
 };
 
 export default function ContactPage() {
@@ -24,8 +24,8 @@ export default function ContactPage() {
           </Link>
         </p>
 
-        {/* Calendly first — it's the fastest path */}
-        <CalendlyEmbed title="Book a 30-minute call ☎" />
+        {/* Cal.com first — it's the fastest path */}
+        <CalEmbed title="Book a 30-minute call ☎" />
 
         <div
           style={{

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { apps, services } from "@/lib/data";
 import { ServiceCard } from "@/components/neo/ServiceCard";
 import { PortfolioCard } from "@/components/neo/PortfolioCard";
-import { CalendlyEmbed } from "@/components/neo/CalendlyEmbed";
+import { CalEmbed } from "@/components/neo/CalEmbed";
 import { Reveal } from "@/components/neo/Reveal";
 
 export const metadata = {
@@ -203,7 +203,7 @@ export default function FreelancePage() {
               .
             </p>
           </Reveal>
-          <CalendlyEmbed title="Pick a slot — discovery calls are free" />
+          <CalEmbed title="Pick a slot — discovery calls are free" />
         </div>
       </section>
     </>

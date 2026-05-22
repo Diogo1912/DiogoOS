@@ -105,6 +105,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   box-shadow: var(--neo-shadow-sm);
+  color: #0a0a0a;
 }
 .neo-badge--pink   { background: var(--neo-pink); }
 .neo-badge--blue   { background: var(--neo-blue); }
@@ -336,13 +337,17 @@
   text-transform: uppercase;
   margin: 0 0 6px;
   display: inline-block;
-  padding: 6px 12px;
-  background: #0a0a0a;
-  color: #fff;
+  padding: 6px 14px;
+  color: #0a0a0a;
   border: 2px solid var(--neo-border);
   border-radius: 999px;
   box-shadow: var(--neo-shadow-sm);
 }
+.neo-apps-cat-title--yellow { background: var(--neo-yellow); }
+.neo-apps-cat-title--pink   { background: var(--neo-pink); }
+.neo-apps-cat-title--green  { background: var(--neo-green); }
+.neo-apps-cat-title--blue   { background: var(--neo-blue); }
+.neo-apps-cat-title--purple { background: var(--neo-purple); }
 .neo-apps-banner {
   display: block;
   padding: 28px;
@@ -372,6 +377,9 @@
   font-size: 44px;
   box-shadow: var(--neo-shadow-sm);
 }
+.neo-apps-banner-text {
+  min-width: 0;
+}
 .neo-apps-banner-text h3 {
   font-size: 32px;
   font-weight: 900;
@@ -384,6 +392,7 @@
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.92);
   margin: 0;
+  overflow-wrap: anywhere;
 }
 @media (max-width: 640px) {
   .neo-apps-banner-inner {
@@ -1195,15 +1204,15 @@
   color: #1a1a1a;
 }
 
-/* ── Calendly embed wrapper ──────────────────────────────── */
-.neo-calendly {
+/* ── Cal.com embed wrapper ───────────────────────────────── */
+.neo-cal-embed {
   border: 2px solid var(--neo-border);
   border-radius: 12px;
   background: #ffffff;
   box-shadow: var(--neo-shadow);
   overflow: hidden;
 }
-.neo-calendly-head {
+.neo-cal-embed-head {
   padding: 16px 20px;
   background: var(--neo-blue);
   border-bottom: 2px solid var(--neo-border);
@@ -1211,11 +1220,16 @@
   font-size: 16px;
   letter-spacing: -0.01em;
 }
-.neo-calendly iframe {
+.neo-cal-embed-frame {
+  width: 100%;
+  height: 720px;
+  background: #ffffff;
+}
+.neo-cal-embed-frame iframe {
   display: block;
   border: 0;
   width: 100%;
-  min-height: 720px;
+  height: 100%;
   background: #ffffff;
 }
 

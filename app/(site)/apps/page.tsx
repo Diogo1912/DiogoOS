@@ -18,24 +18,28 @@ export default function AppsPage() {
   const sections: {
     id: string;
     title: string;
+    tone: "yellow" | "pink" | "green" | "blue" | "purple";
     lead?: string;
     items: App[];
   }[] = [
     {
       id: "games",
       title: "Games & experiments",
+      tone: "pink",
       lead: "Built for fun on weekends — playful interfaces and tiny worlds.",
       items: [chandle].filter(Boolean) as App[],
     },
     {
       id: "tools",
       title: "Tools",
+      tone: "green",
       lead: "Things I made because nothing on the market quite fit.",
       items: [circuitboard, storay].filter(Boolean) as App[],
     },
     {
       id: "freelance",
       title: "Freelance work",
+      tone: "blue",
       lead: "Shipped for clients. Want one of these for your team? See /freelance.",
       items: [untire, golexai].filter(Boolean) as App[],
     },
@@ -56,7 +60,9 @@ export default function AppsPage() {
         {/* Featured — wide banner */}
         {storay && (
           <div style={{ marginTop: 28 }}>
-            <h3 className="neo-apps-cat-title">Featured</h3>
+            <h3 className="neo-apps-cat-title neo-apps-cat-title--yellow">
+              Featured
+            </h3>
             <a
               href={storay.liveUrl}
               target="_blank"
@@ -100,7 +106,9 @@ export default function AppsPage() {
 
         {/* Games & experiments — special-cased so DiogoOS (internal route) sits with Chandle */}
         <div style={{ marginTop: 36 }}>
-          <h3 className="neo-apps-cat-title">Games &amp; experiments</h3>
+          <h3 className="neo-apps-cat-title neo-apps-cat-title--pink">
+            Games &amp; experiments
+          </h3>
           <p className="neo-section-lead" style={{ marginTop: -4 }}>
             Built for fun on weekends — playful interfaces and tiny worlds.
           </p>
@@ -110,7 +118,7 @@ export default function AppsPage() {
             <Link href="/os" className="neo-card neo-card--hover neo-app-card">
               <span
                 className="neo-app-icon"
-                style={{ background: "#0a0a0a" }}
+                style={{ background: "#6b6b6b" }}
               >
                 OS
               </span>
@@ -136,7 +144,9 @@ export default function AppsPage() {
           .filter((s) => s.id !== "games")
           .map((s) => (
             <div key={s.id} style={{ marginTop: 36 }}>
-              <h3 className="neo-apps-cat-title">{s.title}</h3>
+              <h3 className={`neo-apps-cat-title neo-apps-cat-title--${s.tone}`}>
+                {s.title}
+              </h3>
               {s.lead && (
                 <p className="neo-section-lead" style={{ marginTop: -4 }}>
                   {s.lead}
