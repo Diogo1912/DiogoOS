@@ -151,7 +151,7 @@ export function ContactForm() {
           className="neo-btn neo-btn--blue"
           disabled={status === "sending" || !ACCESS_KEY}
         >
-          {status === "sending" ? "Sending…" : "Send message ✉"}
+          {status === "sending" ? "Sending…" : "Send message"}
         </button>
         {!ACCESS_KEY && (
           <p style={{ fontSize: 12, color: "#a00", marginTop: 10 }}>

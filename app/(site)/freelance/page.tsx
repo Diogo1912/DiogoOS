@@ -203,7 +203,75 @@ export default function FreelancePage() {
               .
             </p>
           </Reveal>
-          <CalEmbed title="Pick a slot — discovery calls are free" />
+          <div className="freelance-book-grid">
+            <div style={{ minWidth: 0 }}>
+              <CalEmbed title="Pick a slot — discovery calls are free" />
+            </div>
+            <aside className="freelance-book-aside">
+              <div className="neo-highlight neo-highlight--yellow">
+                <h3
+                  style={{
+                    margin: "0 0 8px",
+                    fontSize: 18,
+                    fontWeight: 900,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  What to expect
+                </h3>
+                <ul
+                  style={{
+                    margin: 0,
+                    paddingLeft: 18,
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  <li>30 minutes, on Cal Video.</li>
+                  <li>You walk me through the problem.</li>
+                  <li>I tell you honestly if I&apos;m the right fit.</li>
+                  <li>If yes, a fixed-fee proposal lands within 48h.</li>
+                </ul>
+              </div>
+              <div className="neo-highlight neo-highlight--blue">
+                <h3
+                  style={{
+                    margin: "0 0 8px",
+                    fontSize: 18,
+                    fontWeight: 900,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  Free, no commitment
+                </h3>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Discovery calls are always free. Nothing to pay, nothing
+                  to sign, nothing to send beforehand.
+                </p>
+              </div>
+            </aside>
+          </div>
+          <style>{`
+            .freelance-book-grid {
+              display: grid;
+              gap: 28px;
+              grid-template-columns: minmax(0, 1fr) 300px;
+              align-items: start;
+            }
+            .freelance-book-aside {
+              display: grid;
+              gap: 14px;
+            }
+            @media (max-width: 900px) {
+              .freelance-book-grid { grid-template-columns: 1fr; }
+            }
+          `}</style>
         </div>
       </section>
     </>

@@ -3,6 +3,12 @@ import { apps, social, services, currentlyDoing } from "@/lib/data";
 import { Reveal } from "@/components/neo/Reveal";
 import { Marquee } from "@/components/neo/Marquee";
 import { PortfolioCard } from "@/components/neo/PortfolioCard";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  MailIcon,
+  SubstackIcon,
+} from "@/components/neo/BrandIcons";
 
 const CLIENT_WORK_IDS = ["tiredofcancer", "golexai", "storay"];
 
@@ -339,10 +345,7 @@ export default function LandingPage() {
               target="_blank"
               rel="noreferrer"
             >
-              <span
-                className="neo-link-card-dot"
-                style={{ background: "var(--neo-blue)" }}
-              />
+              <LinkedInIcon />
               LinkedIn
             </a>
             <a
@@ -351,10 +354,7 @@ export default function LandingPage() {
               target="_blank"
               rel="noreferrer"
             >
-              <span
-                className="neo-link-card-dot"
-                style={{ background: "var(--neo-purple)" }}
-              />
+              <GitHubIcon />
               GitHub
             </a>
             <a
@@ -363,17 +363,11 @@ export default function LandingPage() {
               target="_blank"
               rel="noreferrer"
             >
-              <span
-                className="neo-link-card-dot"
-                style={{ background: "var(--neo-orange)" }}
-              />
+              <SubstackIcon />
               Substack
             </a>
             <Link className="neo-link-card" href="/contact">
-              <span
-                className="neo-link-card-dot"
-                style={{ background: "var(--neo-green)" }}
-              />
+              <MailIcon />
               Send me an email
             </Link>
           </div>

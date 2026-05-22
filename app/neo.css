@@ -459,6 +459,9 @@
   border-radius: 999px;
   border: 2px solid var(--neo-border);
 }
+.neo-link-card svg {
+  flex-shrink: 0;
+}
 
 /* ── Reveal-on-scroll ────────────────────────────────────── */
 .neo-reveal {
@@ -1222,8 +1225,9 @@
 }
 .neo-cal-embed-frame {
   width: 100%;
-  height: 720px;
+  height: 760px;
   background: #ffffff;
+  overflow: hidden;
 }
 .neo-cal-embed-frame iframe {
   display: block;

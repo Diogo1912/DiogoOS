@@ -18,7 +18,7 @@ export function CalEmbed({ title = "Book a time" }: { title?: string }) {
       cal("ui", {
         theme: "light",
         hideEventTypeDetails: false,
-        layout: "month_view",
+        layout: "column_view",
         cssVarsPerTheme: {
           light: {
             "cal-brand": "#0a0a0a",
@@ -47,7 +47,7 @@ export function CalEmbed({ title = "Book a time" }: { title?: string }) {
           namespace="inline"
           calLink={DEFAULT_LINK}
           style={{ width: "100%", height: "100%", overflow: "scroll" }}
-          config={{ layout: "month_view" }}
+          config={{ layout: "column_view" }}
         />
       </div>
     </div>

@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { ContactForm } from "@/components/neo/ContactForm";
 import { CalEmbed } from "@/components/neo/CalEmbed";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  SubstackIcon,
+} from "@/components/neo/BrandIcons";
 import { profile, social } from "@/lib/data";
 
 export const metadata = {
@@ -13,10 +18,7 @@ export default function ContactPage() {
   return (
     <section className="neo-section">
       <div className="neo-container">
-        <span className="neo-badge neo-badge--green neo-hero-eyebrow">
-          Inbox open
-        </span>
-        <h2 style={{ marginTop: 12 }}>Get in touch</h2>
+        <h2>Get in touch</h2>
         <p className="neo-section-lead">
           Three ways to reach me. Pick whichever fits.{" "}
           <Link href="/freelance" style={{ fontWeight: 700 }}>
@@ -24,34 +26,13 @@ export default function ContactPage() {
           </Link>
         </p>
 
-        {/* Cal.com first — it's the fastest path */}
-        <CalEmbed title="Book a 30-minute call ☎" />
-
-        <div
-          style={{
-            display: "grid",
-            gap: 32,
-            gridTemplateColumns: "minmax(0, 1fr) 280px",
-            alignItems: "start",
-            marginTop: 32,
-          }}
-          className="contact-grid"
-        >
-          <div>
-            <h3
-              style={{
-                fontSize: 22,
-                fontWeight: 900,
-                margin: "0 0 18px",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Or send an email
-            </h3>
-            <ContactForm />
+        {/* Two-column: Cal.com on the left, contact methods on the right */}
+        <div className="contact-grid">
+          <div style={{ minWidth: 0 }}>
+            <CalEmbed title="Book a 30-minute call ☎" />
           </div>
 
-          <aside style={{ display: "grid", gap: 14 }}>
+          <aside className="contact-aside">
             <div className="neo-highlight neo-highlight--yellow">
               <div className="neo-label" style={{ marginBottom: 4 }}>
                 Email
@@ -70,10 +51,7 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span
-                  className="neo-link-card-dot"
-                  style={{ background: "var(--neo-blue)" }}
-                />
+                <LinkedInIcon />
                 LinkedIn
               </a>
               <a
@@ -82,10 +60,7 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span
-                  className="neo-link-card-dot"
-                  style={{ background: "var(--neo-purple)" }}
-                />
+                <GitHubIcon />
                 GitHub
               </a>
               <a
@@ -94,20 +69,43 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span
-                  className="neo-link-card-dot"
-                  style={{ background: "var(--neo-orange)" }}
-                />
+                <SubstackIcon />
                 Substack
               </a>
             </div>
           </aside>
         </div>
+
+        {/* Email form full-width below the booking section */}
+        <div style={{ marginTop: 40 }}>
+          <h3
+            style={{
+              fontSize: 22,
+              fontWeight: 900,
+              margin: "0 0 18px",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Or send an email
+          </h3>
+          <ContactForm />
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 720px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
+        .contact-grid {
+          display: grid;
+          gap: 32px;
+          grid-template-columns: minmax(0, 1fr) 320px;
+          align-items: start;
+          margin-top: 28px;
+        }
+        .contact-aside {
+          display: grid;
+          gap: 14px;
+        }
+        @media (max-width: 900px) {
+          .contact-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>
