@@ -37,7 +37,7 @@ export interface App {
   liveUrl: string;
   sourceUrl?: string;
   color: string;
-  badge?: "NEW" | "FREE" | "HOT";
+  badge?: "NEW" | "FREE" | "HOT" | "FEATURED";
   rating?: number; // 0-5
   /** Short status note, e.g. "Live · 200+ users", "In private beta". */
   status?: string;
@@ -308,7 +308,7 @@ export const apps: App[] = [
     icon: "lightbulb",
     liveUrl: "https://storay.app",
     color: "#3a8fde",
-    badge: "NEW",
+    badge: "FEATURED",
     rating: 5,
     status: "In private beta",
     highlights: [
@@ -356,6 +356,7 @@ export const apps: App[] = [
     icon: "dice",
     liveUrl: "https://what-is-tuesday.vercel.app",
     color: "#f59e0b",
+    badge: "NEW",
     status: "Live",
   },
   {

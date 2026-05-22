@@ -79,7 +79,7 @@ export default function AppsPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 style={{ margin: 0 }}>{storay.name}</h3>
                     {storay.badge && (
-                      <span className="neo-badge neo-badge--pink">
+                      <span className={`neo-badge ${badgeTone(storay.badge)}`}>
                         {storay.badge}
                       </span>
                     )}
@@ -126,7 +126,6 @@ export default function AppsPage() {
               </span>
               <div className="flex items-center gap-2 flex-wrap">
                 <h3>DiogoOS</h3>
-                <span className="neo-badge neo-badge--yellow">Featured</span>
               </div>
               <p>
                 My old personal website rebuilt as a Mac OS X-inspired desktop
@@ -166,6 +165,20 @@ export default function AppsPage() {
   );
 }
 
+function badgeTone(badge: NonNullable<App["badge"]>): string {
+  switch (badge) {
+    case "NEW":
+      return "neo-badge--pink";
+    case "FEATURED":
+      return "neo-badge--yellow";
+    case "HOT":
+      return "neo-badge--pink";
+    case "FREE":
+    default:
+      return "neo-badge--green";
+  }
+}
+
 function ExternalAppCard({ app }: { app: App }) {
   return (
     <a
@@ -180,11 +193,7 @@ function ExternalAppCard({ app }: { app: App }) {
       <div className="flex items-center gap-2 flex-wrap">
         <h3>{app.name}</h3>
         {app.badge && (
-          <span
-            className={`neo-badge ${
-              app.badge === "NEW" ? "neo-badge--pink" : "neo-badge--green"
-            }`}
-          >
+          <span className={`neo-badge ${badgeTone(app.badge)}`}>
             {app.badge}
           </span>
         )}
