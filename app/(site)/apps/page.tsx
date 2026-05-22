@@ -15,8 +15,11 @@ export default function AppsPage() {
         </span>
         <h2 style={{ marginTop: 12 }}>My Apps</h2>
         <p className="neo-section-lead">
-          Personal projects, freelance work and side experiments. Click any
-          card to open the live version.
+          Client work, personal projects and side experiments — all live.
+          Click any card to open it.{" "}
+          <Link href="/freelance" style={{ fontWeight: 700 }}>
+            Want one of these for your team? → /freelance
+          </Link>
         </p>
 
         <div className="neo-app-grid">

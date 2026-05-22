@@ -63,8 +63,11 @@ export default function CVPage() {
             >
               Open on LinkedIn ↗
             </a>
+            <Link href="/freelance" className="neo-btn">
+              Hire me →
+            </Link>
             <Link href="/contact" className="neo-btn neo-btn--neutral">
-              Hire / collaborate
+              Say hi
             </Link>
           </div>
 
