@@ -11,27 +11,19 @@ export const metadata = {
 
 export default function CVPage() {
   const profile = getLinkedInProfile();
-  const stillThere = profile.experience.filter((j) => !j.endDate).length;
 
   return (
     <>
       {/* CV header */}
       <section className="neo-section">
         <div className="neo-container">
-          <span className="neo-badge neo-badge--green neo-hero-eyebrow">
-            Synced from LinkedIn ·{" "}
-            {new Date(profile.syncedAt).toLocaleDateString("en-GB", {
-              month: "short",
-              year: "numeric",
-            })}
-          </span>
           <h1
             style={{
               fontSize: "clamp(36px, 5vw, 56px)",
               fontWeight: 900,
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
-              margin: "16px 0 14px",
+              margin: "0 0 14px",
             }}
           >
             {profile.fullName}
@@ -72,30 +64,23 @@ export default function CVPage() {
           </div>
 
           {profile.about && (
-            <Reveal className="neo-highlight neo-highlight--yellow" delay={80}>
-              <div
-                style={{
-                  fontSize: 16,
-                  lineHeight: 1.6,
-                  marginTop: 0,
-                }}
+            <div style={{ marginTop: 32 }}>
+              <Reveal
+                className="neo-highlight neo-highlight--yellow"
+                delay={80}
               >
-                {profile.about}
-              </div>
-            </Reveal>
+                <div
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 1.6,
+                    marginTop: 0,
+                  }}
+                >
+                  {profile.about}
+                </div>
+              </Reveal>
+            </div>
           )}
-
-          <div className="neo-stat-row">
-            <Stat value={`${profile.experience.length}+`} label="Roles" />
-            <Stat value={stillThere.toString()} label="Active now" />
-            <Stat value={profile.languages.length.toString()} label="Languages" />
-            <Stat
-              value={
-                profile.education[0]?.endYear?.toString() ?? "—"
-              }
-              label="Grad. year"
-            />
-          </div>
         </div>
       </section>
 
@@ -215,15 +200,6 @@ export default function CVPage() {
         </div>
       </section>
     </>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="neo-stat">
-      <div className="neo-stat-value">{value}</div>
-      <div className="neo-stat-label">{label}</div>
-    </div>
   );
 }
 

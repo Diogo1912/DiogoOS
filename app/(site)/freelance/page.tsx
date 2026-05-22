@@ -67,10 +67,6 @@ export default function FreelancePage() {
       {/* Hero */}
       <section className="neo-hero neo-bg-dots">
         <div className="neo-container">
-          <span className="neo-badge neo-badge--green neo-hero-eyebrow">
-            <span className="neo-status-dot" aria-hidden />
-            Available for new projects · Amsterdam
-          </span>
           <h1>
             I take on <mark>freelance work</mark>. Here&apos;s what I build.
           </h1>
