@@ -58,7 +58,7 @@ const FAQ: { q: string; a: string }[] = [
 ];
 
 export default function FreelancePage() {
-  const caseStudies = ["tiredofcancer", "golexai", "storay"]
+  const caseStudies = ["tiredofcancer", "golexai"]
     .map((id) => apps.find((a) => a.id === id))
     .filter(Boolean) as (typeof apps)[number][];
 
@@ -139,8 +139,8 @@ export default function FreelancePage() {
           <Reveal>
             <h2>What it looks like in practice</h2>
             <p className="neo-section-lead">
-              Recent client and product work — each with the stack and what
-              actually shipped.
+              Recent client work — each with the stack and what actually
+              shipped.
             </p>
           </Reveal>
           <div className="neo-portfolio-grid">
