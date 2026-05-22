@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AvailableBadge } from "./AvailableBadge";
 
 const links = [
   { href: "/", label: "Home" },
@@ -19,8 +18,6 @@ export function SiteNav() {
         <Link href="/" className="neo-brand">
           <span>Diogo Baptista</span>
         </Link>
-
-        <AvailableBadge />
 
         <nav className="neo-nav-links">
           {links.map((l) => (

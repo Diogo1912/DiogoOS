@@ -44,10 +44,7 @@ export default function AppsPage() {
   return (
     <section className="neo-section">
       <div className="neo-container">
-        <span className="neo-badge neo-badge--blue neo-hero-eyebrow">
-          {apps.length + 1} projects · all live
-        </span>
-        <h2 style={{ marginTop: 12 }}>My Apps</h2>
+        <h2>My Apps</h2>
         <p className="neo-section-lead">
           Client work, personal projects and side experiments — all live.
           Click any card to open it.{" "}
