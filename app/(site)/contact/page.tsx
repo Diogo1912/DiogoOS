@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ContactForm } from "@/components/neo/ContactForm";
 import { CalEmbed } from "@/components/neo/CalEmbed";
 import {
@@ -6,12 +5,12 @@ import {
   LinkedInIcon,
   SubstackIcon,
 } from "@/components/neo/BrandIcons";
-import { profile, social } from "@/lib/data";
+import { social } from "@/lib/data";
 
 export const metadata = {
   title: "Contact · Diogo Baptista",
   description:
-    "Get in touch — email, LinkedIn, GitHub, Substack, or book a meeting on Cal.com.",
+    "Get in touch — book a meeting on Cal.com or drop me a message.",
 };
 
 export default function ContactPage() {
@@ -19,31 +18,33 @@ export default function ContactPage() {
     <section className="neo-section">
       <div className="neo-container">
         <h2>Get in touch</h2>
-        <p className="neo-section-lead">
-          Three ways to reach me. Pick whichever fits.{" "}
-          <Link href="/freelance" style={{ fontWeight: 700 }}>
-            Freelance work? → /freelance
-          </Link>
-        </p>
 
-        {/* Left: Cal.com (compact) + email/socials underneath. Right: email form */}
+        {/* Left: Cal.com booking. Right: email form + socials underneath */}
         <div className="contact-grid">
           <div className="contact-left">
             <CalEmbed title="Book a 30-minute call ☎" compact />
+          </div>
 
-            <div className="neo-highlight neo-highlight--yellow">
-              <div className="neo-label" style={{ marginBottom: 4 }}>
-                Email
-              </div>
-              <a
-                href={`mailto:${profile.email}`}
-                style={{ fontWeight: 700, fontSize: 15, wordBreak: "break-all" }}
-              >
-                {profile.email}
-              </a>
-            </div>
+          <div className="contact-right">
+            <h3
+              style={{
+                fontSize: 22,
+                fontWeight: 900,
+                margin: "0 0 18px",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Or send an email
+            </h3>
+            <ContactForm />
 
-            <div className="neo-link-row" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <div
+              className="neo-link-row"
+              style={{
+                gridTemplateColumns: "1fr 1fr 1fr",
+                marginTop: 22,
+              }}
+            >
               <a
                 className="neo-link-card"
                 href={social.linkedin}
@@ -73,20 +74,6 @@ export default function ContactPage() {
               </a>
             </div>
           </div>
-
-          <div className="contact-right">
-            <h3
-              style={{
-                fontSize: 22,
-                fontWeight: 900,
-                margin: "0 0 18px",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Or send an email
-            </h3>
-            <ContactForm />
-          </div>
         </div>
       </div>
 
@@ -96,13 +83,9 @@ export default function ContactPage() {
           gap: 32px;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           align-items: start;
-          margin-top: 28px;
+          margin-top: 22px;
         }
-        .contact-left {
-          display: grid;
-          gap: 16px;
-          min-width: 0;
-        }
+        .contact-left,
         .contact-right {
           min-width: 0;
         }
