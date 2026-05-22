@@ -10,7 +10,7 @@ import {
   SubstackIcon,
 } from "@/components/neo/BrandIcons";
 
-const CLIENT_WORK_IDS = ["tiredofcancer", "golexai", "storay"];
+const CLIENT_WORK_IDS = ["tiredofcancer", "golexai"];
 
 export default function LandingPage() {
   const clientWork = CLIENT_WORK_IDS
