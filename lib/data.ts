@@ -348,9 +348,9 @@ export const apps: App[] = [
     id: "what-is-tuesday",
     name: "What is Tuesday?",
     description:
-      "Absurdist daily guessing game — three modes: Survival, Daily and Casual.",
+      "You get a word — write the funniest question it could be the answer to. AI referees, players judge.",
     longDescription:
-      "A playful take on the daily-puzzle format. Pick a mode and try to answer the question the title keeps asking — Survival ramps difficulty, Daily gives one shared puzzle a day, Casual lets you mess around. Built solo as a weekend experiment.",
+      "You get a word. Your job is to write the funniest question it could be the answer to. An AI referee decides if your setup actually lands on the word — and other players can judge yours too. Best joke wins.",
     tags: ["Web App", "Game"],
     stack: ["Next.js", "TypeScript", "Vercel"],
     icon: "dice",
