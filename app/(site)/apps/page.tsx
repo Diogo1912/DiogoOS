@@ -11,6 +11,7 @@ const byId = (id: string): App | undefined => apps.find((a) => a.id === id);
 export default function AppsPage() {
   const storay = byId("storay");
   const chandle = byId("chandle");
+  const whatIsTuesday = byId("what-is-tuesday");
   const circuitboard = byId("circuitboard");
   const golexai = byId("golexai");
   const untire = byId("tiredofcancer");
@@ -114,6 +115,7 @@ export default function AppsPage() {
           </p>
           <div className="neo-app-grid">
             {chandle && <ExternalAppCard app={chandle} />}
+            {whatIsTuesday && <ExternalAppCard app={whatIsTuesday} />}
             {/* DiogoOS — internal route */}
             <Link href="/os" className="neo-card neo-card--hover neo-app-card">
               <span

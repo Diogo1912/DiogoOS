@@ -345,6 +345,20 @@ export const apps: App[] = [
     ],
   },
   {
+    id: "what-is-tuesday",
+    name: "What is Tuesday?",
+    description:
+      "Absurdist daily guessing game — three modes: Survival, Daily and Casual.",
+    longDescription:
+      "A playful take on the daily-puzzle format. Pick a mode and try to answer the question the title keeps asking — Survival ramps difficulty, Daily gives one shared puzzle a day, Casual lets you mess around. Built solo as a weekend experiment.",
+    tags: ["Web App", "Game"],
+    stack: ["Next.js", "TypeScript", "Vercel"],
+    icon: "dice",
+    liveUrl: "https://what-is-tuesday.vercel.app",
+    color: "#f59e0b",
+    status: "Live",
+  },
+  {
     id: "chandle",
     name: "Chandle",
     description:
