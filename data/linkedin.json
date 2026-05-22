@@ -38,7 +38,7 @@
       "location": "Remote",
       "locationType": "Remote",
       "startDate": "Mar 2026",
-      "endDate": null,
+      "endDate": "May 2026",
       "description": [
         "Designed and implemented a 4-step conversational coaching flow using the OpenRouter API (Claude Sonnet), with structured prompts for empathetic, autonomy-supportive responses",
         "Built full-stack with Next.js 15 App Router, SQLite, and bcrypt session auth",

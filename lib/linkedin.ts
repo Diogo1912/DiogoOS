@@ -130,8 +130,8 @@ const ROLE_BUCKETS: Record<string, RoleGroupId> = {
   // Active roles
   "Storay|Founder": "now",
   "DiogoBap Studio|Owner": "now",
-  "Tired of Cancer|AI Engineer": "now",
   // AI engineering track
+  "Tired of Cancer|AI Engineer": "ai",
   "Whoppah|AI Engineer": "ai",
   "GOLEXAI|AI Engineer": "ai",
   // Earlier industry (internships before the engineer title)
@@ -148,8 +148,7 @@ const GROUP_META: Record<RoleGroupId, Omit<RoleGroup, "roles">> = {
   now: {
     id: "now",
     title: "Right now",
-    blurb:
-      "What I split my time across today. Two are mine; one is a freelance client.",
+    blurb: "What I'm splitting my time across today — both are mine.",
     tone: "yellow",
   },
   ai: {
