@@ -39,7 +39,7 @@ export interface App {
   color: string;
   badge?: "NEW" | "FREE" | "HOT" | "FEATURED";
   rating?: number; // 0-5
-  /** Short status note, e.g. "Live · 200+ users", "In private beta". */
+  /** Short status note, e.g. "Live · 200+ users", "In public beta". */
   status?: string;
   /** Bullet highlights of impact / what I built. */
   highlights?: string[];
@@ -310,7 +310,7 @@ export const apps: App[] = [
     color: "#3a8fde",
     badge: "FEATURED",
     rating: 5,
-    status: "In private beta",
+    status: "In public beta",
     highlights: [
       "Inventory model that handles photos, custom fields, and rich tags",
       "Public shelves with one-click sharing — sell with zero platform fees",
