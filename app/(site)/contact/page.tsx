@@ -42,17 +42,13 @@ export default function ContactPage() {
               style={{
                 fontSize: 22,
                 fontWeight: 900,
-                margin: "0 0 6px",
+                margin: "0 0 18px",
                 letterSpacing: "-0.01em",
               }}
             >
               Or send an email
             </h3>
-            <p style={{ color: "#444", fontSize: 14, margin: "0 0 18px" }}>
-              The form opens your mail client — no servers, no spam, nothing
-              stored.
-            </p>
-            <ContactForm to={profile.email} />
+            <ContactForm />
           </div>
 
           <aside style={{ display: "grid", gap: 14 }}>
